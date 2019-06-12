@@ -1,0 +1,128 @@
+<div class="custom-alert" #hasAlert></div>
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title m-subheader__title--separator">
+				Register Reporting
+			</h3>
+			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+				<li class="m-nav__item m-nav__item--home">
+					<a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+						<i class="m-nav__link-icon la la-home"></i>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					<i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+					<a class="m-nav__link">
+						<span class="m-nav__link-text">
+							Register 
+						</span>
+					</a>
+        </li>
+        <li class="m-nav__separator" style="padding-left: 10px">
+					<i class="fa fa-angle-right"></i>
+        </li>
+				<li class="m-nav__item">
+					<a class="m-nav__link">
+						<span class="m-nav__link-text">
+							Register Reporting 
+						</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content product-list animated fadeIn">
+	<!--begin::Portlet-->
+	<app-filter [stores]="stores" (loadList)="filterList($event)"></app-filter>
+	<!--end::Portlet-->
+	<!--begin::Portlet-->
+	<div class="m-portlet m-portlet--mobile">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						Register Reporting
+          </h3>
+          <div class="button-midle float-right">
+            <div *ngIf="loaderExport; else ExportBTN" class="m-loader m-loader--brand" style="width: 30px; display: inline-block;"></div>
+						<ng-template #ExportBTN>
+              <button type="button" class="btn btn-success btn-sm" (click)="exportRegister()">
+                <i class="m-nav__link-icon la la-cloud-download"></i>
+                <span class="m-nav__link-text">
+                  Export Report
+                </span>
+              </button>
+            </ng-template>
+					</div>
+				</div>
+			</div>
+    </div>
+
+      <div class="m-portlet__body" style="position: relative;">
+        <!--begin: Datatable -->
+        <!--begin::Section-->
+          <div class="m-section">
+            <div class="m-section__content price-table">
+              <div *ngIf="loader" class="table-load m-loader m-loader--brand"></div>
+                <div class="table-responsive" style="margin-bottom: 10px;">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>
+                          Closing Date
+                        </th>
+                        <th>
+                          Opening Amount
+                        </th>
+                        <th>
+                          Closing Amount
+                        </th>
+                        <th>
+                          Net
+                        </th>
+                        <th>
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="registerList.length<1; else table">
+                      <tr *ngIf="!loader"><td colspan="5"><h4 class="text-center">No Register Found</h4></td></tr>
+                    </tbody>
+                    <ng-template #table>
+                      <tbody>
+                        <tr *ngFor="let reg of registerList; let o='odd'; let e='even'; trackBy: trackTransaction" [ngClass]="{'odd-tr':o, 'even-tr':e}">
+                          <td>{{getDate(reg.date_closed) | date}}</td>
+                          <td>${{(reg?.amount_open ? reg.amount_open : 0) | number: '1.2-2'}}</td>
+                          <td>${{(reg?.amount_close ? reg.amount_close : 0) | number: '1.2-2'}}</td>
+                          <td>${{(reg?.amount_net ? reg.amount_net : 0) | number: '1.2-2'}}</td>
+                          <td>
+                            <button type="button" class="btn btn-sm btn-brand" (click)="detailRegister(reg)">
+                              Daily Details
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </ng-template>
+                  </table>
+                </div>
+              <!-- pagination Start-->
+              <boot-pagination [totalSize]="pagi.total" [page]="pagi.page" [pagelimit]="pagi.limit" [listSize]="pagi.limit" (pageChange)="reloadTable($event)"></boot-pagination>
+              <!-- pagination End-->
+            </div>
+          </div>
+          <!--end::Section-->
+        <!--end: Datatable -->
+      </div>
+      
+	</div>
+		<!--end::Portlet-->
+</div>
+
+
+

@@ -1,0 +1,84 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-subheader">
+  <div class="d-flex align-items-center">
+      <div class="mr-auto">
+          <h3 class="m-subheader__title m-subheader__title--separator">
+              Manage Categories
+          </h3>
+          <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+            <li class="m-nav__item m-nav__item--home">
+              <a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+                <i class="m-nav__link-icon la la-home"></i>
+              </a>
+            </li>
+            <li class="m-nav__separator">
+              <i class="fa fa-angle-right"></i>
+            </li>
+            <li class="m-nav__item">
+              <a class="m-nav__link">
+                <span class="m-nav__link-text">
+                  Settings
+                </span>
+              </a>
+            </li>
+            <li class="m-nav__separator" style="padding-left: 10px">
+              <i class="fa fa-angle-right"></i>
+            </li>
+            <li class="m-nav__item">
+              <a class="m-nav__link">
+                <span class="m-nav__link-text">
+                  Categories
+                </span>
+              </a>
+            </li>
+          </ul>
+      </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content animated fadeIn">
+  <div class="m-portlet row">
+    <div class="m-portlet__body col-lg-6">
+      <!--begin::Section-->
+        <div style="padding: 20px 0px;">
+          <button class="btn btn-brand" (click)="initParentCat()" style="margin-right:10px">
+            <i class="fa fa-plus"></i> Add Parent Category
+          </button>
+          <button class="btn btn-brand" (click)="initChildCat()" [disabled]="selectedId?false:true">
+              <i class="fa fa-plus"></i> Add New
+          </button>
+        </div>
+        <div id="category-jsTree" class="tree-demo"></div>
+        <!--end::Section-->  
+    </div>
+
+    <div class="m-portlet__body col-lg-6">
+      <!--begin::Section-->
+      <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#overview">
+              Overview
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#sort" [ngClass]="{'mousePointer':(selectedId?false:true)}">
+              Sort
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="overview" role="tabpanel">
+            <category-form [edit]="edit" [category]="category" [hiddenCate]="hiddenCate"
+             [selectedId]="selectedId" (alert)= "alert($event)"></category-form>
+          </div>
+          <div class="tab-pane" id="sort" role="tabpanel">
+            <category-sorting [category]="category" [id]="selectedId" (alert)= "alert($event)"></category-sorting>
+          </div>
+        </div>
+        <!--end::Section-->  
+    </div>
+  </div>
+</div>
+
+

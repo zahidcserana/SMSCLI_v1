@@ -1,0 +1,115 @@
+<div class="m-portlet m-portlet--mobile">
+  <div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+      <div class="m-portlet__head-title">
+        <h3 class="m-portlet__head-text">
+          <i class="la la-search"></i>
+          Search
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="m-portlet__body search-panel">
+    <!--begin::Form-->
+    <form class="m-form m-form--fit m-form--label-align-right second-form" 
+      #form="ngForm" (ngSubmit)="searchUsers()">
+      <div class="row">
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" type="text" placeholder="Customer Name" name="name" [(ngModel)]="orderSearch.name" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" type="email" placeholder="Customer Email" name="email" [(ngModel)] ="orderSearch.email" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <input numberOnly class="form-control m-input" type="text" placeholder="Customer Phone" name="phone" [(ngModel)] ="orderSearch.phone" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" type="text" placeholder="Customer Address" name="address" [(ngModel)] ="orderSearch.address" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" type="text" placeholder="Order Id" name="id" [(ngModel)] ="orderSearch.id" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <div class="input-group date">
+              <input type="text" class="form-control m-input" (click)="orderDateChange()" 
+              placeholder="-Order date-" id="order-date" readonly/>
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <i class="la la-calendar-check-o"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+       <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <select class="form-control m-input" name="order_type" [(ngModel)] ="orderSearch.order_type">
+              <option value='null'>-Order Type-</option>
+              <option value="1">Buy</option>
+              <option value="2">Rent</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <select class="form-control m-input" name="payment_type" [(ngModel)] ="orderSearch.payment_type">
+              <option value='null'>-Payment Type-</option>
+              <option value="1">Online</option>
+              <option value="2">Offline</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <select class="form-control m-input" name="salesman" [(ngModel)] ="orderSearch.salesman">
+              <option value='null'>-Order By-</option>
+              <option *ngFor="let sell of salesMan" [value]="sell.id">{{sell.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6" *ngIf="!staustId">
+          <div class="form-group m-form__group">
+            <select class="form-control m-input" name="status" [(ngModel)] ="orderSearch.status">
+              <option value='null'>-Status-</option>
+              <option *ngFor="let s of status; let i = 'index'" [value]="i + 1">{{s}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <select class="form-control m-input" name="location" [(ngModel)] ="orderSearch.location">
+              <option value='null'>-Location-</option>
+              <option *ngFor="let s of location" [value]="s.id">{{s.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-9 col-sm-6">
+          <div class="form-group m-form__group">
+            <button type="submit" class="btn m-btn--pill m-btn--air btn-brand btn-sm"
+            style="margin-right:10px">
+              <i class="fa fa-calendar-check-o"></i>
+                Search
+            </button>
+            <button type="reset" class="btn m-btn--pill m-btn--air btn-danger btn-sm"
+            (click)="resetSearch()">
+              <i class="fa fa-history"></i>
+                Reset
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <!--end::Form-->
+  </div>
+</div>

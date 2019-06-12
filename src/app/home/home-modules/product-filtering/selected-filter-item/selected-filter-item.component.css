@@ -1,0 +1,11 @@
+.filter-search-result ul li {
+    float: left;
+    padding: 2px 0px 2px 15px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    margin-top: -5px;
+    border-radius: 50px;
+    color: #fff;
+    letter-spacing: 1px;
+    font-weight: 400;
+}

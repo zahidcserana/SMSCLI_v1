@@ -1,0 +1,40 @@
+<section class="innerpage-banner"
+         [ngStyle]="bannerImage">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-10 col-10">
+                <div class="w-100 innaerpage-title">
+                    <h2>{{ contents?.site_specific?.product_details && contents?.site_specific?.product_details.page_title ?
+                        contents.site_specific.product_details.page_title :'' }}</h2>
+                    <ul>
+                        <li><a href="/">Home</a>/</li>
+                        <li>{{contents?.site_specific?.product_details?.page_breadcrumb}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / header section -->
+<section class="wraper">
+    <!-- category product content -->
+    <div class="productview-content pt-5">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <product-details [contents]="contents"></product-details>
+                </div>
+                <div class="col-lg-12 description mt-5">
+                    <h3 class="mb-3 ">{{contents?.site_specific?.product_details?.description_title}}</h3>
+                    <div class="p-3" [innerHTML]="description | safeHtml"></div>
+                </div>
+                <div class="col-lg-12 related-product mt-4 mb-5">
+                    <related-product></related-product>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+  
+
+  

@@ -1,0 +1,15 @@
+<!-- Banner Section-->
+<banner></banner>
+
+  <!-- Home Grid-->
+  <home-grid *ngIf="layoutSection?layoutSection.grid :false"></home-grid>
+
+  <!--- Features Product-->
+  <!-- <app-featured-products  *ngIf="layoutSection?layoutSection.new_arrival:false" [type]="'new_arrival'"></app-featured-products> -->
+
+  <!-- Offer -->
+  <app-promotion *ngIf="layoutSection?layoutSection.promotion:false"></app-promotion>
+
+    <!--- Features Product-->
+  <app-featured-products  *ngIf="layoutSection?layoutSection.featured_product:false"  [type]="'featured'"></app-featured-products>
+  

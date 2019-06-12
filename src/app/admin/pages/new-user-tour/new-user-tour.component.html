@@ -1,0 +1,65 @@
+<div class="custom-alert" #hasCusAlert></div>
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="row" style="width: 100%;">
+          <div class="col-10">
+            <h3 class="welcome-title">Let’s grow your rental business!</h3>
+            <p>Pick a category to add products:</p>
+          </div>
+          <div class="col-2 text-right">
+            <a routerLink="/admin/dashboard" class="btn btn-dark btn-sm">SKIP</a>
+          </div>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content animated fadeIn">
+    <!--begin::Portlet-->
+  <div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__body">
+      <div id="carouselExampleControls" class="carousel slide " data-ride="carousel" data-interval="false">
+        <div class="carousel-inner">
+          <div class="carousel-item" [ngClass]="{'active':i===0}" *ngFor="let t of types; let i='index'">
+           <!-- Carusel Iiem #1-->  
+            <div class="row" style="padding-top: 3rem;">
+              <div class="pb-5" [ngClass]="'col-' + grid.c" *ngFor="let a of t">
+                <div class="slider-box-item" (click)="gotoList(a.id)" style="cursor: pointer;">
+                  <img class="" [src]="url + a.image_data" alt="">
+                    <h4>{{a.category_name}}</h4>
+                </div>
+              </div>
+            </div>
+          </div> 
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>   
+      <div class="footer-part">
+        <h3 class="text-center">Or, add products another way:</h3>
+        <div class="text-center" style="padding-top: 15px">
+          <a routerLink="/admin/inventory/import-inventory" class="btn btn-dark btn-sm" style="margin-right: 20px;">IMPORT FROM FILES</a>
+          <a routerLink="/admin/inventory/add" class="btn btn-dark btn-sm">ADD INDIVIDUALLY</a>
+        </div>
+        <div class="text-center" style="padding-top: 15px">
+          <label class="m-checkbox">
+          <input type="checkbox" name="image" [(ngModel)]="dontShow" (change)="doNotShow()">
+            Do not show this again
+            <span></span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+

@@ -1,0 +1,191 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-subheader">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        Shipping Settings
+      </h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+        <li class="m-nav__item m-nav__item--home">
+          <a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+        <li class="m-nav__separator">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+          <a class="m-nav__link">
+            <span class="m-nav__link-text">
+              Settings
+            </span>
+          </a>
+        </li>
+        <li class="m-nav__separator" style="padding-left: 10px">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+          <a class="m-nav__link">
+            <span class="m-nav__link-text">
+              Shipping Settings
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content animated fadeIn">
+  <div class="m-portlet m-portlet--tabs">
+    <div class="m-portlet__body">
+      <div class="row">
+        <div class="col-md-4">
+          <h4>Shipping origin</h4>
+          <span>Used to calculate shipping rates at checkout.</span>
+        </div>
+        <div class="col-md-8">
+          <h5>Shipping from</h5>
+          <div class="flex-div m-5px" *ngFor="let loc of locations">
+            <div class="icon">
+              <i class="fa fa-map-marker"></i>
+            </div>
+            <div style="flex: 1">
+              <h6>
+                {{loc.name}}
+                <span *ngIf="loc.is_online" class="m-badge m-badge--wide m-badge--primary m-5px">online</span>
+                <span *ngIf="inStoreLocation == loc.id" class="m-badge m-badge--wide m-badge--info m-5px">in store</span>
+                <span class="cursor-pointer m-5px" (click)="addLocation(loc)"><i class="fa fa-edit"></i></span>
+              </h6>
+              <span>{{formatAddress(loc)}}</span><br><span>{{loc.phone}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="m-portlet__body">
+      <div class="row">
+        <div class="col-md-4">
+          <h4>Shipping Methods</h4>
+          <span>Other ways to get your products to your customers.</span>
+        </div>
+        <div class="col-md-8">
+          <h5>Carrier accounts</h5>
+          <p>If you have an existing account with a shipping carrier, connect it to your store to use your own
+            rates.</p>
+          <div style="margin: 10px 0px;">
+            <div class="flex-div shipAccount">
+              <div style="width: 100px;">
+                <img class="carrier-service-logo" alt="UPS® logo" src="./assets/img/admin/shipping/ups.svg" width="64"
+                  height="64">
+              </div>
+              <div style="flex: 1">
+                <h6>UPS®</h6>
+                <div>
+                  <ng-container *ngIf="shippings['ups']">
+                    <p>
+                      >Carrier Id: <b>{{shippings['ups'].carrier_id}}</b><br>
+                      Account: <b>{{shippings['ups'].config.account_number}}</b>
+                    </p>
+                  </ng-container>
+                  <p *ngIf="!shippings['ups']">
+                    You need a UPS® account
+                  </p>
+                </div>
+              </div>
+              <div class="text-right" style="flex: 1">
+                <button *ngIf="!shippings['ups']; else disConnectUpsBtn" class="btn btn-sm btn-dark" (click)="addCarrier('ups')">Connect
+                  carrier account</button>
+                <ng-template #disConnectUpsBtn>
+                  <button class="btn btn-sm btn-dark" style="margin-right: 5px" (click)="editCarrier('ups')">Edit</button>
+                  <button class="btn btn-sm btn-danger" (click)="disconnectCarrier('ups')">
+                    Disconnect account
+                    <div class="m-loader m-loader--light shipDisLoader" *ngIf="deleteId == 'ups'"></div>
+                  </button>
+                </ng-template>
+              </div>
+            </div>
+            <div class="flex-div shipAccount">
+              <div style="width: 100px;">
+                <img class="carrier-service-logo" alt="FedEx logo" src="./assets/img/admin/shipping/fedex.svg" width="64"
+                  height="64">
+              </div>
+              <div style="flex: 1">
+                <h6>FedEx</h6>
+                <div>
+                  <ng-container *ngIf="shippings['fedex']">
+                    <p>
+                      Carrier Id: <b>{{shippings['fedex'].carrier_id}}</b><br>
+                      Account: <b>{{shippings['fedex'].config.account_number}}</b>
+                    </p>
+                  </ng-container>
+                  <p *ngIf="!shippings['fedex']">
+                    You need a FedEx account
+                  </p>
+                </div>
+              </div>
+              <div class="text-right" style="flex: 1">
+                <button *ngIf="!shippings['fedex']; else disConnectFedBtn" class="btn btn-sm btn-dark" (click)="addCarrier('fedex')">Connect
+                  carrier account</button>
+                <ng-template #disConnectFedBtn>
+                  <button class="btn btn-sm btn-dark" style="margin-right: 5px" (click)="editCarrier('fedex')">Edit</button>
+                  <button class="btn btn-sm btn-danger" (click)="disconnectCarrier('fedex')">
+                    Disconnect account
+                    <div class="m-loader m-loader--light shipDisLoader" *ngIf="deleteId == 'fedex'"></div>
+                  </button>
+                </ng-template>
+              </div>
+            </div>
+            <div class="flex-div shipAccount">
+              <div style="width: 100px;">
+                <img class="carrier-service-logo" alt="USPS logo" src="./assets/img/admin/shipping/usps.svg" width="64"
+                  height="64">
+              </div>
+              <div style="flex: 1">
+                <h6>USPS</h6>
+                <div>
+                  <ng-container *ngIf="shippings['usps']">
+                    <p>
+                      Carrier Id: <b>{{shippings['usps'].carrier_id}}</b><br>
+                      Account: <b>{{shippings['usps'].config.account_number}}</b>
+                    </p>
+                  </ng-container>
+                  <p *ngIf="!shippings['ups']">
+                    You need a USPS account
+                  </p>
+                </div>
+              </div>
+              <div class="text-right" style="flex: 1">
+                <button *ngIf="!shippings['usps']; else disConnectUspsBtn" class="btn btn-sm btn-dark" (click)="addCarrier('usps')">Connect
+                  carrier account</button>
+                <ng-template #disConnectUspsBtn>
+                  <button class="btn btn-sm btn-dark" style="margin-right: 5px" (click)="editCarrier('usps')">Edit</button>
+                  <button class="btn btn-sm btn-danger" (click)="disconnectCarrier('usps')">
+                    Disconnect account
+                    <div class="m-loader m-loader--light shipDisLoader" *ngIf="deleteId == 'usps'"></div>
+                  </button>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- sidebar -->
+
+<div class="native-routing animated">
+  <button class="close-sidebar btn btn-sm btn-brand">
+    <i class="fa fa-chevron-right"></i>
+  </button>
+  <span class="close-sidebar-upper">
+    <i class="la la-close"></i>
+  </span>
+  <div class="native-routing-container">
+    <ng-template #addFormCard></ng-template>
+  </div>
+</div>

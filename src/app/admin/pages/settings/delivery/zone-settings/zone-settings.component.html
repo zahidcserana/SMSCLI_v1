@@ -1,0 +1,77 @@
+<div class="heading-part">
+  <h5>Delivery Zone Settings</h5>
+</div>
+
+<section>
+  <form class="mt-3 m-form m-form--fit m-form--label-align-right" [formGroup]="zoneForm" (ngSubmit)="submitForm()">
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label for="field1">Zone</label>
+        <input id="field1" type="text" class="form-control m-input" name="delivery_city" formControlName="delivery_city"
+          autocomplete="nope">
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="field2">Delivery Fee</label>
+        <div class="input-group m-input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="table-cost-addon">
+              $
+            </span>
+          </div>
+          <input id="field2" type="text" numberOnly class="form-control m-input" name="delivery_ammount"
+            formControlName="delivery_ammount" autocomplete="nope">
+        </div>
+      </div>
+    </div>
+
+    <div class="m-portlet__foot m-portlet__foot--fit">
+      <div class="m-form__actions m-form__actions text-right" style="padding: 20px 0px;">
+        <button type="submit" class="btn btn-brand" [disabled]="!zoneForm.valid" [ngClass]="{'m-loader m-loader--light m-loader--right': loading}">
+          {{edit ? 'Update' : 'Submit'}}
+        </button>
+        <button type="reset" *ngIf="edit" class="btn btn-danger" (click)="resetForm()" style="margin-left: 10px;">
+          Reset
+        </button>
+      </div>
+    </div>
+  </form>
+</section>
+
+<div class="heading-part">
+  <h5>Delivery Zone List</h5>
+</div>
+
+<section>
+  <div class="table-responsive">
+    <table class="table table-hover" style="padding-bottom: 10px;">
+      <thead>
+        <tr>
+          <th>Zone</th>
+          <th>Delivery Fee</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let zone of zoneList; let i=index">
+          <td>
+            {{zone.delivery_city}}
+          </td>
+          <td>
+            ${{(zone.delivery_ammount ? zone.delivery_ammount : 0) | number: '1.2-2'}}
+          </td>
+          <td>
+            <a id="m_quick_sidebar_toggle" (click)="editZone(zone)" class="m-portlet__nav-link btn m-btn m-btn--hover-band m-btn--icon m-btn--icon-only m-btn--pill">
+              <i class="fa fa-edit"></i>
+            </a>
+            <div *ngIf="deleteId == zone.id; else deleteBtn" class="m-loader m-loader--brand" style="width: 30px; padding-left: 30px; display: inline-block;"></div>
+            <ng-template #deleteBtn>
+              <a id="m_quick_sidebar_toggle" (click)="deleteZone(zone.id, i)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                <i class="fa fa-trash"></i>
+              </a>
+            </ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

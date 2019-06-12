@@ -1,0 +1,60 @@
+.contact-links-wrapper p {
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 0;
+    line-height: 26px;
+}
+.contact-links-wrapper p:nth-child(1) {
+color: #fff;
+    font-size: 25px;
+    padding-bottom: 10px;
+}
+
+.contact-form-wrapper {
+    margin-bottom: 12rem;
+    margin-top: 4rem;
+    padding: 20px 120px;
+    padding-left: 341px;
+}
+.intro-title {
+    text-align: center;
+    font-size: 58px;
+    padding-top: 7rem;
+    font-weight: 700;
+    font-family: "Source Sans Pro", sans-serif;
+}
+
+.contact-form-wrapper img {
+    width: 245px;
+    height: 490px;
+    position: absolute;
+    z-index: 99;
+    left: -49px;
+    top: -51px;
+}
+
+.contact-form-wrapper .form-control {
+    color: #000;
+    border-radius: 0;
+
+}
+
+.contact-form-wrapper label {
+    color: #fff;
+}
+
+.btn-dark {
+    margin-left: 0rem !important;
+    background: black;
+    border-radius: 0;
+    border: none;
+    color: white;
+    font-size: 18px !important;
+    padding: 10px 25px;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+.error {
+    color: red!important;
+}

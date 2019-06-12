@@ -1,0 +1,26 @@
+@import '~dragula/dist/dragula.css';
+.custom-alert{
+    position: fixed;
+    top: 90px;
+    right: 30px;
+    z-index: 5000;
+}
+
+.green {
+    color: green;
+}
+.red {
+    color: red;
+}
+
+.sorted-tr{
+    margin: 10px 0px!important;
+    font-weight: normal;
+    cursor: -webkit-grab;
+    cursor: move; 
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+    padding: 10px;
+    border-radius: 10px;
+}

@@ -1,0 +1,101 @@
+<div class="animated fadeIn">
+  <h4 class="text-center" style="padding: 20px;">Create New Account</h4>
+
+  <form #form="ngForm" (ngSubmit)="createAccount(form)">
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="finame" class="colorPurpel">
+          First Name*
+        </label>
+        <div class="form-group m-form__group">
+          <input id="finame" type="text" class="form-control" placeholder="First Name" name="f-name" autocomplete="off"
+            #fname="ngModel" [(ngModel)]="signUp.first_name" required>
+          <span *ngIf="fname.errors && fname.touched">
+            <small *ngIf="fname.errors.required" class="error">First Name Required</small>
+          </span>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <label for="flaname" class="colorPurpel">
+          Last Name*
+        </label>
+        <div class="form-group m-form__group">
+          <input id="flaname" type="text" class="form-control" placeholder="Last Name" name="l-name" autocomplete="off"
+            #lname="ngModel" [(ngModel)]="signUp.last_name" required>
+          <span *ngIf="lname.errors && lname.touched">
+            <small *ngIf="lname.errors.required" class="error">Last Name Required</small>
+          </span>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <label for="ema" class="colorPurpel">
+          Email*
+        </label>
+        <div class="form-group m-form__group">
+          <input id="ema" type="email" class="form-control" placeholder="Email" name="email" autocomplete="off" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$"
+            #email="ngModel" [(ngModel)]="signUp.email" required>
+          <span *ngIf="email.errors && email.touched">
+            <small *ngIf="email.errors.required" class="error">Email required</small>
+            <small *ngIf="email.errors.pattern" class="error">Please enter correct email</small>
+          </span>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <label for="pass" class="colorPurpel">
+          Password*
+        </label>
+        <div class="form-group m-form__group">
+          <input id="pass" autocomplete="off" type="password" class="form-control" placeholder="Password" [(ngModel)]="password"
+            #pass="ngModel" name="pass" minlength="6" required>
+          <span *ngIf="pass.valid">
+            <password-strength-bar [passwordToCheck]="password" [showText]="true"></password-strength-bar>
+          </span>
+          <span *ngIf="pass.errors && pass.touched">
+            <small *ngIf="pass.errors.required" class="error">Password Required</small>
+            <small *ngIf="pass.errors.minlength" class="info">Password must be 6 characters long</small>
+          </span>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <label for="con" class="colorPurpel">
+          Confirm Password*
+        </label>
+        <div class="form-group m-form__group">
+          <input id="con" autocomplete="off" type="password" class="form-control" placeholder="Confirm Password" name="passConf"
+            #confirm="ngModel" [(ngModel)]="signUp.password" required>
+          <span *ngIf="confirm.valid">
+            <small *ngIf="checkPassword(password,signUp.password)" class="error">Mismatched Password</small>
+          </span>
+          <span *ngIf="confirm.errors && confirm.touched">
+            <small *ngIf="confirm.errors.required" class="error">Confirm Password Required</small>
+          </span>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <label for="con" class="colorPurpel">
+          Select User Type*
+        </label>
+        <div class="form-group m-form__group">
+          <select class="form-control m-input" name="user_type_id" [(ngModel)]="signUp.user_type_id">
+            <option value="3">Store Admin</option>
+            <option value="4">Cash Register</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <label class="m-checkbox colorPurpel">
+          <input type="checkbox" name="send_email" [(ngModel)]="signUp.send_email">
+          Send activation email
+          <span></span>
+        </label>
+      </div>
+    </div>
+    <div style="padding-top: 10px;">
+      <div *ngIf="loader; else button" class="m-loader m-loader--brand" style="width: 30px; display: inline-block;"></div>
+      <ng-template #button>
+        <button type="submit" [disabled]="checkPassword(password,signUp.password) || !form.valid" class="btn btn-brand">Create
+          Account</button>
+      </ng-template>
+    </div>
+  </form>
+</div>

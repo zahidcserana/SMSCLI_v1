@@ -1,0 +1,161 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-content product-sidebar-attr">
+  <!--begin::Portlet-->
+    <h5 class="colorPurpel" *ngIf="payment.payment_method!='Captured'">Deposit Amount Refund</h5>
+    <div class="m-portlet__body" >
+      <form class="m-form m-form--fit m-form--label-align-right row" #form="ngForm">
+        <div class="col-md-6">
+          <div class="form-group m-form__group">
+            <label for="cost">Refund Amount</label>
+            <div class="input-group m-input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="table-cost-addon">
+                  $
+                </span>
+              </div>
+              <input id="cost" class="form-control m-input" type="text" placeholder="0.00"
+              name="amount"  [(ngModel)]="refundAmount"  #amountR numberOnly  autocomplete="off" (ngModelChange)="getRefundAmount(form.value.amount)">
+             
+              <!-- <input *ngIf="isAuthorized" id="cost" class="form-control m-input" type="text" placeholder="0.00"
+              name="amount" [readonly]="isAuthorized"  #amountR numberOnly [(ngModel)]="refundAmount" autocomplete="off" (ngModelChange)="getRefundAmount(form.value.amount)"> -->
+             
+              <div class="input-group-append">
+                <span class="input-group-text" id="table-cost-addon">
+                  USD
+                </span>
+              </div>
+            </div>
+            <!-- <small *ngIf="amountR.value > checkDue()" class="error">Amount should be less than or equal to {{checkDue()}}</small> -->
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group m-form__group">
+            <label for="note">If not 100%, explain why?</label>
+            <textarea id="note" class="form-control m-input" type="text" 
+            name="note" ngModel autocomplete="off" autocomplete="off"></textarea>
+          </div>
+        </div>
+        <h6 class="col-12" *ngIf="online && isCap ">Capture Amount: ${{(capturedAmount ? capturedAmount : 0) | number: '1.2-2'}}</h6>
+        <div class="col-12">
+          <div class="form-group m-form__group" style="padding-top: 15px!important;">
+              <button *ngIf="!online; else OnlinBTN" type="button" class="btn btn-brand btn-sm" [disabled]="form.value.amount<=0" (click)="submit(form)"> Proceed with refund of ${{refundAmount | number:'1.2-2'}}</button>
+              <ng-template #OnlinBTN>
+                <!-- <button type="button" [disabled]="  refundAmount<=0 && !isAuthorized || capturedAmount<=0" class="btn btn-brand btn-sm" (click)="submit(form)">Proceed with refund of ${{refundAmount | number:'1.2-2'}}</button> -->
+                <button type="button" [disabled]="refundAmount<=0" class="btn btn-brand btn-sm" (click)="submit(form)">Proceed with refund of ${{refundAmount | number:'1.2-2'}}</button>
+              </ng-template>
+              <div *ngIf="loader" class="m-loader m-loader--brand" style="width: 30px; display: inline-block;"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!--begin::Portlet-->
+    <h5 class="colorPurpel" style="padding-top:20px;">Deposited Amount</h5>
+    <div class="m-portlet__body">
+            <!--begin::Section-->
+			<div class="m-section">
+				<div class="m-section__content price-table">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>
+								  Product Name
+                </th>
+                <th>
+								  Date & Time
+								</th>
+								<th>
+								  Amount
+								</th>
+							</tr>
+						</thead>
+						<tbody *ngIf="refundList.length > 0; else noDeposData">
+							<tr *ngFor="let re of refundList; let i ='index'; trackBy: refundListTrack">
+								<td>
+									{{re?.product?.name}}
+                </td>
+                <td>
+									{{getDate(re?.created) | date:'MM/dd/yyyy, hh:mm a'}}
+								</td>
+								<td>
+                  ${{(re?.deposit_amount ? re?.deposit_amount : 0) | number:'1.2-2'}}
+                </td>
+              </tr>
+            </tbody>
+            <ng-template #noDeposData>
+              <tbody>
+                <tr>
+                  <td colspan="3">
+                    <h5 class="text-center">
+                      No Deposit Found
+                    </h5>
+                  </td>
+                </tr>
+              </tbody>
+            </ng-template>
+          </table>
+				</div>
+			</div>
+			<!--end::Section-->
+    </div>
+    <!--end::Portlet-->
+
+    <!--begin::Portlet-->
+    <h5 class="colorPurpel">Refund Amout</h5>
+    <div class="m-portlet__body">
+            <!--begin::Section-->
+			<div class="m-section" style="margin: 0px;">
+				<div class="m-section__content price-table">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>
+								  Amount
+								</th>
+								<th>
+								  Date & Time
+                </th>
+                <th>Note</th>
+                <th></th>
+							</tr>
+						</thead>
+						<tbody *ngIf="refunds.length > 0; else noData">
+							<tr *ngFor="let re of refunds; let i ='index'; trackBy: refundsTrack">
+								<td>
+									${{(re?.amount ? re?.amount : 0) | number:'1.2-2'}}
+                </td>
+                <td>
+									{{getDate(re?.created) | date:'MM/dd/yyyy, hh:mm a'}}
+                </td>
+                <td>
+									{{re?.note ? re.note : ''}}
+								</td>
+								<td>
+                  <span id="m_quick_sidebar_toggle" (click)="deleteRefund(re.id, i)"
+                    class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                    <i class="la la-trash"></i>
+                  </span>
+								</td>
+              </tr>
+            </tbody>
+            <ng-template #noData>
+              <tbody>
+                <tr>
+                  <td colspan="4">
+                    <h5 class="text-center">
+                      No Refund Found
+                    </h5>
+                  </td>
+                </tr>
+              </tbody>
+            </ng-template>
+          </table>
+				</div>
+			</div>
+			<!--end::Section-->
+    </div>
+    <!--end::Portlet-->
+
+</div>
+

@@ -1,0 +1,67 @@
+<div class="custom-alert" #hasCusAlert></div>
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+				Student Dashboard
+			</h3>
+			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+					<a routerLink="/admin/dashboard" class="m-nav__link m-nav__link--icon">
+						<i class="m-nav__link-icon la la-home"></i>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					<i class="fa fa-angle-right"></i>
+				</li>
+				<li class="m-nav__item">
+					<a class="m-nav__link">
+						<span class="m-nav__link-text">
+							Student Dashboard
+						</span>
+					</a>
+				</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content animated fadeIn">
+    <!--begin::Portlet-->
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-xl-7 col-lg-8 paragraph-body">
+                    <h2>Manage Student</h2>
+                    <p>
+                       Manage Students, add new student.
+					</p>
+					<!--<p>
+					  Want to get pro tips on using this portion of RentMy? Visit our YouTube page 
+					  <a href="https://www.youtube.com/channel/UCUG96KnXRqqKrJRRxzZeTFQ" target="_blank" class="m-link"><b>RentMy Co</b></a>
+					  for demos by the experts!
+                    </p>-->
+                    <div class="btn-group-dashboard">
+                        <button type="button" class="btn lbtn-block m-btn--square btn-outline-info btn-lg" (click)="navigateTo('/admin/inventory')">
+                            Student List
+                        </button>
+                        <button type="button" class="btn lbtn-block m-btn--square  btn-outline-success btn-lg" (click)="navigateTo('/admin/inventory/add')">
+                            Add new
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-4 img-body">
+                    <!-- <div class="shap-div"> -->
+                        <img src="assets/img/home/shape.png" class="img-fluid dashboard-img">
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

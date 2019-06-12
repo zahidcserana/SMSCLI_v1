@@ -1,0 +1,27 @@
+<h5>Page Contents</h5>
+
+<div class="row animated">
+  <div class="col-12">
+    <div class="form-group">
+      <label for="name">Page Header</label>
+      <input id="name" class="form-control m-input" name="header" placeholder="Page Header" [(ngModel)]="contents.heading">
+    </div>
+
+
+    <label>Contents</label>
+
+    <div class="summernote-content"></div>
+
+    <div class="m-portlet__foot m-portlet__foot--fit">
+      <div class="m-form__actions m-form__actions" style="padding: 30px 0px;">
+        <div class="m-loader m-loader--brand"  *ngIf="loader; else btnSubmit" style="width: 30px; padding-left: 30px; display: inline-block;"></div>
+        <ng-template #btnSubmit>
+          <button type="submit" class="btn btn-brand" (click)="save()">
+            <i class="fa fa-save"></i>
+            <span style="padding-left:10px;">Submit</span>
+          </button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

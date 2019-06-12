@@ -1,0 +1,20 @@
+<div class="m-login__signin animated fadeIn">
+  <div class="row">
+    <div class="col-md-6 hidden-div">
+      <div class="login-shape">
+        <img src="assets/img/home/graphic4.svg">
+      </div>
+    </div>
+    <div class="col-md-6 login-side animated fadeIn" style="position: relative;">
+      <div *ngIf="loader; else activationDone" class="table-load m-loader m-loader--brand"></div>
+      <ng-template #activationDone>
+        <div class="success-message animated zoomIn" *ngIf="success">
+          {{message}} <br> <a (click)="goToLogin()" class="m-link" style="font-weight: 500;">Login Here</a>
+        </div>
+        <h6 class="error-message animated zoomIn" *ngIf="!success">
+          {{message}}
+        </h6>
+      </ng-template>
+    </div>
+  </div>
+</div>

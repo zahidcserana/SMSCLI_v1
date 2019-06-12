@@ -1,0 +1,173 @@
+<header class="header">
+    <div class="menu-header">
+    <!-- xl lg menu -->
+        <div class="container-fluid">
+            <div class="menuh-container">
+                <div class="row">
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-3 col-sm-3 col-4 logo-area">
+                        <div class="logo-area-inner">
+                        <div class="logo-area-middle">
+                            <a routerLink="">
+                            <img [src]="logo" class="img-fluid">
+                            </a>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-md-10 col-sm-9 col-8 main-menu">
+                        <nav class="nav-leftside">
+                        <ul class="nav-list">
+                            <li>
+                            <a id="search-bar">
+                                <i class="fa fa-search"></i>
+                            </a>
+                            </li>
+                            <li>
+                            <a class="cart-bar">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="cart-item">{{count}}</span>
+                            </a>
+                            </li>
+                            <li>
+                            <a id="right-menubar">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                            </li>
+                        </ul>
+                        </nav>
+                        <home-cartlist *ngIf="count>0" [contents]="contents" [cartItems]="cartItems" [total]="total"></home-cartlist>
+                        <a class="menubar" id="m-menubar">
+                        <i class="fa fa-ellipsis-v"></i>
+                        </a>
+                        <nav class="nav-manu">
+                            <ul class="nav-list">
+                                <li>
+                                    <a routerLink="/" class="active-menu">Home</a>
+                                </li>
+                                <ng-container *ngIf="menus.length > 0">
+                                    <li *ngFor="let m of menus;trackBy: trackByFn">
+                                        <a *ngIf="m.content_type==='External'; else otherTypeLg"
+                                            [attr.href]="m.content_url" target="_blank">{{m.label}} </a>
+                                        <ng-template #otherTypeLg>
+                                            <a (click)="changeTag(m)" [routerLink]="['/' + m.content_url]">{{m.label}} </a>
+                                        </ng-template>
+                                    </li>
+                                </ng-container>
+                                <!-- <ng-container *ngIf="menus.length < 1">
+                                    <li>
+                                        <a routerLink="/contact" class="active-menu"> Contact Us</a>
+                                    </li>
+                                    <li>
+                                        <a routerLink="/about" class="active-menu">About Us</a>
+                                    </li>
+                                </ng-container> -->
+                            </ul>
+                        </nav>
+                        <div id="sidbar-menu" class="box">
+                            <h4>Category</h4>
+                            <a id="closebar" class="closemenu"><i class="fa fa-close"></i></a>
+                            <ul class="togglemenu">
+                                <li> <a routerLink="" class="active-menu"> Home</a></li>
+                                <li *ngFor="let m of menus;trackBy: trackByFn">
+                                    <a *ngIf="m.content_type==='External'; else otherType" [attr.href]="m.content_url" target="_blank">{{m.label}} </a>
+                                    <ng-template #otherType>
+                                        <a (click)="changeTag(m)" [routerLink]="m.content_url">{{m.label}} </a>
+                                    </ng-template>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="right-sidebarmenu" class="toggle-box">
+            <div class="w-100 relative rightsidebar-body">
+                <a id="right-closebar" class="right-close">
+                    <i class="fa fa-long-arrow-right"></i>
+                </a>
+                <div class="w-100 sidebar-about" *ngIf="store_info">
+                    <h3>{{store_info.title}}</h3>
+                    <p>{{ contents.site_specific && contents.site_specific.others?.about_us ?
+                        contents.site_specific.others.about_us :''}} </p>
+                </div>
+                <div class="w-100 sidebar-menu">
+
+                    <ul>
+                        <li>
+                            <a routerLink="/about">
+                                <span>01.</span>About us</a>
+                        </li>
+                        <li>
+                            <a routerLink="/contact">
+                                <span>02.</span>Contact us</a>
+                        </li>
+                        <li>
+                            <a routerLink="/terms-and-conditions">
+                                <span>03.</span>Terms & Condition </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="w-100 sidebar-contact" *ngIf=" contents && contents.site_specific">
+                    <h3>Contact Information</h3>
+                    <ul>
+                        <li>
+              <span>
+                <i class="fa fa-phone"></i>
+              </span> {{ contents.site_specific && contents.site_specific.general?.phone ?
+                            contents.site_specific.general.phone :''}}
+                        </li>
+                        <li>
+              <span>
+                <i class="fa fa-envelope"></i>
+              </span> {{contents.site_specific &&
+                            contents.site_specific.general?.email?contents.site_specific.general.email :''}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="w-100 sidebar-social" *ngIf=" contents && contents.site_specific.social">
+                    <h3>Follow Us On Social</h3>
+                    <ul>
+                        <li *ngIf="contents.site_specific.social.facebook">
+                            <a class="facebook" href="{{contents.site_specific.social.facebook}}">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                        </li>
+                        <li *ngIf="contents.site_specific.social.twitter">
+                            <a class="twitter" href="{{contents.site_specific.social.twitter}}">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li *ngIf="contents.site_specific.social.googlePlus">
+                            <a class="google" href="{{contents.site_specific.social.googlePlus}}">
+                                <i class="fa fa-google-plus"></i>
+                            </a>
+                        </li>
+                        <li *ngIf="contents.site_specific.social.linkedin">
+                            <a class="linkdin" href="{{contents.site_specific.social.linkedin}}">
+                                <i class="fa fa-linkedin-in"></i>
+                            </a>
+                        </li>
+                        <li *ngIf="contents.site_specific.social.linkedin">
+                            <a class="instagram" href="{{contents.site_specific.social.instagram}}">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="search-body" class="search-box">
+                    <div class="w-100 relative rightsidebar-body">
+                        <a id="search-closebar" class="search-close">
+                            <i class="fa fa-times"></i>
+                        </a>
+                        <div class="row">
+                            <div class="col-md-6 offset-md-3 mt-2">
+                                <div class="input-group mb-3">
+                                    <search-item></search-item>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

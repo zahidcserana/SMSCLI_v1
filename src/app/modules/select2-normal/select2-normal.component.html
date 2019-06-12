@@ -1,0 +1,6 @@
+<div id="{{'select2_add_option_parent' + domId}}" style="min-width: 200px;">
+    <select class="form-control m-select2" id="{{'select2_add_option' + domId}}" name="param">
+        <option value="0">-Select {{placeholder}}-</option>
+        <option *ngFor="let v of data" [value]="v.id">{{v.name}}</option>
+    </select>
+</div>

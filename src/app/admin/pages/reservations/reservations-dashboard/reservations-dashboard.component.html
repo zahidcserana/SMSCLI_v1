@@ -1,0 +1,238 @@
+<div class="custom-alert" #hasCusAlert></div>
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+				Reservation Dashboard
+			</h3>
+			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+					<a routerLink="/admin/dashboard" class="m-nav__link m-nav__link--icon">
+						<i class="m-nav__link-icon la la-home"></i>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					<i class="fa fa-angle-right"></i>
+				</li>
+				<li class="m-nav__item">
+					<a class="m-nav__link">
+						<span class="m-nav__link-text">
+							Reservation Dashboard
+						</span>
+					</a>
+				</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content animated fadeIn">
+    <!--begin::Portlet-->
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-xl-7 col-lg-8 paragraph-body">
+                    <h2>Reservation</h2>
+                    <p>
+                        Here’s a short video about how to come up with product ideas for your business. You’ll learn how to use customer passions or pain points as a way of inspiring your brand
+                        Here’s a short video about how to come up with product ideas for your business. You’ll learn how to use customer passions or pain points as a way of inspiring your brand
+                        Here’s a short video about how to come up with product ideas for your business. You’ll learn how to use customer passions or pain points as a way of inspiring your brand
+                        Here’s a short video about how to come up with product ideas for your business. You’ll learn how to use customer passions or pain points as a way of inspiring your brand
+                    </p>
+                </div>
+                <div class="col-xl-5 col-lg-4 img-body">
+                    <!-- <div class="shap-div"> -->
+                        <img src="assets/img/home/shape5.svg" class="dashboard-img" style="max-width: 300px;">
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--begin::Portlet-->
+            <div class="row">
+            	<div class="col-xl-6 col-lg-12">
+            		<div class="m-portlet m-portlet--mobile m-widget14">
+	            		<div class="row align-items-center">
+	            			<div class="col-md-5">
+			                    <img src="assets/img/home/shape7.svg" style="width: 86%;">
+			                </div>
+			                <div class="col-md-7 paragraph-body">
+			                    <h2>Returned</h2>
+			                    <p>
+			                        Here’s a short video about how to come up with product ideas for your business. You’ll learn how to use customer passions or pain points as a way of inspiring your brand
+			                        Here’s a short video about how to come up with product ideas for your business. You’ll learn how to use customer passions or pain points as a way of inspiring your brand
+			                        Here’s a short video about how to come up with product ideas for your business. You’ll learn how to use customer passions or pain points as a way of inspiring your brand learn how to use customer passions or pain points as a way of inspiring your brand
+			                    </p>
+			                </div>
+			            </div>
+		            </div>
+            	</div>
+            	<div class="col-xl-6 col-lg-12">
+                    <div class="m-portlet m-portlet--full-height ">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        Reservation
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="m-portlet__head-tools">
+                                <div class="first-child-btn m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover" aria-expanded="true" style="margin-right: 10px;">
+                                    <button class="m-portlet__nav-link m-dropdown__toggle decoration-none btn m-btn--pill m-btn--air btn-light btn-sm">
+                                        <!-- <span class="btn-text" style="color:#5867dd;">Actions</span> -->
+                                        <span class="btn btn-brand btn-sm btn-sm  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill">
+                                            <i class="la la-plus m--hide"></i>
+                                            <i class="la la-angle-down"></i>
+                                        </span>
+                                    </button>
+                                    <div class="m-dropdown__wrapper">
+                                        <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                        <div class="m-dropdown__inner">
+                                            <div class="m-dropdown__body">
+                                                <div class="m-dropdown__content">
+                                                    <ul class="m-nav">
+                                                        <li class="m-nav__item">
+                                                            <a [routerLink]="['/admin/inventory/archive-1']" class="m-nav__link">
+                                                                <i class="m-nav__link-icon flaticon-share"></i>
+                                                                <span class="m-nav__link-text">
+                                                                    Archive
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="m-nav__item">
+                                                            <a [routerLink]="['/admin/inventory/pending-2']" class="m-nav__link">
+                                                                <i class="m-nav__link-icon flaticon-share"></i>
+                                                                <span class="m-nav__link-text">
+                                                                    Pending
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="m-nav__item">
+                                                            <a [routerLink]="['/admin/inventory/paid-3']" class="m-nav__link">
+                                                                <i class="m-nav__link-icon flaticon-share"></i>
+                                                                <span class="m-nav__link-text">
+                                                                    Paid
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="m-nav__item">
+                                                            <a [routerLink]="['/admin/inventory/rejected-4']" class="m-nav__link">
+                                                                <i class="m-nav__link-icon flaticon-share"></i>
+                                                                <span class="m-nav__link-text">
+                                                                    Rejected
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="m-nav__item">
+                                                            <a [routerLink]="['/admin/inventory/with-customer-5']" class="m-nav__link">
+                                                                <i class="m-nav__link-icon flaticon-share"></i>
+                                                                <span class="m-nav__link-text">
+                                                                    Customers
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="m-nav__item">
+                                                            <a [routerLink]="['/admin/inventory/returned-6']" class="m-nav__link">
+                                                                <i class="m-nav__link-icon flaticon-share"></i>
+                                                                <span class="m-nav__link-text">
+                                                                    Returned
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="m-nav__item">
+                                                            <a [routerLink]="['/admin/inventory/reserved-7']" class="m-nav__link">
+                                                                <i class="m-nav__link-icon flaticon-share"></i>
+                                                                <span class="m-nav__link-text">
+                                                                    Reserved
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="m-nav__item">
+                                                            <a [routerLink]="['/admin/inventory/shipped-8']" class="m-nav__link">
+                                                                <i class="m-nav__link-icon flaticon-share"></i>
+                                                                <span class="m-nav__link-text">
+                                                                    Shipped
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="m-nav__item">
+                                                            <a [routerLink]="['/admin/inventory/all']" class="m-nav__link">
+                                                                <i class="m-nav__link-icon flaticon-share"></i>
+                                                                <span class="m-nav__link-text">
+                                                                    View All
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body pb-0">
+                            <div class="row">
+                                <div class="col-xl-4 col-md-4 col-sm-6">
+                                    <a [routerLink]="['/admin/inventory/archive-1']">
+                                        <div class="menu-box text-center">
+                                            <i class="fa flaticon-pie-chart"></i>
+                                            <h5>Archive</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xl-4 col-md-4 col-sm-6">
+                                    <a [routerLink]="['/admin/inventory/pending-2']">
+                                        <div class="menu-box text-center">
+                                            <i class="fa flaticon-pie-chart"></i>
+                                            <h5>Pending</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xl-4 col-md-4 col-sm-6">
+                                    <a [routerLink]="['/admin/inventory/paid-3']">
+                                        <div class="menu-box text-center">
+                                            <i class="fa flaticon-pie-chart"></i>
+                                            <h5>Paid</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xl-4 col-md-4 col-sm-6">
+                                    <a [routerLink]="['/admin/inventory/rejected-4']">
+                                        <div class="menu-box text-center">
+                                            <i class="fa flaticon-pie-chart"></i>
+                                            <h5>Rejected</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xl-4 col-md-4 col-sm-6">
+                                    <a [routerLink]="['/admin/inventory/with-customer-5']">
+                                        <div class="menu-box text-center">
+                                            <i class="fa flaticon-pie-chart"></i>
+                                            <h5>Customers</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xl-4 col-md-4 col-sm-6">
+                                    <a [routerLink]="['/admin/inventory/returned-6']">
+                                        <div class="menu-box text-center">
+                                            <i class="fa flaticon-pie-chart"></i>
+                                            <h5>Returned</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+</div>
+
+
+
+
+
+

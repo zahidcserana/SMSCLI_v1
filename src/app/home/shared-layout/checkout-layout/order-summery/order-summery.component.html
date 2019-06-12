@@ -1,0 +1,77 @@
+<div class="row cart_btn pl-5 ">
+  <a *ngIf="token" [routerLink]="['/','cart',token]"  class="mb-3  col-md-4  btn theme-btn" style="margin: 5px;">{{ contents.site_specific.checkout_info.btn_back}}</a>
+</div>
+
+<div class="row order_summery mb-5 m-1" *ngIf="cart && cartItems.length">
+  <H5>{{ contents.site_specific.checkout_info.title_order_summary}}</H5>
+  <div class="col-md-12 ">
+    <div *ngFor="let cart of cartItems" class="order-list">
+      <div class="order-img">
+        <img class="img-fluid img-avatar img-thumbnail" onError="this.src='./assets/img/home/product-image-placeholder.jpg';" *ngIf="cart.product.images.length && cart.product.images[0].image_small!=''"
+          src="{{img_url}}{{cart.store_id}}/{{cart.product.id}}/{{cart.product.images[0].image_small}}">
+        <img class="img-fluid img-avatar img-thumbnail" *ngIf="!cart.product.images.length || !cart.product.images[0].image_small"
+          src="./assets/img/home/product-image-placeholder.jpg" alt="Product profile" />
+      </div>
+      <div class="order-product_details">
+        <div class="name">{{cart.product.name}}</div>
+        <div class="bottom_info">
+          <p class="qty">Qty: {{cart.quantity}}</p>
+          <p class="tax">{{ contents.site_specific.cart.th_sales_tax}}: {{cart.sales_tax}}%</p>
+          <p class="order-product_price">Price: ${{cart.sub_total | number:'1.2-2' }}</p>
+        </div>
+        <div class="bottom_info" *ngIf="cart.driving_license_required">
+          <p style="font-weight: bold"> Driving License required *</p>
+        </div>
+        <div class="bottom_info mt-2" *ngIf="cart.deposit_amount>0">
+          <p class="deposit">{{ contents.site_specific.cart.lbl_total_deposite}} : ${{cart.deposit_amount | number:'1.2-2'}}
+            <span *ngIf="cart.deposite_tax==='true'">
+              <small>(Sales Tax Included)</small>
+            </span>
+          </p>
+        </div>
+      </div>
+      <div class="order-product_price">
+        <!--  -->
+      </div>
+    </div>
+  </div>
+  <div class="mt-4 pt-4 pb-3 mb-3 col-md-12">
+    <div class="price_show">
+      <p>{{ contents.site_specific.cart.th_subtotal}} :
+        <span class="cart_p">${{ cart.sub_total | number:'1.2-2'}}</span>
+      </p>
+    </div>
+    <div class="price_show">
+      <p>{{ contents.site_specific.cart.lbl_shipping}} :
+        <span class="cart_p">${{cart.delivery_charge | number:'1.2-2'}}</span>
+      </p>
+    </div>
+    <div class="price_show">
+      <p>{{ contents.site_specific.cart.lbl_discount}} :
+        <span class="cart_p">${{ cart.total_discount | number:'1.2-2'}}</span>
+      </p>
+    </div>
+    <div class="price_show">
+      <p>{{ contents.site_specific.cart.lbl_tax}} :
+        <span class="cart_p">${{ cart.tax | number:'1.2-2'}}</span>
+      </p>
+    </div>
+    <div class="price_show">
+      <p>Delivery Tax :
+        <span class="cart_p">${{ cart.delivery_tax | number:'1.2-2'}}</span>
+      </p>
+    </div>
+    <div class="price_show">
+      <p>{{ contents.site_specific.cart.lbl_total_deposite}} :
+        <span class="cart_p">${{cart.deposit_amount | number:'1.2-2'}}</span>
+      </p>
+    </div>
+
+    <div class="price_show">
+      <h4>{{ contents.site_specific.cart.lbl_total}} :
+        <span class="cart_p">${{cart.total | number : '1.2-2'}}</span>
+      </h4>
+    </div>
+  </div>
+
+</div>

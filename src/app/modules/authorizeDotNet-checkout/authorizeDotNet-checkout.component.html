@@ -1,0 +1,74 @@
+<div id="accordion">
+  <div class="card">
+
+
+    <div id="collapseOne" class="collapse show">
+      <form [formGroup]="form" (submit)="submitAuthorizeDotNet()">
+        <div class="form-group" id="cardnumber">
+          <label for="card-number">{{ contents.site_specific.checkout_payment.lbl_card_number}}</label>
+          <input id="cardName" type="text" numberOnly formControlName="card_number" class="form-control cardnumber">
+          <img [src]="cardTypeimg" class="credicardImg">
+        </div>
+        
+        <div class="row">
+          <label for="" class="col-md-12">{{ contents.site_specific.checkout_payment.lbl_expiration_data}}</label>
+          <div class="form-group col-md-6 ">
+            <select (change)="selectExpireMonth($event)"  class="form-control">
+              <option [value]="month.value" *ngFor="let month of months">{{month.text}}</option>
+
+            </select>
+          </div>
+          <div class="form-group col-md-6 ">
+            <select id="EventXCardYear" (change)="selectExpireYear($event)" class="form-control">
+              <option [value]="year.value" *ngFor="let year of years">{{year.text}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cvv_number">{{ contents.site_specific.checkout_payment.lbl_cvv}}</label>
+          <input maxlength="3" numberOnly formControlName="cvv" type="text" placeholder="CVV Number " class="form-control">
+        </div>
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label>{{ contents.site_specific.checkout_info.lbl_first_name}}</label>
+            <input type="text" formControlName="first_name" placeholder="First Name" class="form-control">
+          </div>
+          <div class="col-md-6 form-group">
+            <label>{{ contents.site_specific.checkout_info.lbl_lastname}}</label>
+            <input type="text" formControlName="last_name" placeholder="Last Name" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>{{ contents.site_specific.checkout_info.lbl_address}}</label>
+          <input type="text" formControlName="billing_address" placeholder="Address" class="form-control">
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label>{{ contents.site_specific.checkout_info.lbl_city}}</label>
+            <input type="text" formControlName="billing_city" placeholder="City" class="form-control">
+          </div>
+          <div class="form-group col-md-6">
+            <label>{{ contents.site_specific.checkout_info.lbl_state}}</label>
+            <input type="text" formControlName="billing_state" placeholder="State" class="form-control">
+          </div>
+          <div class="form-group col-md-6">
+            <label>{{ contents.site_specific.checkout_info.lbl_zipcode}}</label>
+            <input type="text" formControlName="billing_post_code" placeholder="Post Code " class="form-control">
+          </div>
+          <div class="form-group col-md-6">
+            <label>{{ contents.site_specific.checkout_info.lbl_country}}</label>
+            <input type="text" formControlName="billing_country" placeholder="Country" class="form-control">
+          </div>
+        </div>
+
+        <div class="row justify-content-center mt-5 mb-5 " style="position: relative;">
+          <div *ngIf="loader; else buttonShow" class="m-loader" [ngClass]="loaderColor" style="width: 30px; display: inline-block;"></div>
+          <ng-template #buttonShow>
+            <button [disabled]="form.invalid || !validCard " class="btn col-md-4 theme-btn" [ngClass]="btnColor">{{ contents.site_specific.checkout_payment.btn_continue}}</button>
+          </ng-template>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,85 @@
+<div class="custom-alert" #hasCusAlert></div>
+  
+  <div class="m-content product-sidebar-related">
+      <!--begin::Portlet-->
+      <h5 class="colorPurpel">Related Products</h5>
+      <div>
+          <div class="m-portlet__body">
+            <form class="m-form m-form--fit m-form--label-align-right row">
+              <div class="m-portlet__body col-md-9 col-sm-6">
+                <div class="form-group m-form__group row">
+                  <label class="col-3 col-form-label" for="exampleSelect1">
+                      Select Product
+                  </label>
+                  <select2-ajax class="col-9" [cache]="true" [placeholder]="'Select One'" [url]="url"
+                   [prop]="'name'" (changeValue)="changeValue($event)"></select2-ajax>
+                </div>
+              </div>
+              <div class="m-portlet__foot m-portlet__foot--fit text-right col-md-3 col-sm-6">
+                  <div *ngIf="loader; else button" class="m-loader m-loader--brand"
+                            style="width: 30px; display: inline-block;"></div>
+                  <ng-template #button>
+                    <button type="reset" class="btn btn-brand btn-sm" [disabled]="!selectedId.related_product_id" (click)="submitSearch()">Submit</button>
+                  </ng-template>
+                  
+              </div>
+            </form>
+              <!--begin::Section-->
+            <div class="m-section">
+              <div class="m-section__content price-table">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>
+                        Product Image
+                      </th>
+                      <th>
+                        Product Name
+                      </th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="productList.length>0; else noData">
+                    <tr *ngFor="let rel of productList; let i=index; trackBy:tarckProduct">
+                      <td>
+                        <img *ngIf="rel.images && rel.images?.length>0; else alterImage" class="img-fluid img-avatar img-thumbnail" src="{{img_url + store_id + '/' + rel.id + '/' + rel.images[0]?.image_original}}" onError="this.src='./assets/img/home/product-image-placeholder.jpg';">
+                        <ng-template #alterImage>
+                          <img class="img-fluid img-avatar img-thumbnail" src="./assets/img/home/product-image-placeholder.jpg" alt="Product Image" width="100"/>
+                        </ng-template>
+                      </td>
+                      <td>
+                        <a (click)="loadDetails(rel.id)" routerLink="{{'/admin/inventory/' + rel.id + '/details'}}">{{rel.name}}</a>
+                      </td>
+                      <td>        
+                        <a id="m_quick_sidebar_toggle" (click)="deleteProduct(rel.id,i)"
+                          class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                          <i class="la la-trash"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <ng-template #noData>
+                    <tbody>
+                      <tr>
+                        <td colspan="3">
+                          <h5 class="text-center">
+                            No Product Found
+                          </h5>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </ng-template>
+                </table>
+              </div>
+            </div>
+        <!--end::Section-->
+          </div>
+      </div>
+      <!--end::Portlet-->
+    
+  
+  
+  </div>
+
+
+  

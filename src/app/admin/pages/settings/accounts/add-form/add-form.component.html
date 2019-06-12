@@ -1,0 +1,78 @@
+<section style="padding-top: 35px;">
+  <div class="row">
+    <div class="col-sm-6">
+      <h4 *ngIf="edit; else heading">Update Account</h4>
+      <ng-template #heading>
+        <h4>Add Account</h4>
+      </ng-template>
+      <form class="mt-3 m-form m-form--fit m-form--label-align-right"  #f="ngForm">
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="type">Type</label>
+              <select id="type" class="form-control m-select" name="type"  [(ngModel)] ="account.type" required>
+                <option value="1"> Income </option>
+                <option value="2"> Expense </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="amount">
+                Amount
+              </label>
+              <input class="form-control m-input" id="amount" type="text" placeholder="Enter Amount" #amount="ngModel" name="amount" [(ngModel)] ="account.amount" autocomplete="off" required>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="amount">
+                Description
+              </label>
+              <input class="form-control m-input" id="description" type="text" placeholder="Enter Description" #description="ngModel" name="description" [(ngModel)] ="account.description" autocomplete="off" required>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="status"> Status</label>
+              <select id="status" class="form-control m-select" name="status" [(ngModel)] ="account.status">
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="m-portlet__foot m-portlet__foot--fit">
+          <div class="m-form__actions m-form__actions" style="padding: 20px 0px;">
+            <div class="m-loader m-loader--brand"  *ngIf="loader; else btnSubmit" style="width: 30px; padding-left: 30px; display: inline-block;"></div>
+
+            <ng-template #btnSubmit>
+              <button type="button" class="btn btn-brand"  *ngIf="edit; else addbtn" (click)="update()">
+                <i class="fa fa-save"></i> <span style="padding-left:10px;">Update</span>
+              </button>
+              <ng-template #addbtn>
+                <button type="button" class="btn btn-brand" [disabled]="!f.form.valid" (click)="submit()">
+                  <i class="fa fa-save"></i> <span style="padding-left:10px;">Submit</span>
+                </button>
+              </ng-template>
+            </ng-template>
+
+            <!--<ng-template #btnSubmit>
+              <button type="submit" class="btn btn-brand" (click)="submit()">
+                <i class="fa fa-save"></i>
+                <span style="padding-left:10px;">Submit</span>
+              </button>
+            </ng-template>-->
+          </div>
+        </div>
+
+      </form>
+
+
+    </div>
+  </div>
+</section>

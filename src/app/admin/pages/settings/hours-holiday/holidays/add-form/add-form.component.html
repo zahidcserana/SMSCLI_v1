@@ -1,0 +1,76 @@
+<div class="m-portlet">
+  <div class="m-portlet__body">
+    <div style="border-bottom: 1px solid #e7ecf1">
+      <h4>Add Holidays</h4>
+      <p>Add holidays to prevent rentals on starting these day(s).</p>
+    </div>
+
+    <form class="m-form m-form--fit m-form--label-align-right" #form="ngForm" (ngSubmit)="submit()" style="padding-bottom: 0px;">
+      <div class="row">
+        <div class="col-md-6 form-group m-form__group">
+          <label for="" class="colorPurpel">Start Date</label>
+          <div class="input-group date">
+            <input type="text" class="form-control m-input" id="holiday-date-start" placeholder="-Select Date-"
+              readonly />
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <i class="la la-calendar-check-o"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 form-group m-form__group">
+          <label class="colorPurpel">
+            Start Time
+          </label>
+          <div class="input-group timepicker">
+            <input type="text" class="form-control m-input" id="holiday-time-start" readonly placeholder="-Select Time-">
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <i class="la la-clock-o"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 form-group m-form__group">
+          <label for="" class="colorPurpel">End Date</label>
+          <div class="input-group date">
+            <input type="text" class="form-control m-input" id="holiday-date-end" placeholder="-Select Date-"
+              readonly />
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <i class="la la-calendar-check-o"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 form-group m-form__group">
+          <label class="colorPurpel">
+            End Time
+          </label>
+          <div class="input-group timepicker">
+            <input type="text" class="form-control m-input" id="holiday-time-end" readonly placeholder="-Select Time-">
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <i class="la la-clock-o"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 form-group m-form__group">
+          <label for="title">
+            Name
+          </label>
+          <input type="text" autocomplete="off" class="form-control m-input" placeholder="Name" id="title" name="name"
+            #name="ngModel" [(ngModel)]="holiday.description">
+        </div>
+        <div class="col-12 form-group text-right" style="margin-top:20px;">
+          <button type="submit" class="btn btn-brand" [ngClass]="{'m-loader m-loader--light m-loader--right': loading}">
+            Submit
+          </button>
+          <button class="btn btn-danger" *ngIf="edit" (click)="resetAll()" style="margin-left: 10px;">Reset</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

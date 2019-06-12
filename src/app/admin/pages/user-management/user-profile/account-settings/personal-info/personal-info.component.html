@@ -1,0 +1,176 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="animated fadeIn personal-info">
+  <h4 class="colorPurpel info-heading">Personal Info</h4>
+
+  <form class="m-form m-form--fit m-form--label-align-right row">
+    <div class="form-group col-sm-6 col-xl-4">
+      <label for="fname">
+        First Name
+      </label>
+      <input type="text" class="form-control m-input" id="fname" name="fname" [(ngModel)]="user.first_name" autocomplete="off">
+    </div>
+    <div class="form-group col-sm-6 col-xl-4">
+      <label for="lname">
+        Last Name
+      </label>
+      <input type="text" class="form-control m-input" id="lname" name="lname" [(ngModel)]="user.last_name" autocomplete="off">
+    </div>
+    <div class="form-group col-sm-6 col-xl-4">
+      <label for="email">
+        Email
+      </label>
+      <input type="email" class="form-control m-input" id="email" name="email" [(ngModel)]="user.email" autocomplete="off">
+    </div>
+    <div class="form-group col-sm-6 col-xl-4">
+      <label for="usertype">
+          User Type
+      </label>
+      <select class="form-control m-input" id="usertype" name="userType" [(ngModel)]="user.user_type_id">
+        <option value='null'>-Select-</option>
+        <option value="3">Store Admin</option>
+        <option value="4">Cash Register</option>
+      </select>
+    </div>
+    <div class="form-group col-sm-6 col-xl-4">
+      <label for="phone">
+        Phone
+      </label>
+      <input type="text" class="form-control m-input" id="phone" name="phone" [(ngModel)]="user.primary_addres.phone" autocomplete="off">
+    </div>
+    <div class="form-group col-sm-6 col-xl-4">
+      <label for="mobile">
+        Mobile No
+      </label>
+      <input type="text" class="form-control m-input" id="mobile" name="mobile" [(ngModel)]="user.primary_addres.mobile" autocomplete="off">
+    </div>
+    <div class="form-group col-sm-6 col-xl-4">
+      <label for="Merchant">
+          Status
+      </label>
+      <select class="form-control m-input" id="Merchant" name="status" [(ngModel)]="user.status">
+        <option value='null'>-Select-</option>
+        <option value="1">Active</option>
+        <option value="0">Inactive</option>	
+      </select>
+    </div>
+    <div class="form-group col-12">
+      <label for="bio">
+          Bio
+      </label>
+      <textarea class="form-control m-input" name="bio" id="bio" cols="30" rows="5" [(ngModel)]="user.about"></textarea>
+    </div>
+    <div class="form-group col-12">
+      <div *ngIf="loader; else button" class="m-loader m-loader--brand" style="width: 30px; display: inline-block;"></div>
+			<ng-template #button>
+          <button type="button" (click)="updateUserInfo()"
+          class="btn btn-brand btn-sm">Save Change</button>
+			</ng-template>
+    </div>
+  </form>
+
+  <div class="address-section">
+    <h4 class="info-heading">
+      Address
+      <span *ngIf="!add_address || edit " class="btn btn-outline-metal m-btn m-btn--icon btn-lg m-btn--icon-only m-btn--pill m-btn--air float-right"
+      (click)="initAddress()" >
+        <i class="fa fa-plus"></i>
+      </span>
+    </h4>
+    <form class="row" *ngIf="add_address" #addressForm="ngForm">
+      <div class="form-group col-sm-12">
+        <label for="add-ty">
+          Address Type*
+        </label>
+        <input type="text" class="form-control m-input" id="add-ty" name="address-Type" [(ngModel)]="address.type" required autocomplete="off">
+      </div>
+      <div class="form-group col-sm-12">
+        <label for="line">
+        Address Line*
+        </label>
+        <textarea type="text" class="form-control m-input" id="line" name="address-line" [(ngModel)]="address.address_line1" required autocomplete="off"></textarea>
+      </div>
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="phone">
+          Phone*
+        </label>
+        <input type="text" class="form-control m-input" id="phone" name="address-phone" [(ngModel)]="address.phone" required autocomplete="off">
+      </div>
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="mobile">
+          Mobile No
+        </label>
+        <input type="text" class="form-control m-input" id="mobile" name="address-mobile" [(ngModel)]="address.mobile" autocomplete="off">
+      </div>
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="city">
+          City*
+        </label>
+        <input type="text" class="form-control m-input" id="city" name="address-city" [(ngModel)]="address.city" required autocomplete="off">
+      </div>
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="state">
+          State
+        </label>
+        <input type="text" class="form-control m-input" id="state" name="address-state" [(ngModel)]="address.state" autocomplete="off">
+      </div>
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="zip">
+          Zip Code
+        </label>
+        <input type="text" class="form-control m-input" id="zip" name="address-zip" [(ngModel)]="address.zipcode" autocomplete="off">
+      </div>
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="country">
+          Country
+        </label>
+        <input type="text" class="form-control m-input" id="country" name="address-country" [(ngModel)]="address.country" autocomplete="off">
+      </div>
+      <div class="form-group col-sm-12 col-md-6">
+        <label class="m-checkbox">
+				<input type="checkbox" name="main" [(ngModel)]="address.is_primary" #main="ngModel">
+          Is Main?
+					<span></span>
+				</label>
+      </div>
+      <div class="form-group col-12">
+        <div *ngIf="loaderA; else buttonA" class="m-loader m-loader--brand" style="width: 30px; display: inline-block;"></div>
+        <ng-template #buttonA>
+          <button *ngIf="edit; else submit" type="button" class="btn btn-brand btn-sm" (click)="updateAddress()">Update</button>
+          <ng-template #submit>
+            <button type="button" class="btn btn-brand btn-sm" [disabled]="!addressForm.form.valid" (click)="submitAddress(addressForm)">Save</button>
+          </ng-template>
+          <button type="reset" class="btn btn-danger btn-sm" (click)="closeAddress()"
+            style="margin-left: 10px;">Cancel</button>
+        </ng-template>
+      </div>
+    </form>
+  </div>
+
+  <div class="address-list">
+    <div class="row" *ngFor="let adr of addressList; let i='index'">
+      <div class="col marker" >
+        <i class="fa fa-map-marker" style="font-size: 2rem;"></i>
+      </div>
+      <div class="col-9">
+        <h5>{{adr.type}}</h5>
+        <p>{{adr.address_line1}}</p>
+        <p>{{adr.city}} {{adr.state? ' | '+adr.state:''}} {{adr.zipcode? ' | '+adr.zipcode:''}}
+            {{adr.country? ' | '+adr.country:''}}</p>
+      </div>
+      <div class="col action">
+        <a id="m_quick_sidebar_toggle" (click)="editAddress(adr,i)"
+          class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill">
+          <i class="fa fa-edit"></i>
+        </a>
+        <a id="m_quick_sidebar_toggle" (click)="deleteAddress(adr.id,i)"
+          class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+          <i class="fa fa-trash"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+    
+

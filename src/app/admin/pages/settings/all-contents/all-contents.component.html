@@ -1,0 +1,104 @@
+<div class="m-subheader">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        Contents
+      </h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+        <li class="m-nav__item m-nav__item--home">
+          <a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+        <li class="m-nav__separator">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+          <a class="m-nav__link">
+            <span class="m-nav__link-text">
+              Settings
+            </span>
+          </a>
+        </li>
+        <li class="m-nav__separator" style="padding-left: 10px">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+          <a class="m-nav__link">
+            <span class="m-nav__link-text">
+              Contents
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content animated fadeIn">
+  <div class="m-portlet m-portlet--tabs">
+    <div class="m-portlet__head">
+      <div class="m-portlet__head-tools">
+        <ul class="nav nav-tabs m-tabs-line m-tabs-line--dark" role="tablist">
+          <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link" routerLink="./store-logo" routerLinkActive="active" role="tab">
+              <i class="la la-pagelines"></i>
+              Store Logo
+            </a>
+          </li>
+
+          <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link" routerLink="./layout" routerLinkActive="active" role="tab">
+              <i class="la la-files-o"></i>
+              Layout
+            </a>
+          </li>
+
+          <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link" routerLink="./banner" routerLinkActive="active" role="tab">
+              <i class="la la-image"></i>
+              Banners
+            </a>
+          </li>
+          <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link" routerLink="./pages" routerLinkActive="active" role="tab">
+              <i class="la la-copy"></i>
+              Page Contents
+            </a>
+          </li>
+          <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link" routerLink="./site-specific" routerLinkActive="active" role="tab">
+              <i class="la la-link"></i>
+              Site Contents
+            </a>
+          </li>
+          <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link" routerLink="./grid" routerLinkActive="active" role="tab">
+              <i class="la la-th-large"></i>
+              Grids
+            </a>
+          </li>
+
+          <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link" routerLink="./time-zone" routerLinkActive="active" role="tab">
+              <i class="la la-thumb-tack"></i>
+              Time Zone
+            </a>
+          </li>
+
+          <!-- <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link" routerLink="./custom-content" routerLinkActive="active" role="tab">
+              <i class="la la-code-fork"></i>
+              Custom
+            </a>
+          </li> -->
+        </ul>
+      </div>
+    </div>
+    <div class="m-portlet__body">
+      <div class="tab-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

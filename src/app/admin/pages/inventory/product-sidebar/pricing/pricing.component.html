@@ -1,0 +1,629 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-content product-sidebar-pricing" *ngIf="!noData">
+  <h5 class="colorPurpel" *ngIf="!unassign" style="padding: 5px 0px;">Selected Variant:</h5>
+  <div class="m-portlet__body add-image" style="padding-bottom: 20px;" *ngIf="!unassign">
+    <div class="row">
+      <div class="col-sm-6">
+        <select class="form-control m-input" name="attribute" [(ngModel)]="selectedId.variants_products_id" (change)="attributeChange()">
+          <option *ngFor="let a of attributeList" [value]="a.id">
+            {{a.chain}}
+          </option>
+        </select>
+      </div>
+      <div class="col-sm-6">
+        <label class="m-checkbox">
+          <input type="checkbox" name="all" [(ngModel)]="applyAll">
+            Apply For All
+          <span></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div *ngIf="listLoader" class="table-load m-loader m-loader--brand" style="z-index: 999;"></div> -->
+  <!--begin::Portlet-->
+  <h5 class="colorPurpel">Update Price Related Information</h5>
+  <div class="m-portlet--mobile">
+    <form #formInfo = "ngForm">
+      <div class="m-portlet__body">
+        <div class="row" style="padding:0px 15px;">
+          <div class="col-lg-6">
+            <div class="form-group m-form__group ">
+              <label for="purchage">
+                  Purchase Date
+              </label>
+              <input type="text" id="purchage" class="form-control m-input" 
+                placeholder="yyyy-mm-dd" id="purchase-date" (click)="dateChange()" autocomplete="off" readonly/>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group m-form__group">
+              <label for="cost">
+                Purchase Cost
+              </label>
+              <div class="input-group m-input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="table-cost-addon">
+                    $
+                  </span>
+                </div>
+                <input id="cost" numberOnly class="form-control m-input" type="text" name="cost" [(ngModel)]="priceInfo.cost"
+                placeholder="0.00" autocomplete="off">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="table-cost-addon">
+                    USD
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group m-form__group">
+              <label for="lwd">
+                Loss/Damage Waiver Amount
+              </label>
+              <div class="input-group m-input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="table-cost-addon">
+                    $
+                  </span>
+                </div>
+                <input id="lwd" numberOnly class="form-control m-input" type="text" name="ldw_tax" [(ngModel)]="priceInfo.ldw_tax"
+                placeholder="0.00" autocomplete="off">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="table-cost-addon">
+                    USD
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group m-form__group">
+              <label for="sale_tax">
+                Sales Tax
+              </label>
+              <div class="input-group m-input-group">
+                <input id="sale_tax" numberOnly class="form-control m-input" type="text" name="sale_tax" [(ngModel)]="priceInfo.sales_tax"
+                placeholder="0.00" autocomplete="off">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="table-cost-addon">
+                    %
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group m-form__group">
+              <label for="deposit">
+                Deposit Amount
+              </label>
+              <div class="input-group m-input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="table-cost-addon">
+                    $
+                  </span>
+                </div>
+                <input numberOnly class="form-control m-input" name="deposit" [(ngModel)]="priceInfo.deposit_amount"
+                  type="text" placeholder="0.00" autocomplete="off">
+                <div class="input-group-append">
+                  <small class="input-group-text" id="table-cost-addon">
+                    USD
+                  </small>
+                </div>
+              </div>
+            </div>
+            <label class="m-checkbox" >
+              <input type="checkbox" name="deposit_tax" [(ngModel)]="priceInfo.deposit_tax">
+                Apply sales tax on deposit amount 
+              <span></span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="m-portlet__foot m-portlet__foot--fit">
+        <div class="m-form__actions" style="padding-left: 15px;">
+          <div *ngIf="loaderInfo; else buttonInfo" class="m-loader m-loader--brand" 
+            style="width: 30px; display: inline-block;"></div>
+          <ng-template #buttonInfo>
+            <button type="button" class="btn btn-brand" [disabled]="!formInfo.form.valid" (click)="addPriceInfo(formInfo)">Submit</button> 
+          </ng-template>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="priceForm" class="animated fadeIn" style="padding-top: 20px;">
+    <h5 class="colorPurpel" *ngIf="edit; else addHead">Update Price 
+    </h5>
+    <ng-template #addHead>
+      <h5 class="colorPurpel">Add Price</h5>
+    </ng-template>
+
+    <div class="m-portlet--mobile">
+      <form #formPric = "ngForm">
+        <div class="m-portlet__body">
+          <div class="row">
+            <div class="col-12" style="border: 0px;">
+              <div class="m-portlet__body" style="padding: 10px 0px;">
+                <!--begin::Section-->
+                <div class="m-section" style="margin-bottom: 0px;">
+                  <div class="m-section__content table-responsive cost-table">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>
+                            
+                          </th>
+                          <th>
+                            Price:
+                          </th>
+                          <th>
+                            Durations:
+                          </th>
+                          <!-- <th>
+                            Each Additional:
+                          </th>
+                          <th>
+                            Hour(s) for $:
+                          </th> -->
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="onePrice; else baseJoin">
+                        <tr >
+                          <td>
+                            <div class="form-group m-form__group">
+                              <select class="form-control m-select" #select [(ngModel)]="selected" name="type" [disabled]="edit">
+                                <option value="0">-Select Type-</option>
+                                <option value="1">Hourly</option>
+                                <option value="2">Daily</option>
+                                <option value="3">Weekly</option>
+                              </select>
+                            </div>
+                          </td>
+                          <td [ngSwitch]="select.value">
+                            <div class="form-group m-form__group">
+                              <div class="input-group m-input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="table-cost-addon">
+                                    $
+                                  </span>
+                                </div>
+                                <ng-template [ngSwitchCase]="'0'">
+                                  <input readonly class="form-control m-input" type="text" placeholder="0.00" autocomplete="off">
+                                </ng-template>
+                                <ng-template [ngSwitchCase]="'1'">
+                                  <input numberOnly class="form-control m-input" name="hourly_price" [(ngModel)]="price.hourly_price"
+                                  type="text" placeholder="0.00" autocomplete="off">
+                                </ng-template>
+                                <ng-template [ngSwitchCase]="'2'">
+                                  <input numberOnly class="form-control m-input" name="daily_price" [(ngModel)]="price.daily_price"
+                                  type="text" placeholder="0.00" autocomplete="off">
+                                </ng-template>
+                                <ng-template [ngSwitchCase]="'3'">
+                                  <input numberOnly class="form-control m-input" name="weekly_price" [(ngModel)]="price.weekly_price"
+                                  type="text" placeholder="0.00"autocomplete="off">
+                                </ng-template>
+                                <div class="input-group-append">
+                                  <small class="input-group-text" id="table-cost-addon">
+                                    USD
+                                  </small>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td [ngSwitch]="select.value">
+                            <div class="form-group m-form__group">
+                              <div class="input-group m-input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="table-cost-addon">
+                                    For
+                                  </span>
+                                </div>
+                                <ng-template [ngSwitchCase]="'0'">
+                                  <input readonly class="form-control m-input" type="text" placeholder="0" autocomplete="off">
+                                </ng-template>
+                                <ng-template [ngSwitchCase]="'1'">
+                                  <input numberOnly class="form-control m-input" name="hourly_duration" [(ngModel)]="price.hourly_duration"
+                                  type="text" placeholder="0" autocomplete="off">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      Hour(s)
+                                    </span>
+                                  </div>
+                                </ng-template>
+                                <ng-template [ngSwitchCase]="'2'">
+                                  <input numberOnly class="form-control m-input" name="daily_duration" [(ngModel)]="price.daily_duration"
+                                  type="text" placeholder="0" autocomplete="off">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      Day(s)
+                                    </span>
+                                  </div>
+                                </ng-template>
+                                <ng-template [ngSwitchCase]="'3'">
+                                  <input numberOnly class="form-control m-input" name="weekly_duration" [(ngModel)]="price.weekly_duration"
+                                  type="text" placeholder="0" autocomplete="off">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      Week(s)
+                                    </span>
+                                  </div>
+                                </ng-template>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <ng-template #baseJoin>
+                        <tbody>
+
+                          <tr>
+                            <th scope="row">
+                              Retail (for sale) price
+                            </th>
+                            <td>
+                              <div class="form-group m-form__group">
+                                <div class="input-group m-input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      $
+                                    </span>
+                                  </div>
+                                  <input numberOnly class="form-control m-input" name="price" [(ngModel)]="price.price"
+                                  type="text" placeholder="0.00" autocomplete="off">
+                                  <div class="input-group-append">
+                                    <small class="input-group-text" id="table-cost-addon">
+                                      USD
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <th scope="row">
+                              Hourly
+                            </th>
+                            <td>
+                              <div class="form-group m-form__group">
+                                <div class="input-group m-input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      $
+                                    </span>
+                                  </div>
+                                  <input numberOnly class="form-control m-input" name="hourly_price" [(ngModel)]="price.hourly_price"
+                                  type="text" placeholder="0.00" autocomplete="off">
+                                  <div class="input-group-append">
+                                    <small class="input-group-text" id="table-cost-addon">
+                                      USD
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="form-group m-form__group">
+                                <div class="input-group m-input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      For
+                                    </span>
+                                  </div>
+                                  <input numberOnly class="form-control m-input" name="hourly_duration" [(ngModel)]="price.hourly_duration"
+                                  type="text" placeholder="0" autocomplete="off">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      Hour(s)
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <!-- <td>
+                              <div class="form-group m-form__group">
+                                <div class="input-group m-input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      $
+                                    </span>
+                                  </div>
+                                  <input class="form-control m-input" type="text" placeholder="0.00">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      USD
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </td> -->
+                          </tr>
+                          
+                          <tr>
+                            <th scope="row">
+                              Daily
+                            </th>
+                            <td>
+                              <div class="form-group m-form__group">
+                                <div class="input-group m-input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      $
+                                    </span>
+                                  </div>
+                                  <input numberOnly class="form-control m-input" name="daily_price" [(ngModel)]="price.daily_price"
+                                  type="text" placeholder="0.00" autocomplete="off">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      USD
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="form-group m-form__group">
+                                <div class="input-group m-input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      For
+                                    </span>
+                                  </div>
+                                  <input numberOnly class="form-control m-input" name="daily_duration" [(ngModel)]="price.daily_duration"
+                                  type="text" placeholder="0" autocomplete="off">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      Day(s)
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <!-- <td>
+                              <div class="form-group m-form__group">
+                                <div class="input-group m-input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      $
+                                    </span>
+                                  </div>
+                                  <input class="form-control m-input" type="text" placeholder="0.00">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      USD
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="form-group m-form__group">
+                                <div class="input-group m-input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      $
+                                    </span>
+                                  </div>
+                                  <input class="form-control m-input" type="text" placeholder="0.00">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      USD
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </td> -->
+                          </tr>
+                          
+                          <tr>
+                            <th scope="row">
+                              Weekly
+                            </th>
+                            <td>
+                              <div class="form-group m-form__group">
+                                <div class="input-group m-input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      $
+                                    </span>
+                                  </div>
+                                  <input numberOnly class="form-control m-input" name="weekly_price" [(ngModel)]="price.weekly_price"
+                                  type="text" placeholder="0.00"autocomplete="off">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      USD
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="form-group m-form__group">
+                                <div class="input-group m-input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      For
+                                    </span>
+                                  </div>
+                                  <input numberOnly class="form-control m-input" name="weekly_duration" [(ngModel)]="price.weekly_duration"
+                                  type="text" placeholder="0" autocomplete="off">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      Week(s)
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <!-- <td>
+                              <div class="form-group m-form__group">
+                                <div class="input-group m-input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      $
+                                    </span>
+                                  </div>
+                                  <input class="form-control m-input" type="text" placeholder="0.00">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      USD
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="form-group m-form__group">
+                                <div class="input-group m-input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      $
+                                    </span>
+                                  </div>
+                                  <input class="form-control m-input" type="text" placeholder="0.00">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text" id="table-cost-addon">
+                                      USD
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </td> -->
+                          </tr>
+                        </tbody>
+                      </ng-template>
+                    </table>
+                  </div>
+                </div>
+                <!--end::Section-->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+          <div class="m-form__actions" style="padding-left: 15px;">
+            <div *ngIf="loader; else button" class="m-loader m-loader--brand" 
+              style="width: 30px; display: inline-block;"></div>
+            <ng-template #button>
+              <button type="button" class="btn btn-brand" [disabled]="!formPric.form.valid"
+                *ngIf="edit; else add" (click)="updatePrice(formPric)">
+                Update
+              </button> 
+              <ng-template #add>
+                <button type="button" class="btn btn-brand" [disabled]="!formPric.form.valid" (click)="savePrice(formPric)">
+                  Save
+                </button>
+              </ng-template>
+              <button type="button" class="btn btn-danger" (click)="resetForm()" style="margin-left: 10px;">
+                Cancel
+              </button>
+            </ng-template>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--begin::Portlet-->
+  <h5 class="colorPurpel" style="padding-top:20px;">Price List
+    <span *ngIf="priceList.length>0" class="btn btn-sm btn-dark float-right" (click)="initAddOnePrice()">Add More Rental Price</span>
+  </h5>
+  <div>
+    <div class="m-portlet__body">
+      <!--begin::Section-->
+			<div class="m-section" style="position: relative;">
+        <div *ngIf="listLoader; else button" class="table-load m-loader m-loader--brand" style="z-index: 999;"></div>
+				<div class="m-section__content price-table">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <!-- <th>
+                    Attribute
+                  </th> -->
+                  <th>
+                    Base Price
+                  </th>
+                  <th>
+                    Hourly Price
+                  </th>
+                  <th>
+                    Daily Price
+                  </th>
+                  <th>
+                    Weekly Price
+                  </th>
+                  <th>
+
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="priceList.length>0; else priceNo">
+                <tr *ngFor="let price of priceList; let i = index; trackBy: trackPrice">
+                  <!-- <td>
+                    <span *ngIf="price.attribute; else noAttribute">
+                      {{price?.attribute.name}}
+                    </span>
+                    <ng-template #noAttribute>
+                      N/A
+                    </ng-template>
+                  </td> -->
+                  <td class="max-width">
+                    <div *ngIf="price && (price.price > 0)">
+                      ${{price?.price | number: '1.2-2' }}
+                    </div>
+                  </td>
+                  <td class="max-width">
+                    <div *ngIf="price && (price.hourly_price > 0)">
+                      ${{price?.hourly_price | number: '1.2-2'}} / {{price.hourly_duration ? price.hourly_duration : 1}} {{(single(price.hourly_duration) ? ' Hour' : ' Hours')}}
+                    </div>
+                  </td>
+                  <td class="max-width">
+                    <div *ngIf="price && (price.daily_price > 0)">
+                      ${{price?.daily_price | number: '1.2-2'}} / {{price.daily_duration ? price.daily_duration : 1}} {{(single(price.daily_duration) ? ' Day' : ' Days')}}
+                    </div>
+                  </td>
+                  <td class="max-width">
+                    <div *ngIf="price && (price.weekly_price > 0)">
+                      ${{price?.weekly_price | number: "1.2-2"}} /  {{price.weekly_duration ? price.weekly_duration : 1}} {{(single(price.weekly_duration) ? ' Week' : ' Weeks')}}
+                    </div>
+                  </td>
+                  <td>
+                    <a class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon 
+                    m-btn--icon-only m-btn--pill" (click)="editPrice(price, i)">
+                      <i class="la la-edit"></i>
+                    </a>
+                    <a id="m_quick_sidebar_toggle" *ngIf="i!==0" (click)="deletePrice(price.id, i)"
+                    class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                      <i class="la la-trash"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+              <ng-template #priceNo>
+                <tbody>
+                  <tr *ngIf="!listLoader">
+                    <td colspan="6">
+                      <h5 class="text-center">
+                        No Price Added
+                        <button class="btn btn-sm btn-dark" (click)="initAddPrice()">Add Price</button>
+                      </h5>
+                    </td>
+                  </tr>
+                </tbody>
+              </ng-template>
+            </table>
+          </div>
+				</div>
+			</div>
+			<!--end::Section-->
+    </div>
+  </div>
+  <!--end::Portlet-->
+</div>
+
+<div class="m-content product-sidebar-pricing" *ngIf="noData">
+  <h3 class="colorPurpel">To add price, please add product variant at variants section.</h3>
+</div>

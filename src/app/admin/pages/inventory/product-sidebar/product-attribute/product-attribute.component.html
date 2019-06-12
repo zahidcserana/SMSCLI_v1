@@ -1,0 +1,155 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-content product-sidebar-attr" style="position:relative;">
+  <div *ngIf="attLoader" class="table-load m-loader m-loader--brand" style="z-index: 999;"></div>
+  <!--begin::Portlet-->
+  <div *ngIf="createNew" style="padding: 20px 0px; border-bottom: 1px solid #ebedf2!important;">
+    <div class="m-portlet__body">
+      <h5 *ngIf="!unassign">{{edit ? 'Update Product Variant' : 'Create New Product Variant'}}</h5>
+      <form class="m-form m-form--fit m-form--label-align-right" #manageFrom="ngForm">
+        <div class="row" *ngIf="!unassign">
+          <div class="form-group m-form__group col-sm-6" *ngFor="let man of manageAttribut?.attribute_set">
+            <label class="col-form-label">
+              {{man?.name}}*
+            </label>
+            <select2-add-option [data]="findAttribute(man.id)" [domId]="'variant-set-' + man.id" [prop]="'name'" [url]="'variants/'+man.id+'/value'"
+              [value]="man.a_id" [edit]="edit" [placeholder]="'Variant Value'" (changeValue)="changedVariantValue($event,  man.id)"></select2-add-option>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group m-form__group col-sm-6">
+            <label class="col-form-label">
+              Barcode
+            </label>
+            <input type="text" class="form-control m-input" name="barcode" #bar="ngModel" [(ngModel)]="manageAttribut.barcode">
+          </div>
+          <div class="form-group m-form__group col-sm-6" *ngIf="!defaultWeight">
+            <label for="unit" class="col-form-label">
+              Weight
+            </label>
+            <div class="input-group m-input-group">
+              <input type="text" numberOnly autocomplete="off" id="unit" class="form-control m-input" placeholder="0.00" name="weight_amount"
+                [(ngModel)]="manageAttribut.weight_amount">
+              <div class="input-group-append">
+                <select class="form-control cursor-pointer" name="weight_unit" [(ngModel)]="manageAttribut.weight_unit" >
+                  <option value="pound">lb</option>
+                  <option value="kilogram">kg</option>
+                  <option value="ounce">oz</option>
+                </select>
+              </div>
+            </div>
+            <small>Used to calculate shipping rate at checkout</small>
+          </div>
+          <div class="form-group m-form__group col-sm-4 col-6" *ngFor="let qty of manageAttribut.location">
+            <label class="col-form-label">
+              Qty {{qty.name}}
+            </label>
+            <input type="number" class="form-control m-input" [min]="0" name="{{'qty_'+qty.id}}" [(ngModel)]="qty.quantity"
+              required>
+            <small class="error" *ngIf="qty.quantity < 0">Minimum quantity should be 0</small>
+          </div>
+
+          <div class="form-group m-form__group col-sm-12" style="padding-top: 20px;">
+            <label class="m-checkbox m-checkbox--state-brand colorPurpel" *ngIf="!unassign">
+              <input type="checkbox" name="default" [(ngModel)]="manageAttribut.default">
+              Set Default
+              <span></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="m-portlet__foot m-portlet__foot--fit">
+          <div class="m-form__actions">
+            <div *ngIf="loader; else button" class="m-loader m-loader--brand" style="width: 30px; display: inline-block;"></div>
+            <ng-template #button>
+              <button *ngIf="edit; else ADDBTN" type="button" [disabled]="!manageFrom.form.valid || check()" class="btn btn-brand" (click)="updateAttribute(manageFrom)">
+                {{ unassign ? 'Save' : 'Update'}}
+              </button>
+              <ng-template #ADDBTN>
+                <button type="button" [disabled]="!manageFrom.form.valid || check()" class="btn btn-brand" (click)="addAttribute()">
+                  Save
+                </button>
+              </ng-template>
+              <button *ngIf="!unassign && attributeList.length>0" type="button" class="btn btn-danger" (click)="cancel()"
+                style="margin-left: 10px;">
+                Cancel
+              </button>
+            </ng-template>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <div style="padding-top: 20px;" *ngIf="!unassign && attributeList.length>0">
+    <div class="text-right">
+      <button class="btn btn-dark" (click)="addNewVariantValue()">Add New</button>
+    </div>
+    <div>
+      <h5> <span class="colorPurpel">Variant List </span><small>( <div class="colorPlate"></div> Default Variant )</small></h5>
+      <div class="m-portlet__body">
+        <!--begin::Section-->
+        <div class="m-section">
+          <div class="m-section__content price-table">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <ng-template ngFor let-a let-i='index' [ngForOf]="filteredAttributes">
+                      <th>
+                        {{a?.name}}
+                      </th>
+                    </ng-template>
+                    <th>
+                      Barcode
+                    </th>
+                    <th style="min-width: 125px;">
+                      <div class="row">
+                        <div class="col-8">Location</div>
+                        <div class="col-4"><b>QTY</b></div>
+                      </div>
+                    </th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let list of attributeList; let id='index';" [ngClass]="{'bgColor': list?.default}">
+                    <ng-template ngFor let-a let-i='index' [ngForOf]="filteredAttributes">
+                      <td>
+                        {{getArrtibuteSet(a?.id, list?.variant_set)}}
+                      </td>
+                    </ng-template>
+                    <td>{{list?.barcode}}</td>
+                    <td>
+                      <div class="row" *ngFor="let loc of list?.location">
+                        <div class="col-8">{{loc?.name}}:</div>
+                        <div class="col-4"><b>{{ loc?.quantity}}</b></div>
+                      </div>
+                    </td>
+                    <td>
+                      <a id="m_quick_sidebar_toggle" (click)="editAttribute(list)" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="la la-edit"></i>
+                      </a>
+                      <a id="m_quick_sidebar_toggle" (click)="removeAttribute(list.ids)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="la la-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!--end::Section-->
+      </div>
+    </div>
+  </div>
+  <!--end::Portlet-->
+
+
+
+
+
+
+</div>

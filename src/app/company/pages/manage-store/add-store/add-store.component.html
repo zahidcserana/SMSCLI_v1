@@ -1,0 +1,110 @@
+
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-subheader">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        {{htmlname.header}}
+      </h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+        <li class="m-nav__item m-nav__item--home">
+          <a routerLink="/partner/dashboard" class="m-nav__link m-nav__link--icon">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+        <li class="m-nav__separator" *ngIf="edit">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item" *ngIf="edit">
+          <a [routerLink]="['/partner/store/list']" class="m-nav__link">
+            <span class="m-nav__link-text">
+              Store List
+            </span>
+          </a>
+        </li>
+        <li class="m-nav__separator" [ngClass]="{'m-l-10': edit}">
+					<i class="fa fa-angle-right"></i>
+				</li>
+				<li class="m-nav__item">
+					<a class="m-nav__link">
+						<span class="m-nav__link-text">
+							{{htmlname.header}}
+						</span>
+					</a>
+				</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content row">
+  <div class="m-portlet col-md-3 col-lg-3" *ngIf="edit">
+    <div class="m-portlet-body" style="padding:30px 25px;">
+      <div *ngIf="logo; else uplogo" class="company-logo">
+          <img class="img-fluid img-avatar img-thumbnail" [src]="logo"
+          onError="this.src='./assets/img/admin/logo/store_logo.png';" style="cursor:pointer;">
+          <div class="change-logo" (click)="changeLogo()">Change Logo</div>
+      </div>
+      <ng-template #uplogo>
+        <label class="upload-title">
+          Upload logo <small>(Maximum file size 1MB)</small>
+          <span *ngIf="tempLogo" class="float-right cursor-pointer" title="Cancel" (click)="cancelUpload()"><i class="fa fa-times"></i></span>
+        </label>
+
+        <drag-drop [class]="'col-12'" [resetOff]="true" [multi]='false' [width]="100" [height]="100" [url]="url" [limit]="1" [fileName]="'image'" [accept]="'image/*'" (upload)="uploadLogo($event)" ></drag-drop>
+      </ng-template>
+    </div>
+  </div>
+  <div class="m-portlet col-md-9 col-lg-8">
+    <div class="m-portlet-body">
+	<!--begin::Portlet-->
+      <form class="m-form m-form--fit m-form--label-align-right" [formGroup]="storeForm" (ngSubmit)="storeForm.valid && unique && submitStore()">
+        <div class="form-group m-form__group" *ngIf="edit"><h5>Store Name: {{storeName.value}}</h5></div>
+        <div class="form-group m-form__group" style="position: relative;" *ngIf="!edit">
+          <label for="title">Store Name*</label>
+          <input type="text" autocomplete="off" class="form-control m-input" placeholder="Store name" id="title" formControlName="name" (change)="checkStoreName(storeName?.errors?.pattern)" 
+            (keyup)="unique=false; message=false" pattern="[A-Za-z-_0-9]*">
+          <span class="error-span m-form__help"><small>Example: my-store or my_store or mystore</small></span><br>
+          <small *ngIf="unique" style="color:#041531">{{storeName.value}}.rentmy.co</small>
+          <small *ngIf="message" class="error">Store name should be unique</small>
+          <div *ngIf="storeName.invalid && storeName.touched">
+            <small *ngIf="storeName.errors.required" class="error">Store Name Required</small>
+            <small *ngIf="storeName.errors.pattern" class="error">Only uppercase, lowercase, digit, hyphen and underscore are allowed</small>
+          </div>
+          <div class="unique-check" *ngIf="unique || message">
+            <i class="fa" [ngClass]="{'fa-check': unique, 'fa-close': message}"></i>
+          </div>
+          <div class="m-loader m-loader--skin-dark checkLoader" *ngIf="checking"></div>
+        </div>
+
+        <div class="form-group m-form__group"><h5>Features:</h5></div>
+        
+        <div class="form-group m-form__group">
+          <label class="m-checkbox">
+            <input type="checkbox" name="multi_location" formControlName="multi_location">
+              Multiple Location<span></span>
+          </label>
+        </div>
+        <div class="form-group m-form__group">
+          <label class="m-checkbox">
+            <input type="checkbox" name="multi_location" formControlName="online_store">
+              Online Store Access<span></span>
+          </label>
+        </div> 
+        
+        <div class="form-group m-form__group">
+          <label for="status">Status</label>
+          <select id="status" class="form-control m-select" formControlName="status">
+            <option value="1">Active</option>
+            <option value="0">Inactive</option>
+          </select>
+        </div> 
+        <div class="form-group m-form__group">
+          <button type="submit" class="btn btn-brand" [ngClass]="{'m-loader m-loader--light m-loader--right': loading}" [disabled]="loading">{{htmlname.submitBtn}}</button>
+        </div>
+      </form>
+            <!--end::Form-->
+    </div>
+  </div>
+</div>

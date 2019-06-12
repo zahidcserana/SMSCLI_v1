@@ -1,0 +1,27 @@
+<div class="m-section head-section animated fadeIn">
+  <div class="m-section__content">
+    <ul id="m_quick_sidebar_tabs" class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand" role="tablist">
+      <li class="nav-item m-tabs__item">
+        <a class="nav-link m-tabs__link" [routerLink]="'./personal-info'" routerLinkActive="active">
+          Personal Info
+        </a>
+      </li>
+      <li class="nav-item m-tabs__item">
+        <a class="nav-link m-tabs__link" [routerLink]="'./change-avatar'" routerLinkActive="active">
+          Change Avatar
+        </a>
+      </li>
+      <li class="nav-item m-tabs__item">
+        <a class="nav-link m-tabs__link" [routerLink]="'./change-password'" routerLinkActive="active">
+          Change Password
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="m-section info-section animated fadeIn">
+    <div class="m-section__content" style="padding-bottom: 20px;">
+      <router-outlet></router-outlet>
+    </div>
+</div>

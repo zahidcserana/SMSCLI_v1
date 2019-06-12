@@ -1,0 +1,20 @@
+  <p>The selected node is: <strong class="colorPurpel">{{category.name}}</strong></p>
+  <div *ngIf="dataLoader; else dagular" class="m-loader m-loader--brand"
+      style="width: 30px; display: inline-block;"></div>
+  <ng-template #dagular>
+    <div class='wrapper'>
+      <div class="container" [dragula]="'sortingCategory'" [dragulaModel]="categoryList">
+        <div class="cate-list colorPurpel" *ngFor="let child of categoryList" [attr.data-id]="child.id">
+            {{child.text}}
+        </div>
+      </div>
+
+      <div *ngIf="loader; else button" class="m-loader m-loader--brand"
+        style="width: 30px; display: inline-block;"></div>
+      <ng-template #button>
+        <button class="btn btn-sm btn-brand" (click)="updateOrder()">
+          <i class="fa fa-save"></i> Update
+        </button>
+      </ng-template>
+    </div>
+  </ng-template>

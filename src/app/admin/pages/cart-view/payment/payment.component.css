@@ -1,0 +1,130 @@
+.order_summery {
+    width: 500px;
+    border: 1px solid #ccc;
+    min-height: 160px;
+}
+.order_summery h5 {
+    text-align: center;
+    border-bottom: 1px solid #cccc;
+    width: 52%;
+    margin: 0;
+    padding: 10px;
+    margin-bottom: 25px;
+}
+.order-list {
+    min-height: 110px;
+    width: 90%;
+    border-bottom: 1px solid #cccc;
+    margin: 0;
+    padding: 10px 0;
+}
+.order-list:last-child {
+    border-bottom: none;
+}
+.order-product_details {
+    width: 295px;
+    float: left;
+}
+.order_summery .order-img {
+    width: 85px;
+    float: left;
+    margin-right: 14px;
+}
+.order_summery .order-product_name {
+    width: 270px;
+    float: left;
+    margin-left: 13px;
+    margin-top: 25px;
+}
+.order_summery .order-product_price {
+    width: 37%;
+    float: left;
+    text-align: right;
+    padding-right: 6px;
+} 
+
+.order-product_details .name  {
+    width: 100%;
+    min-height: 44px;
+
+    
+} 
+
+.bottom_info .qty {
+    
+    width:19%;
+    float: left;
+} 
+
+.bottom_info {
+    width: 100%;
+}
+
+.price_show {
+    margin: 7px;
+    text-align: left; 
+}
+.price_show p {
+    margin: 14px 0;
+
+}
+.price_show .cart_p {
+    width: 35%;
+    float: right;
+    margin-right: 12px;
+}
+
+.gatewat-select {
+    display: flex; align-items: center;
+    flex-wrap: wrap;
+}
+.gatewat-select div img {
+    margin-left: 20px;
+    height: 50px!important;
+    object-fit: contain;
+}
+
+.cart_btn a {
+    color: #fff;
+    padding: 10px;
+    text-align: center
+}
+
+#cardnumber {
+    position: relative;
+}
+.credicardImg {
+    width: 44px;
+    position: absolute;
+    top: 31px;
+    right: 1px;
+
+}
+
+.bottom_info .tax {
+    width: 42%;
+    float: left;
+}
+
+.custom-alert{
+    position: absolute;
+    top: 10px;
+    right: 30%;
+    z-index: 5000;
+}
+
+.content {
+    margin-top: 90px;
+}
+
+.img-thumbnail{
+    max-width: 100px!important;
+    height: 100px!important;
+    object-fit: contain;
+}
+
+@media screen and (max-width: 992px) {
+    .content {
+        margin-top: 120px;
+    }
+}

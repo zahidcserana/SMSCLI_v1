@@ -1,0 +1,35 @@
+.page-title {
+  text-align: center;
+  font-size: 50px;
+  padding-top: 5rem;
+  font-weight: 700;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.about-page-sub-tile {
+  font-size: 31px;
+    font-weight: 700;
+    padding-bottom: 2.5rem;
+    line-height: 36px;
+}
+p {
+  font-size: 15px;
+    font-weight: 700;
+    padding-bottom: 2.5rem;
+    line-height: 36px;
+}
+/* 
+.signature {
+  font-family: 'Satisfy', cursive;
+  font-size: 22px;
+  font-weight: 600;
+  color: #e58222;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 0;
+} */
+
+img {
+  margin-top: 39%;
+    padding-left: 15%;
+}

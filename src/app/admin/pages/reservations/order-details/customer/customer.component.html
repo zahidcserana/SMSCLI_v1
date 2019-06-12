@@ -1,0 +1,50 @@
+<div class="m-portlet m-portlet--full-height">
+  <div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+      <div class="m-portlet__head-title">
+        <h3 class="m-portlet__head-text colorPurpel">
+          Customer Details
+        </h3>
+        <div class="edit-btn">
+          <a id="m_product_sidebar_toggle" [routerLink]="'./edit/customer'" 
+          class="btn btn-secondary m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air" title="Edit Customer">
+            <i class="la la-edit"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-portlet__body">
+    <div class="description-fields">
+      <div class="row">
+        <p class="col-md-6"><span class="description-field-title">Name: </span> <span>{{customer?.first_name}} {{customer?.last_name}}</span></p>   
+        <p class="col-md-6"><span class="description-field-title">Email: </span> <span>{{customer?.email}}</span></p>
+      </div>    
+      <div class="row">
+        <p class="col-md-6"><span class="description-field-title">Phone: </span> <span>{{customer?.phone}}</span></p>     
+        <p class="col-md-6"><span class="description-field-title">Mobile: </span> <span>{{customer?.mobile}}</span></p>
+      </div>
+      <div class="row">    
+        <p class="col-md-6"><span class="description-field-title">Address: </span> <span>{{customer?.address_line1}}</span></p>
+        <p class="col-md-6"><span class="description-field-title">City: </span> <span>{{customer?.city}}</span></p>
+      </div>      
+      <div class="row"> 
+        <p class="col-md-6"><span class="description-field-title">State: </span> <span>{{customer?.state_id}}</span></p>
+        <p class="col-md-6"><span class="description-field-title">Zip Code: </span> <span>{{customer?.zipcode}}</span></p>
+      </div>
+      <div class="row">
+        <p class="col-md-6"><span class="description-field-title">Country: </span> <span>{{customer?.country_id}}</span></p>
+
+      </div>
+      <div class="row" *ngIf="customer?.shipping_address1"> 
+        <h5 class="col-12 colorPurpel">Shipping Info:</h5>
+        <p class="col-md-6"><span class="description-field-title">Name: </span> <span>{{customer?.shipping_first_name}} {{customer?.shipping_last_name}}</span></p>
+        <p class="col-md-6"><span class="description-field-title">Phone: </span> <span>{{customer?.shipping_mobile}}</span></p>
+        <p class="col-md-6"><span class="description-field-title">Address 1st: </span> <span>{{customer?.shipping_address1}}</span></p>
+        <p class="col-md-6"><span class="description-field-title">Address 2nd: </span> <span>{{customer?.shipping_address2}}</span></p>
+        <p class="col-md-6"><span class="description-field-title">City: </span> <span>{{customer?.shipping_city}}</span></p>
+        <p class="col-md-6"><span class="description-field-title">Zip Code: </span> <span>{{customer?.shipping_zipcode}}</span></p>
+      </div>
+    </div>
+</div>

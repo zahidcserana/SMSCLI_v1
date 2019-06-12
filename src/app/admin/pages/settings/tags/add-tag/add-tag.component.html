@@ -1,0 +1,40 @@
+<div style="padding-top: 35px;">
+    <h5 class="colorPurpel" *ngIf="edit; else add">Update Tag</h5>
+    <ng-template #add class="colorPurpel">
+      <h5 class="colorPurpel">Add Tag </h5>
+    </ng-template>
+    <form [formGroup]="tagForm" class="m-form m-form--fit m-form--label-align-right">
+      <div class="form-group m-form__group">
+        <label for="title">
+         Tag Name
+        </label>
+        <input type="text" formControlName="name"  class="form-control m-input" placeholder="Enter name" id="title"
+        name="name" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label class="m-checkbox">
+          <input type="checkbox" formControlName="is_shown_in_nav">
+            Is Shown in Navigation
+          <span></span>
+        </label>
+      </div>
+      <div class="m-portlet__foot m-portlet__foot--fit text-right">
+        <div class="m-form__actions m-form__actions" style="padding: 30px 0px;">
+          <div *ngIf="loader; else button" class="m-loader m-loader--brand"
+              style="width: 30px; padding-left: 30px; display: inline-block;"></div>
+          <ng-template #button>
+            <button type="button" class="btn btn-brand btn-sm"  *ngIf="edit; else addbtn" (click)="update()">
+              <i class="fa fa-save"></i> <span style="padding-left:10px;">Update</span>
+            </button>
+            <ng-template #addbtn>
+              <button type="button" class="btn btn-brand btn-sm" (click)="submit()">
+                <i class="fa fa-save"></i> <span style="padding-left:10px;">Submit</span>
+                </button>
+            </ng-template>
+          </ng-template>
+        </div>
+      </div>
+    </form>
+  </div>	
+  
+  

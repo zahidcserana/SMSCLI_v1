@@ -1,0 +1,118 @@
+<div class="custom-alert" #hasAlert></div>
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title m-subheader__title--separator">
+				User Profile
+			</h3>
+			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+				<li class="m-nav__item m-nav__item--home">
+					<a routerLink="/partner/dashboard" class="m-nav__link m-nav__link--icon">
+						<i class="m-nav__link-icon la la-home"></i>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					<i class="fa fa-angle-right"></i>
+				</li>
+				<li class="m-nav__item">
+					<a routerLink="/partner/users" class="m-nav__link">
+						<span class="m-nav__link-text">
+							User List
+						</span>
+					</a>
+				</li>
+				<li class="m-nav__separator" style="padding-left: 10px">
+					<i class="fa fa-angle-right"></i>
+				</li>
+				<li class="m-nav__item">
+					<a class="m-nav__link">
+						<span class="m-nav__link-text">
+							User Profile
+						</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content animated fadeIn">
+	<div class="row">
+		<div class="col-xl-3 col-lg-4">
+			<div class="m-portlet m-portlet--full-height">
+				<div class="m-portlet__body">
+					<div class="m-card-profile">
+						<div class="m-card-profile__title m--hide">
+							Your Profile
+						</div>
+						<div class="m-card-profile__pic">
+							<div class="m-card-profile__pic-wrapper" style="position: relative;">
+								<img *ngIf="image_url; else alter" onError="this.src='./assets/img/admin/logo/user.png';" [src]="image_url" alt="" />
+								<ng-template #alter>
+									<img src="./assets/img/admin/logo/user.png" alt="" />
+								</ng-template>
+							</div>
+						</div>
+						<div class="m-card-profile__details">
+							<span class="m-card-profile__name">
+								{{user?.first_name}} {{user?.last_name}}
+							</span>
+							<p class="sub-title">
+								{{findUserType(user?.user_type_id)}} / 
+								<span class="m-badge m-badge--wide" [ngClass]="{'m-badge--success':user?.status==1,'m-badge--warning':user?.status==0, 'm-badge--danger':user?.status==2 || user?.status==3}">{{checkStatus(user?.status)}}</span>
+							</p>
+						</div>
+						<div class="user-email">{{user?.email}}</div>
+						<div class="user-email">{{dateFormat(user?.created)}}</div>
+						<div class="user-email" *ngIf="user?.user_type_id != 5 || user?.user_type_id != 4">Billing Type: {{getPlanePeriod(user)}}</div>
+						<div class="user-email" style="margin: 10px;">
+							<button class="btn btn-sm btn-dark" [ngClass]="{'m-loader m-loader--light m-loader--right': deleteLoad}" (click)="dialogBox()">{{deleteText}}</button>
+						</div>
+					</div>
+					<ul class="m-nav m-nav--hover-bg m-portlet-fit--sides">
+						<li class="m-nav__separator m-nav__separator--fit"></li>
+						<li class="m-nav__item" *ngIf="user?.user_type_id != 5">
+							<a routerLink="./details" routerLinkActive="active" class="m-nav__link">
+								<i class="m-nav__link-icon flaticon-medical"></i>
+								<span class="m-nav__link-text">
+									Overview
+								</span>
+							</a>
+						</li>
+						<li class="m-nav__item">
+							<a routerLink="./account-settings" routerLinkActive="active" class="m-nav__link">
+								<i class="m-nav__link-icon flaticon-user-settings"></i>
+								<span class="m-nav__link-text">
+									Account Settings
+								</span>
+							</a>
+						</li>
+						<li class="m-nav__item" *ngIf="user?.user_type_id != 5">
+							<a routerLink="./stores" routerLinkActive="active" class="m-nav__link">
+								<i class="m-nav__link-icon flaticon-graphic-2"></i>
+								<span class="m-nav__link-text">
+									Stores
+								</span>
+							</a>
+						</li>
+						<li class="m-nav__item" *ngIf="user?.user_type_id != 5 || user?.user_type_id != 4">
+							<a routerLink="./billings" routerLinkActive="active" class="m-nav__link">
+								<i class="m-nav__link-icon flaticon-coins"></i>
+								<span class="m-nav__link-text">
+									Billings History
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xl-9 col-lg-8">
+			<div class="m-portlet m-portlet--full-height" style="padding: 2.5rem;">
+				<router-outlet></router-outlet>
+			</div>
+		</div>
+	</div>
+</div>

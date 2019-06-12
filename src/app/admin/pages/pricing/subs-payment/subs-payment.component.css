@@ -1,0 +1,83 @@
+.payment-area p {
+    color: #888;
+  }
+  .payment-box-top h4 {
+    font-weight: 500;
+    padding-bottom: 15px;
+  }
+  .addcard-btn {
+    float: right;
+    margin-top: -65px;
+  }
+  .payment-box{
+      margin: 20px;
+      width: 100%;
+      padding: 30px;
+      /* border: 1px solid #e4e1e1; */
+  }
+  .payment-box h4 {
+      color: #666;
+      width: 100%;
+  }
+   .card-list {
+      padding: 26px 0;
+   }
+    .single-card{
+      padding: 10px 30px;
+      border: 1px solid #d2d1d1;
+    }
+    .card-default {
+      border: 1px solid #eee;
+      font-size: 10px;
+      padding: 0px 5px;
+      margin-left: 24px;
+      background-color: #eee;
+    }
+  
+     .single-card span {
+        margin: 0;
+        margin-right: 5px;
+    }
+    .more-btn {
+      float: right;
+      margin-top: -13px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+  
+  
+    .alert_container {
+      position: fixed;
+      right: 5%;
+      top: 18%;
+      z-index: 9999;
+  }
+  
+  .preload {
+    position: fixed;
+    left: 7%;
+    top: 15%;
+    background: rgba(255,255,255,.1);
+    width: 100%;
+    height: 100%;
+  }
+  
+  app-upgrade-subscription {
+    float: right;
+    margin-top: -59px;
+  }
+  @media (max-width: 575px) {
+    .payment-box {
+      padding: 15px;
+      margin: 15px 0;
+    }
+    .addcard-btn {
+      float: unset;
+      margin-top: 20px;
+    }
+  }  
+  
+  .btn-card {
+    float: right;
+  }

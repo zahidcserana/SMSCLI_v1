@@ -1,0 +1,23 @@
+.form-group {
+    padding-bottom:1.2rem!important;
+}
+.add-list-btn{
+    display: table-cell; vertical-align: middle;
+}
+.search-panel .row> div {
+    padding-right: 0px;
+    padding-left: 0px;;
+}
+.search-panel select option[data-default] {
+    color: #888;
+}
+.search-panel select option[value=""][disabled] {
+    display: none;
+}
+
+/*-- Adition order filter --*/
+@media (max-width: 575px) {    
+    .m-portlet .m-portlet__body {        
+        padding: 15px 15px;    
+    }
+}

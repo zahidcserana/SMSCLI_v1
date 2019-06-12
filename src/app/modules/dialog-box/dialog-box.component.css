@@ -1,0 +1,17 @@
+.closing-btn button{
+    margin-right: 10px;
+}
+
+button.close {
+    position: absolute;
+    right: 0;
+    top: -28px;
+    border-radius: 50px;
+    font-size: 25px;
+    text-shadow: none !important;
+    color: #eee !important;
+    opacity: 9;
+}
+button.close:hover {
+    color: #eee;
+}

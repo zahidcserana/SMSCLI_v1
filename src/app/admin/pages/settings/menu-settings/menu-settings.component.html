@@ -1,0 +1,157 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Navigations
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+              <li class="m-nav__item m-nav__item--home">
+                <a routerLink="/admin/dashboard" class="m-nav__link m-nav__link--icon">
+                  <i class="m-nav__link-icon la la-home"></i>
+                </a>
+              </li>
+              <li class="m-nav__separator">
+                <i class="fa fa-angle-right"></i>
+              </li>
+              <li class="m-nav__item">
+                <a class="m-nav__link">
+                  <span class="m-nav__link-text">
+                    Settings
+                  </span>
+                </a>
+              </li>
+              <li class="m-nav__separator" style="padding-left: 10px">
+                <i class="fa fa-angle-right"></i>
+              </li>
+              <li class="m-nav__item">
+                <a class="m-nav__link">
+                  <span class="m-nav__link-text">
+                    Navigations
+                  </span>
+                </a>
+              </li>
+            </ul>
+        </div>
+    </div>
+  </div>
+  <!-- END: Subheader -->
+  <div class="m-content animated fadeIn">
+    <div class="m-portlet">
+      <div class="m-portlet__body">
+        <div style="padding: 20px 0px;">
+          <div class="m-dropdown m-dropdown--inline m-dropdown--arrow" data-dropdown-toggle="click" aria-expanded="true">
+            <button class="m-dropdown__toggle btn btn-dark dropdown-toggle">
+              Add Menu Items
+            </button>
+            <div class="m-dropdown__wrapper">
+                <span class="m-dropdown__arrow m-dropdown__arrow--left"></span>
+                <div class="m-dropdown__inner">
+                  <div class="m-dropdown__body">
+                    <div class="m-dropdown__content">
+                      <ul class="m-nav">
+                        <li class="m-nav__item">
+                          <a (click)="addMenu('header')" class="m-nav__link cursor-pointer">
+                            <span class="m-nav__link-text">
+                              Header Links
+                            </span>
+                          </a>
+                        </li>
+                        <li class="m-nav__item">
+                          <a (click)="addMenu('footer_quick_links')" class="m-nav__link cursor-pointer">
+                            <span class="m-nav__link-text">
+                              Footer Quick Links
+                            </span>
+                          </a>
+                        </li>
+                        <li class="m-nav__item">
+                          <a (click)="addMenu('footer_more_links')" class="m-nav__link cursor-pointer">
+                            <span class="m-nav__link-text">
+                              Footer More Links
+                            </span>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+          <!--begin::Section-->
+        <div class="m-section">
+          <div class="m-section__content price-table" style="position:relative">
+            <div *ngIf="loader" class="table-load m-loader m-loader--brand table-responsive"></div>
+              <table class="table table-hover" style="padding-bottom: 10px;">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Url</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="menuList.length > 0; else noDate" [dragula]="'menuSorting'"  [dragulaModel]="menuList">
+                  <tr class="sorted-tr" *ngFor="let menu of menuList; let i = 'index'; trackBy: trackCoupon; let o='odd'; let e='even'" [ngClass]="{'odd-tr':o, 'even-tr':e}" [attr.data-id]="menu.id">
+                    <td>
+                      {{menu.label}}
+                    </td>
+                    <td>
+                      {{menu.content_url}}
+                    </td>
+                    <td>
+                      {{menu.type && menu.type=='header' ? 'Header ' : 'Footer '}} -> {{menu.content_type}}
+                    </td>
+                    <td>
+                      <span [ngClass]="{'green': menu?.status, 'red': !menu?.status}">
+                        {{menu?.status ? 'Active' : 'Inactive'}}
+                      </span>
+                    </td>
+                    <td>       
+                      <a id="m_quick_sidebar_toggle" (click)="editMenu(menu)"
+                        class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="fa fa-edit"></i>
+                      </a>
+                      <div class="m-loader m-loader--brand"  *ngIf="deleteId===menu.id; else btnSubmit" style="width: 30px; padding-left: 30px; display: inline-block;"></div>
+                      <ng-template #btnSubmit>
+                        <a id="m_quick_sidebar_toggle" (click)="deleteMenu(menu.id, i)"
+                          class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                          <i class="fa fa-trash"></i>
+                        </a>
+                      </ng-template>
+                    </td>
+                  </tr>
+                </tbody>
+                <ng-template #noDate>
+                  <tbody><tr *ngIf="!loader"><td colspan="5"><h5 class="text-center">No Data Found</h5></td></tr></tbody>
+                </ng-template>
+              </table>
+          </div>
+
+        </div>
+			<!--end::Section-->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- sidebar -->
+
+<div class="native-routing animated">
+	<button class="close-sidebar btn btn-sm btn-brand">
+		<i class="fa fa-chevron-right"></i>
+  </button>
+  <span class="close-sidebar-upper">
+    <i class="la la-close"></i>
+  </span>
+    <div class="native-routing-container">
+        <ng-template #menuFormComponent></ng-template>
+    </div>
+</div>
+<!-- <div class="backdrop animated"></div> -->
+
+
+
+  

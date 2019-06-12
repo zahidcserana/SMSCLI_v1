@@ -1,0 +1,128 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Variants
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+              <li class="m-nav__item m-nav__item--home">
+                <a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+                  <i class="m-nav__link-icon la la-home"></i>
+                </a>
+              </li>
+              <li class="m-nav__separator">
+                <i class="fa fa-angle-right"></i>
+              </li>
+              <li class="m-nav__item">
+                <a class="m-nav__link">
+                  <span class="m-nav__link-text">
+                    Settings
+                  </span>
+                </a>
+              </li>
+              <li class="m-nav__separator" style="padding-left: 10px">
+                <i class="fa fa-angle-right"></i>
+              </li>
+              <li class="m-nav__item">
+                <a class="m-nav__link">
+                  <span class="m-nav__link-text">
+                    Variants
+                  </span>
+                </a>
+              </li>
+            </ul>
+        </div>
+    </div>
+  </div>
+  <!-- END: Subheader -->
+  <div class="m-content animated fadeIn">
+    <div class="m-portlet">
+      <div class="m-portlet__body">
+        <div style="padding: 20px 0px;">
+          <button class="btn btn-brand" (click)="initAddAttribute()">
+            Add Variant
+          </button>
+        </div>
+          <!--begin::Section-->
+        <div class="m-section">
+          <div class="m-section__content price-table" style="position:relative">
+            <div *ngIf="loader" class="table-load m-loader m-loader--brand table-responsive"></div>
+                <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th (click)="sorting('name')" style="cursor: pointer;">
+                      Name
+                      <i class="la icon" id="name" style="padding-left: 5px"></i>
+                    </th>
+                    <th>Slug</th>
+                    <th>
+                      Value
+                    </th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="attributeSetsList.length>0; else noDate">
+                  <tr *ngFor="let att of attributeSetsList; let i = 'index'; trackBy: trackAttribute; let o='odd'; let e='even'" [ngClass]="{'odd-tr':o, 'even-tr':e}">
+                    <th *ngIf="att.id != 1">
+                      {{att.name}}
+                    </th>
+                    <td *ngIf="att.id != 1">
+                      {{att.slug}}
+                    </td>
+                    <td *ngIf="att.id != 1">
+                      {{formateAttrivutes(att.variants)}}
+                    </td>
+                    <td *ngIf="att.id != 1">
+                      <a id="m_quick_sidebar_toggle" (click)="viewAttribute(att)"
+                        class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="fa fa-plus"></i>
+                      </a>     
+                      <a id="m_quick_sidebar_toggle" (click)="editAttribute(att, i)"
+                        class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="fa fa-edit"></i>
+                      </a>
+                      <a id="m_quick_sidebar_toggle" (click)="deleteAttributeSet(att.id, i)"
+                        class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="fa fa-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+                <ng-template #noDate>
+                  <tbody><tr><td colspan="4"><h5 class="text-center">No Variant Set Found</h5></td></tr></tbody>
+                </ng-template>
+              </table>
+            <!-- pagination Start-->
+            <boot-pagination [totalSize]="pagi.total" [listSize]="pagi.limit" (pageChange)="reloadTable($event)"></boot-pagination>
+            <!-- pagination End-->
+          </div>
+
+        </div>
+			<!--end::Section-->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- sidebar -->
+
+<div class="native-routing animated">
+	<button class="close-sidebar btn btn-sm btn-brand">
+		<i class="fa fa-chevron-right"></i>
+  </button>
+  <span class="close-sidebar-upper">
+    <i class="la la-close"></i>
+  </span>
+    <div class="native-routing-container">
+        <attribute-set *ngIf="sideBarName=='add'" [edit]="updateSetName" [attributeSet]="attributeSet"  
+        (submit)="submitAttributeSet($event)"></attribute-set>
+        <attribute-view *ngIf="sideBarName=='view'" (alert)="alert($event)" [attributeSet]="attributeSet"></attribute-view>
+    </div>
+</div>
+<!-- <div class="backdrop animated"></div> -->
+
+
+
+  

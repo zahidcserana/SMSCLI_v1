@@ -1,0 +1,138 @@
+<section class="innerpage-banner"   [ngStyle]="bannerImage">
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-10 col-10">
+        <div class="w-100 innaerpage-title">
+          <h2>Contact Us</h2>
+          <ul>
+            <li>
+              <a routerLink="">Home</a>/</li>
+            <li>Contact Us</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-xl-6 col-md-6">
+        <div class="w-100 innerpage-banner-img">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- / header section -->
+<div class="wraper animated fadeIn">
+  <section class="category-content pt-5">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-8">
+          <form [formGroup]="form" (submit)="submit()">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="">First Name * </label>
+                  <input formControlName="first_name" type="text" class="form-control">
+                  <span *ngIf="form.get('first_name').invalid">
+                <small *ngIf="form.get('first_name').hasError('required') && form.get('first_name').touched" class="error">First Name is Required</small>
+              </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="">Last Name *</label>
+                  <input formControlName="last_name" type="text" class="form-control">
+                  <span *ngIf="form.get('last_name').invalid">
+                <small *ngIf="form.get('last_name').hasError('required') && form.get('last_name').touched" class="error">Last Name is Required</small>
+              </span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="">Phone *</label>
+                  <input formControlName="tempPhone" numberOnly (change)="valuechange($event.target.value)" type="text" class="form-control">
+                  <span *ngIf="form.get('tempPhone').invalid">
+                <small *ngIf="form.get('tempPhone').hasError('required') && form.get('tempPhone').touched" class="error">Phone is Required</small>
+              </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="">Email *</label>
+                  <input type="email" formControlName="email" class="form-control">
+                  <span *ngIf="form.get('email').invalid">
+                <small *ngIf="form.get('email').hasError('required') && form.get('email').touched" class="error">Email is Required</small>
+              </span>
+                  <span *ngIf="form.get('email').hasError('email') && !form.get('email').hasError('required')">
+                <small class="error"> Please enter a valid email address</small>
+              </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 p-0">
+              <div class="form-group">
+                <label for="">Message *</label>
+                <textarea formControlName="message" cols="30" rows="3" class="form-control"></textarea>
+                <span *ngIf="form.get('message').invalid">
+              <small *ngIf="form.get('message').hasError('required') && form.get('message').touched" class="error">Message is Required</small>
+            </span>
+              </div>
+            </div>
+            <div class="row">
+              <div *ngIf="loader" class="m-loader " style="width: 30px; display: inline-block;"></div>
+              <div class="col-md-2">
+                <button type="submit" [disabled]="!form.valid" class="ml-4 btn-dark mrt-xs lbtn-sm caps theme-btn"> Submit</button>
+              </div>
+              <div class="col-md-8 custom-alert mt-4 " #hasAlert> </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div>&nbsp;&nbsp;</div>
+    <!--<div class="row justify-content-center">-->
+      <!--<div class="col-md-8">-->
+        <!--<div class="row">-->
+          <!--<div class="col-md-6 contact-links-wrapper">-->
+            <!--<p>BOOtique Costumes-->
+              <!--<br>The Woodlands area </p>-->
+            <!--<p>19445 I-45-->
+              <!--<br>Shenandoah, TX 73385</p>-->
+            <!--<p>(281) 719-0663</p>-->
+            <!--<p>-->
+              <!--<br> Hours-->
+              <!--<br> M- Sa 10-8-->
+              <!--<br> Sun 11-6</p>-->
+          <!--</div>-->
+          <!--<div class="col-md-6 contact-links-wrapper">-->
+            <!--<div>BOOtique Costumes-->
+              <!--<br>Magnolia Area </div>-->
+            <!--<p>33020 FM2978 #519</p>-->
+            <!--<p>Magnolia, TX 77354-->
+              <!--<br>-->
+            <!--</p>-->
+            <!--<p>(832) 521-5880</p>-->
+
+            <!--<p>-->
+              <!--<br> Hours-->
+              <!--<br> M- Sa 10-8-->
+              <!--<br> Sun 11-6</p>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row justify-content-center mt-5 mb-5">-->
+      <!--<div class="col-md-8 mt-3 mb-3 ">-->
+        <!--<div class="row">-->
+          <!--<div class="col-md-6">-->
+            <!--<app-angular-map [mapUrl]="'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3449.2163300672264!2d-95.45279658488184!3d30.173813781835506!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864736e5ee850573%3A0xd8f1a46aba1081f3!2s19445+I-45%2C+Shenandoah%2C+TX+77385!5e0!3m2!1sen!2sus!4v1504209637113'"></app-angular-map>-->
+          <!--</div>-->
+          <!--<div class="col-md-6">-->
+            <!--<app-angular-map [mapUrl]="'https://maps.google.com/maps?q=30.219668%2C%20-95.567436&t=&z=15&ie=UTF8&iwloc=&output=embed'"></app-angular-map>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  </section>
+</div>
+
+

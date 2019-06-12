@@ -1,0 +1,18 @@
+.info-heading{
+    padding-bottom: 20px;
+}
+
+.change-avatar{
+    padding-bottom: 20px;
+}
+
+label{
+    font-weight: 400;
+}
+
+.previewImage{
+    width: 210px;
+    padding:5px;
+    height: 200px;
+    border: 1px solid #ccc;
+}

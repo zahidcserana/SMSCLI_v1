@@ -1,0 +1,117 @@
+<div class="m-portlet m-portlet--mobile">
+  <div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+      <div class="m-portlet__head-title">
+        <h3 class="m-portlet__head-text">
+          <i class="la la-search"></i>
+          Search
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="m-portlet__body search-panel">
+    <!--begin::Form-->
+    <form class="m-form m-form--fit m-form--label-align-right second-form" 
+      #form="ngForm" (ngSubmit)="searchSalesReport()">
+      <div class="row">
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" type="text" placeholder="Customer Name" name="name" [(ngModel)]="salesReport.name" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" type="email" placeholder="Customer Email" name="email" [(ngModel)] ="salesReport.email" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <div class="m-input-icon pull-right" id="m_daterangepicker_3">
+              <input type="text" class="form-control m-input" placeholder="Select Date Range" autocomplete="off" readonly>
+              <span class="m-input-icon__icon m-input-icon__icon--right">
+                <span>
+                  <i class="la la-calendar-check-o"></i>
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+       <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <select class="form-control m-input" name="location" [(ngModel)] ="salesReport.location">
+              <option value='null'>-Location-</option>
+              <option *ngFor="let l of stores" [value]="l.id">{{l.store_name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <select class="form-control m-input" name="terminal" [(ngModel)] ="salesReport.terminal">
+              <option value='null'>-Terminal-</option>
+              <option *ngFor="let l of terminals" [value]="l.id">{{l.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <select class="form-control m-input" name="transaction_type" [(ngModel)] ="salesReport.transaction_type">
+              <option value='null'>-Transaction Type-</option>
+              <option value="Authorized">Authorized</option>
+              <option value="Captured">Captured</option>
+              <option value="Voided">Voided</option>
+              <option value="Paid">Paid</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <select class="form-control m-input" name="payment_type" [(ngModel)] ="salesReport.payment_type">
+              <option value='null'>-Payment Type-</option>
+              <option value="1">Online</option>
+              <option value="2">Offline</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <select class="form-control m-input" name="order_status" [(ngModel)] ="salesReport.order_status">
+              <option value='null'>-Order Status-</option>
+              <option *ngFor="let s of status" [value]="s.id">{{s.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <select class="form-control m-input" name="payment_status" [(ngModel)] ="salesReport.payment_status">
+              <option value='null'>-Payment Status-</option>
+              <option value="1">Online store – Card entry</option>
+              <option value="2">In-store – Card entry</option>
+              <option value="3">In-store – Card Swipe</option>
+              <option value="4">In-store – Cash</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" type="text" placeholder="Coupon Code" name="name" [(ngModel)]="salesReport.coupon_code" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <div class="form-group m-form__group">
+            <button type="submit" class="btn m-btn--pill m-btn--air btn-brand btn-sm"
+            style="margin-right:10px">
+              <i class="fa fa-calendar-check-o"></i>
+                Search
+            </button>
+            <button type="reset" class="btn m-btn--pill m-btn--air btn-danger btn-sm"
+            (click)="resetSearch()">
+              <i class="fa fa-history"></i>
+                Reset
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <!--end::Form-->
+  </div>
+</div>

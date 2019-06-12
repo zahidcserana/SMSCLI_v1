@@ -1,0 +1,32 @@
+
+.info-heading{
+    padding-bottom: 20px;
+}
+
+label{
+    font-weight: 400;
+}
+
+.address-section{
+    margin: 20px auto;
+}
+
+.address-list{
+    margin: 10px auto;
+}
+.address-list row{
+    margin: 5px auto;
+}
+
+.address-list .marker, .address-list .action{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-alert{
+    position: fixed;
+    top: 90px;
+    right: 30px;
+    z-index: 5000;
+}

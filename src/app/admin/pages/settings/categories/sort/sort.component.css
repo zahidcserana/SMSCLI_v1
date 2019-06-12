@@ -1,0 +1,52 @@
+@import '~dragula/dist/dragula.css';
+
+.container{
+    border: 1px solid #ebedf2;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.cate-list{
+    margin: 10px 0px!important;
+    font-weight: normal;
+    cursor: -webkit-grab;
+    cursor: move; 
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+    padding: 10px;
+    border: 1px solid #ebedf2;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.05);
+}
+
+.cate-list:hover{
+    background: #041531;
+    color: #fff!important;
+}
+
+/* .gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    opacity: .8;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=80);
+  }
+  
+  .gu-hide {
+    display: none !important;
+  }
+  
+  .gu-unselectable {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+  }
+  
+  .gu-transit {
+    opacity: .2;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    filter: alpha(opacity=20);
+  } */

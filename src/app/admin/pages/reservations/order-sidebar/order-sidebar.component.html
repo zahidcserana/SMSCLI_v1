@@ -1,0 +1,36 @@
+<!-- begin::Quick Sidebar -->
+<div class="m-quick-sidebar--skin-light inventory-sidebar" appunwraptag="" animated fadeIn>
+		<ul id="m_quick_sidebar_tabs" class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand" role="tablist">
+			<li class="nav-item m-tabs__item" *ngIf="refund; else OtherList">
+				<a class="nav-link m-tabs__link" [routerLink]="'./refund'" routerLinkActive="active">
+					Refund
+				</a>
+			</li>
+			<ng-template #OtherList>
+				<li class="nav-item m-tabs__item">
+					<a class="nav-link m-tabs__link" [ngClass]="{'pointer-none': menu.cus}" [routerLink]="'./customer'" routerLinkActive="active">
+						Customer
+					</a>
+				</li>
+				<li class="nav-item m-tabs__item">
+					<a class="nav-link m-tabs__link" [ngClass]="{'pointer-none': menu.item}" [routerLink]="'./product'" routerLinkActive="active">
+						Items
+					</a>
+				</li>
+				<li class="nav-item m-tabs__item">
+					<a class="nav-link m-tabs__link" [ngClass]="{'pointer-none': menu.pay}" [routerLink]="'./payment'" routerLinkActive="active">
+						Payment
+					</a>
+				</li>
+				<li class="nav-item m-tabs__item">
+					<a class="nav-link m-tabs__link" [ngClass]="{'pointer-none': menu.del}" [routerLink]="'./delivery'" routerLinkActive="active">
+						Delivery
+					</a>
+				</li>
+			</ng-template>
+		</ul>
+		<div class="tab-content">
+				<router-outlet></router-outlet>
+		</div>
+
+</div>

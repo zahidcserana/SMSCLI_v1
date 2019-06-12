@@ -1,0 +1,311 @@
+<div class="custom-alert" #hasCusAlert></div>
+<section style="margin-top: 10px;">
+  <div style="margin-bottom: 20px; display: flex; align-items: center;">
+    <h5 style="flex: 2">
+      Selected Layout:
+      {{ layout?.layout_id ? "Layout " + layout?.layout_id : "Default" }}
+    </h5>
+    <div
+      class="text-right"
+      style="flex: 1"
+      *ngIf="layout.layout_id == layoutId"
+    >
+      <button class="btn btn-sm btn-dark" (click)="resetBtn()">Reset</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Choose Layout</h5>
+      <div class="form-group">
+        <div class="m-radio-inline">
+          <label class="m-radio">
+            <input
+              type="radio"
+              name="main"
+              [value]="0"
+              [(ngModel)]="layoutId"
+              (change)="changeLayout()"
+            />
+            Default <span></span>
+          </label>
+          <label class="m-radio">
+            <input
+              type="radio"
+              name="main"
+              [value]="1"
+              [(ngModel)]="layoutId"
+              (change)="changeLayout()"
+            />
+            Layout 1 <span></span>
+          </label>
+          <label class="m-radio">
+            <input
+              type="radio"
+              name="main"
+              [value]="2"
+              [(ngModel)]="layoutId"
+              (change)="changeLayout()"
+            />
+            Layout 2 <span></span>
+          </label>
+        </div>
+      </div>
+
+      <form [formGroup]="sectionForm">
+        <h5>Select Sections</h5>
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label class="m-checkbox">
+              <input type="checkbox" name="grid" formControlName="grid" /> Grid
+              <span></span>
+            </label>
+          </div>
+          <div class="col-md-6 form-group">
+            <label class="m-checkbox">
+              <input
+                type="checkbox"
+                name="featured_product"
+                formControlName="featured_product"
+              />
+              Featured Product <span></span>
+            </label>
+          </div>
+          <!-- <div class="col-md-6 form-group">
+                      <label class="m-checkbox">
+                        <input type="checkbox" name="new_arrival" formControlName="new_arrival">
+                        New Arrival
+                        <span></span>
+                      </label>
+                    </div> -->
+          <div class="col-md-6 form-group">
+            <label class="m-checkbox">
+              <input
+                type="checkbox"
+                name="promotion"
+                formControlName="promotion"
+              />
+              Promotion <span></span>
+            </label>
+          </div>
+        </div>
+      </form>
+
+      <h5>Screen Shot</h5>
+      <div class="row image-container">
+        
+        <div
+          class="col-6 col-md-3 d-flex"
+          *ngFor="let i of getImages()"
+          style="align-items: center; margin-top: 10px;margin-bottom: 10px;"
+        >
+          <img [src]="i" alt="" (click)="showBigImage(i)" style="width: 100%;"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div>
+        <h5>Set Color For Current Layout</h5>
+        <form [formGroup]="colorForm">
+          <div class="row">
+            <div class="col-sm-6 form-group">
+              <label>Theme Color</label>
+              <input
+                type="color"
+                class="form-control m-input"
+                name="theme_color"
+                formControlName="theme_color"
+                autocomplete="off"
+              />
+            </div>
+            <!-- <div class="col-sm-6 form-group">
+                            <label>Primary Color</label>
+                            <input type="color" class="form-control m-input" name="primary_color"
+                                   formControlName="primary_color" autocomplete="off">
+                        </div> -->
+            <div class="col-sm-6 form-group">
+              <label>Secondary Color</label>
+              <input
+                type="color"
+                class="form-control m-input"
+                name="secondary_color"
+                formControlName="secondary_color"
+                autocomplete="off"
+              />
+            </div>
+            <div class="col-sm-6 form-group">
+              <label>Grid Shop Background Color</label>
+              <input
+                type="color"
+                class="form-control m-input"
+                name="primary_color"
+                formControlName="primary_color"
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="col-sm-6 form-group">
+              <label>Offer Background Color</label>
+              <input
+                type="color"
+                class="form-control m-input"
+                name="offer_background_color"
+                formControlName="offer_background_color"
+                autocomplete="off"
+              />
+            </div>
+            <div class="col-sm-6 form-group">
+              <label>Footer Background Color</label>
+              <input
+                type="color"
+                class="form-control m-input"
+                name="footer_background_color"
+                formControlName="footer_background_color"
+                autocomplete="off"
+              />
+            </div>
+            <div class="col-sm-6 form-group">
+              <label>Footer Background Text</label>
+              <input
+                type="color"
+                class="form-control m-input"
+                name="footer_background_img"
+                formControlName="footer_background_img"
+                autocomplete="off"
+              />
+            </div>
+            <!-- <div class="col-sm-6 form-group">
+              <label>Theme Button Background</label>
+              <input
+                type="color"
+                class="form-control m-input"
+                name="theme_btn_background"
+                formControlName="theme_btn_background"
+                autocomplete="off"
+              />
+            </div> -->
+            <!-- <div class="col-sm-6 form-group">
+              <label>Theme Button Color</label>
+              <input
+                type="color"
+                class="form-control m-input"
+                name="theme_btn_color"
+                formControlName="theme_btn_color"
+                autocomplete="off"
+              />
+            </div> -->
+          </div>
+        </form>
+        <div>
+          <h5>Colors For Layouts</h5>
+          <table class="table  table-striped  table-hover  table-sm">
+            <thead>
+              <tr>
+                <td>Content</td>
+                <td>Default</td>
+                <td>Color Variable</td>
+              </tr>
+            </thead>
+            <tr>
+              <td>Button BG color</td>
+              <td>#444</td>
+              <td>Theme Button Background Color</td>
+            </tr>
+            <tr>
+              <td>Button font color</td>
+              <td>#fff</td>
+              <td>Theme Button Color</td>
+            </tr>
+            <tr>
+              <td>Global paragraph</td>
+              <td>#888</td>
+              <td>Primary Color</td>
+            </tr>
+            <tr>
+              <td>Header Menu font color</td>
+              <td>#444</td>
+              <td>Primary Color</td>
+            </tr>
+            <tr>
+              <td>Header Menu font color hove</td>
+              <td></td>
+              <td>Secondary Color</td>
+            </tr>
+            <tr>
+              <td>Header cart item circle BG color</td>
+              <td>#444</td>
+              <td>Primary Color</td>
+            </tr>
+            <tr>
+              <td>Footer background color</td>
+              <td>#333</td>
+              <td>Footer Background Color</td>
+            </tr>
+            <tr>
+              <td>Footer text color</td>
+              <td>#333</td>
+              <td>Footer Color</td>
+            </tr>
+
+            <tr>
+              <td>Homepage slider first text color</td>
+              <td>#444</td>
+              <td>Primary Color</td>
+            </tr>
+            <tr>
+              <td>Homepage slider second text color</td>
+              <td>#555</td>
+              <td>Secondary Color</td>
+            </tr>
+            <tr>
+              <td>Grid Background color</td>
+              <td>#f4f5f7</td>
+              <td>Theme Color</td>
+            </tr>
+            <tr>
+              <td>Grid First title text color</td>
+              <td>#444</td>
+              <td>Primary Color</td>
+            </tr>
+            <tr>
+              <td>Grid Second title text color</td>
+              <td>#555</td>
+              <td>Secondary Color</td>
+            </tr>
+            <tr>
+              <td>Grid Shop color</td>
+              <td>#444</td>
+              <td>Primary Color</td>
+            </tr>
+            <tr>
+              <td>Offer Section Background color</td>
+              <td>#333</td>
+              <td>Primary Color</td>
+            </tr>
+            <tr>
+              <td>Offer Section font color</td>
+              <td>#fff</td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 m-portlet__foot m-portlet__foot--fit">
+      <div class="m-form__actions m-form__actions" style="padding: 30px 15px;">
+        <div
+          class="m-loader m-loader--brand"
+          *ngIf="loader; else btnSubmit"
+          style="width: 30px; padding-left: 30px; display: inline-block;"
+        ></div>
+        <ng-template #btnSubmit>
+          <button type="submit" class="btn btn-brand" (click)="saveColor()">
+            <i class="fa fa-save"></i>
+            <span style="padding-left:10px;">Submit</span>
+          </button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</section>

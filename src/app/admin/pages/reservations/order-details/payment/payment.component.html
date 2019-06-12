@@ -1,0 +1,103 @@
+<div class="custom-alert" #hasCusAlert></div>
+<div class="m-portlet m-portlet--full-height">
+  <div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+      <div class="m-portlet__head-title">
+        <h3 class="m-portlet__head-text colorPurpel">
+          Payment Details
+        </h3>
+        <div class="edit-btn">
+          <a id="m_product_sidebar_toggle" [routerLink]="'./edit/payment'" 
+          class="btn btn-secondary m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air" title="Edit Payment">
+            <i class="la la-edit"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="m-portlet__body">
+    <div class="row" style="padding-bottom: 10px">
+      <div class="col-4">
+        <h6>Total Amount: ${{methodsAmount.total_amount | number: '1.2-2'}}</h6>
+      </div>
+      <div class="col-4">
+        <h6>Total Paid: ${{getTotalPaid(paymentList) | number: '1.2-2'}}</h6>
+      </div>
+      <div class="col-4">
+        <h6>Due Amount: ${{(methodsAmount.total_amount - getTotalPaid(paymentList)) | number: '1.2-2'}}</h6>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Payment Type</th>
+            <th>Payment Status</th>
+            <th>Paid Amount</th>
+            <th>Note</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="paymentList && paymentList.length>0; else NoPay">
+          <ng-template ngFor let-pay let-i='index' [ngForOf]="paymentList" [ngForTrackBy]="trackPayment">
+            <tr>
+              <td style="max-width: 50px;">
+								<span *ngIf="pay.type==1" id="product_sidebar_toggle" (click)="openSummary('det-pay-id-'+ pay.id, 'det-pay-icon-'+ pay.id)"
+								class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View Payment">
+									<i class="fa fa-plus-circle" id="{{'det-pay-icon-'+pay.id}}"></i>
+								</span>
+							</td>
+              <td>{{pay.content_method}}</td>
+              <td>{{pay.payment_method}}</td>
+              <td>${{pay.payment_amount | number:'1.2-2'}}</td>
+              <td>{{pay.note && pay.note != 0 ? pay.note : ''}}</td>
+              <td>
+                <div *ngIf="pay.type==2; else Online">
+                  <button type="button" (click)="refund(pay)" class="btn btn-sm btn-outline-brand">
+                      Refund
+                    </button>
+                </div>
+                <ng-template #Online>
+                  <div *ngIf="pId == pay.id; else BTNLoad" class="m-loader m-loader--brand"
+                    style="width: 30px; display: inline-block;"></div>
+                  <ng-template #BTNLoad>
+                    <div *ngIf="pay.payment_method=='Authorized'">
+                        <button type="button" (click)="captured(pay)" style="margin-right: 5px" class="btn btn-sm btn-outline-success">
+                        Capture
+                        </button>
+                        <button *ngIf="status" type="button" (click)="refund(pay)" style="margin-right: 5px" class="btn btn-sm btn-outline-brand">
+                          Refund
+                        </button>
+                        <button type="button" (click)="voidBtn(pay)" class="btn btn-sm btn-outline-dark">
+                          Void
+                        </button>
+                    </div>
+                  </ng-template>
+                </ng-template>
+              </td>
+            </tr>
+            <tr class="dis-none" id="{{'det-pay-id-'+pay.id}}">
+              <td colspan="6">
+                <div class="row">
+                  <div class="col-6" *ngFor="let text of getTextResponse(pay.response_text); trackBy: trackbyText">
+                    <b style="font-weight: 500; text-transform: capitalize;">{{text.key}} :</b> {{text.value}}
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </tbody>
+        <ng-template #NoPay>
+          <tbody>
+            <tr>
+              <td colspan="6">
+                <h5 class="text-center">No Payment Found</h5>
+              </td>
+            </tr>
+          </tbody>
+        </ng-template>
+      </table>
+    </div> 
+  </div>
+</div>

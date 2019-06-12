@@ -1,0 +1,56 @@
+<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('')">
+  <span aria-hidden="true">&times;</span>
+</button>
+<div class="modal-body">
+  <section>
+    <div class="heading">
+      <div class="text-left" style="flex:2;">
+        <div [innerHtml]="preview.general | safeHtml"></div>
+      </div>
+      <div class="text-center" style="flex:1;">
+        <div *ngIf="preview.logo">
+          <img class="img-fluid img-avatar img-thumbnail" [src]="preview.logo" onError="this.src='./assets/img/admin/logo/store_logo.png';">
+        </div>
+      </div>
+      <div class="text-right" style="flex:2;">
+        <div [innerHtml]="preview.store_address | safeHtml"></div>
+      </div>
+    </div>
+    <div>
+      <div class="table-responsive">
+        <table class="table" style="padding-bottom: 10px;">
+          <thead>
+            <tr>
+              <th *ngFor="let h of table.head">{{h}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let b of table.body">
+              <td>{{b.name}}</td>
+              <td>{{b.start}}</td>
+              <td>{{b.end}}</td>
+              <td>{{b.unit}}</td>
+              <td>{{b.qty}}</td>
+              <td>{{b.tax}}</td>
+              <td>{{b.depo}}</td>
+              <td>{{b.sub}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div>
+          <div class="text-right d-flex" *ngFor="let o of table.others">
+            <h6 style="flex: 1">{{o.label}}</h6>
+            <div style="width: 150px;">
+              {{o.amount}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="margin-top:20px" [innerHtml]="preview.terms_conditions | safeHtml"></div>
+      <div style="margin-top:20px" [innerHtml]="preview.message_1 | safeHtml"></div>
+      <div style="margin-top:20px" [innerHtml]="preview.message_2 | safeHtml"></div>
+    </div>
+  </section>
+</div>

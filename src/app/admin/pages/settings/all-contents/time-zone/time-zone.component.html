@@ -1,0 +1,17 @@
+<div class="custom-alert" #hasCusAlert></div>
+<div class="row">
+  <div class="col-md-6">
+    <h4>Select Time Zone</h4>
+    <form [formGroup]="timeForm" (ngSubmit)="save()">
+      <div class="form-group">
+        <select class="form-control m-select" name="timezone" formControlName="timezone">
+          <option *ngFor="let z of zoneList" [value]="z.name">{{z.label}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <button type="submit" [disabled]="loading" class="btn btn-dark m-btn--icon" 
+          [ngClass]="{'m-loader m-loader--light m-loader--right': loading}">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+
+<!-- begin::Quick Sidebar -->
+<div class="m-quick-sidebar--skin-light inventory-sidebar" appunwraptag="">
+		<ul id="m_quick_sidebar_tabs" class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand" role="tablist">
+			<li class="nav-item m-tabs__item">
+				<a class="nav-link m-tabs__link" [routerLink]="'./description'" routerLinkActive="active">
+					Description
+				</a>
+			</li>
+			<li class="nav-item m-tabs__item">
+				<a class="nav-link m-tabs__link" [routerLink]="'./images'" routerLinkActive="active">
+					Images
+				</a>
+			</li>
+
+
+			<!--<li class="nav-item m-tabs__item">
+				<a class="nav-link m-tabs__link" [routerLink]="'./variant'" routerLinkActive="active">
+					Variants
+				</a>
+			</li>
+			<li class="nav-item m-tabs__item">
+				<a class="nav-link m-tabs__link" [routerLink]="'./pricing'" routerLinkActive="active">
+					Pricing
+				</a>
+			</li>
+			<li class="nav-item m-tabs__item">
+				<a class="nav-link m-tabs__link" [routerLink]="'./related-product'" routerLinkActive="active">
+					Related Product
+				</a>
+			</li>
+			<li class="nav-item m-tabs__item">
+				<a class="nav-link m-tabs__link" [routerLink]="'./calendar'" routerLinkActive="active">
+					Calendar
+				</a>
+			</li>
+			<li class="nav-item m-tabs__item">
+				<a class="nav-link m-tabs__link" [routerLink]="'./categories'" routerLinkActive="active">
+					Categories
+				</a>
+			</li>-->
+		</ul>
+		<div class="tab-content">
+				<router-outlet></router-outlet>
+		</div>
+
+</div>
+

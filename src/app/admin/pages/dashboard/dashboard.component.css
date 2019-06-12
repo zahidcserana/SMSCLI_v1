@@ -1,0 +1,19 @@
+
+.custom-alert{
+    position: fixed;
+    top: 90px;
+    right: 30px;
+    z-index: 5000;
+}
+
+.paragraph-body {
+    padding-top: 20px;
+}
+
+.img-body {
+    padding: 20px;
+}
+
+.btn-group-dashboard button {
+    margin: 5px;
+}

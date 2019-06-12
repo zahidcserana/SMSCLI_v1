@@ -1,0 +1,126 @@
+<div class="container text-center" style="margin-bottom: 30px;">
+    <a href="https://rentmy.co"> <img src='assets/img/home/logo.png' class="img-fluid" width="200"></a>
+</div>
+<div class="m-login__signin animated fadeIn">
+    <div class="row sign-up-content">
+        <div class="col-md-6 hidden-div left-part" style="min-height: 585px;">
+            <div class="login-shape">
+                <img src="assets/img/home/signup.svg">
+
+                <h4 style="margin-top: 20px;"><i class="fa fa-long-arrow-right"></i> Unlimited Inventory</h4>
+                <h4><i class="fa fa-long-arrow-right"></i> Unlimited Orders</h4>
+                <h4><i class="fa fa-long-arrow-right"></i> Sell and Rent Products</h4>
+                <h4><i class="fa fa-long-arrow-right"></i> Friendly, Free Support</h4>
+                <h4><i class="fa fa-long-arrow-right"></i> No Startup Fees</h4>
+
+
+            </div>
+        </div>
+
+        <div class="col-md-6 login-side">
+            <div *ngIf="successMessage; else createAccountPage">
+                <h5 class="success-message text-center">{{successMessage}}</h5>
+                <div style="text-align:center;">
+                    <button type="button" (click)="goToSmsRoute()" class="btn btn-dark">Activate Account By SMS</button>
+                </div>
+            </div>
+            <ng-template #createAccountPage>
+                <div class="m-login__head">
+                    <h5 class="text-left">Create New Account</h5>
+                </div>
+                <div class="custom-alert" #hasAlert></div>
+                <form (ngSubmit)="createAccount(form)" #form="ngForm" class="m-login__form m-form" action="">
+                    <div class="form-group m-form__group" style="position: relative;">
+                        <input class="form-control m-input" type="text" placeholder="Business Name*" name="slug"
+                               [(ngModel)]="model.slug"
+                               (keyup)="unique=false; duplicate=false" (change)="checkStoreName()" #store="ngModel"
+                               autocomplete="off" required style="margin-top: 0;">
+
+                        <small *ngIf="unique" style="color:#041531">{{model.store_name}}{{domain}}</small>
+                        <small *ngIf="duplicate" class="error">Should be unique</small>
+                        <div *ngIf="store.invalid && store.touched">
+                            <small *ngIf="store.errors.required" class="error">Business Name Required</small>
+                        </div>
+                        <div class="unique-check" *ngIf="unique || duplicate">
+                            <i class="fa" [ngClass]="{'fa-check': unique, 'fa-close': duplicate}"></i>
+                        </div>
+                        <div class="m-loader m-loader--skin-dark checkLoader" *ngIf="checking"></div>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <input class="form-control m-input" type="text" placeholder="First Name*" name="first_name"
+                               [(ngModel)]="model.first_name" #fname="ngModel" autocomplete="off" required>
+                        <span class="error-span" *ngIf="fname.errors && fname.touched">
+                    <small *ngIf="fname.errors.required" class="error">First Name Required</small>
+                  </span>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <input class="form-control m-input" type="text" placeholder="Last Name*" name="last_name"
+                               [(ngModel)]="model.last_name" #lname="ngModel" autocomplete="off" required>
+                        <span class="error-span" *ngIf="lname.errors && lname.touched">
+                    <small *ngIf="lname.errors.required" class="error">First Name Required</small>
+                  </span>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <input class="form-control m-input" type="text"
+                               pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$" autocomplete="nope"
+                               placeholder="Email*" name="email" [(ngModel)]="model.email" #email="ngModel"
+                               autocomplete="off" required>
+                        <span class="error-span" *ngIf="email.errors && email.touched">
+                    <small *ngIf="email.errors.required" class="error">Email required</small>
+                    <small *ngIf="email.errors.pattern" class="error">Please enter correct email</small>
+                  </span>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <input class="form-control m-input m-login__form-input--last" type="password"
+                               placeholder="Password*" [(ngModel)]="password" #pass="ngModel" name="pass"
+                               minlength="6" autocomplete="new-password" required>
+                        <span *ngIf="pass.valid">
+                    <password-strength-bar [passwordToCheck]="password" [showText]="true"></password-strength-bar>
+                  </span>
+                        <span class="error-span" *ngIf="pass.errors && pass.touched">
+                    <small *ngIf="pass.errors.required" class="error">Password Required</small>
+                    <small *ngIf="pass.errors.minlength" class="info">Password must be 6 characters long</small>
+                  </span>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <input class="form-control m-input m-login__form-input--last" type="password"
+                               placeholder="Confirm Password*" name="passConf"
+                               #confirm="ngModel" [(ngModel)]="model.password" autocomplete="new-password" required>
+                        <span class="error-span" *ngIf="confirm.valid">
+                    <small *ngIf="checkPassword(password,model.password)" class="error">Mismatched Password</small>
+                  </span>
+                        <span class="error-span" *ngIf="confirm.errors && confirm.touched">
+                    <small *ngIf="confirm.errors.required" class="error">Confirm Password Required</small>
+                  </span>
+                    </div>
+                    <div class="form-group m-form__group" style="padding-top: 20px;">
+                        <label class="m-checkbox" style="color: #ccc!important;">
+                            <input type="checkbox" name="condition" [(ngModel)]="condition">
+                            By proceeding, you accept the <a style="color: #ccc!important;" href="https://rentmy.co/terms-conditions/"
+                               target="_blank"> terms of use of RentMy.co</a>
+                            <span style="top:5px;"></span>
+                        </label>
+                    </div>
+                    <div class="m-login__form-action">
+                        <button [disabled]="loading || !form.form.valid || checkPassword(password,model.password) || !model.store_name || !condition"
+                                id="m_login_signin_submit" class="btn m-btn--pill btn-secondary btn-lg m-btn--icon"
+                                [ngClass]="{'m-loader m-loader--skin-dark m-loader--right': loading}"
+                                style="margin-top: 0px;">
+                    <span>
+                      <i class="fa fa-sign-in"></i>
+                      <span>
+                        Sign Up
+                      </span>
+                    </span>
+                        </button>
+                    </div>
+                </form>
+                <div class="form-group">
+                    Already have an account?
+                    <a routerLink="/auth/login" class="m-link" style="font-weight: 500;">Login here</a>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

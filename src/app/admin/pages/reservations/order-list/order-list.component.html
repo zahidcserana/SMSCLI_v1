@@ -1,0 +1,224 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        Order List
+      </h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+        <li class="m-nav__item m-nav__item--home">
+          <a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+        <li class="m-nav__separator">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+          <a class="m-nav__link">
+            <span class="m-nav__link-text">
+              Reservations
+            </span>
+          </a>
+        </li>
+        <li class="m-nav__separator" style="padding-left: 10px">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+          <a class="m-nav__link">
+            <span class="m-nav__link-text">
+              Order List
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content product-list animated fadeIn">
+  <!--begin::Portlet-->
+  <order-filter [staustId]="staustId" (loadList)="filterList($event)"></order-filter>
+  <!--end::Portlet-->
+  <!--begin::Portlet-->
+  <div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+      <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title">
+          <h3 class="m-portlet__head-text">
+            Order List
+          </h3>
+          <div class="button-midle float-right">
+            <button type="button" class="btn btn-brand btn-sm" (click)="openCartSidebar()">
+              View Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="m-portlet__body">
+      <!--begin: Datatable -->
+      <!--begin::Section-->
+      <div class="m-section">
+        <div class="m-section__content price-table" style="position: relative;">
+          <div *ngIf="loader" class="table-load m-loader m-loader--brand"></div>
+          <div class="table-responsive" style="margin-bottom: 15px;">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th (click)="sorting('id')" style="cursor: pointer;">
+                    Order ID
+                    <i class="la icon" id="id" style="padding-left: 5px"></i>
+                  </th>
+                  <th (click)="sorting('name')" style="cursor: pointer;">
+                    Customer Name
+                    <i class="la icon" id="name" style="padding-left: 5px"></i>
+                  </th>
+                  <th>
+                    Customer Address
+                  </th>
+                  <th>
+                    Order Date & Time
+                  </th>
+                  <th>
+                    Total Quantity
+                  </th>
+                  <th>
+                    Total Price
+                  </th>
+                  <th>Status</th>
+                  <th>Pickup/Return</th>
+                  <th style="min-width: 90px!important;">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="orderList.length < 1; else hasData">
+                <tr *ngIf="!loader">
+                  <td colspan="10">
+                    <h4 class="text-center">No Order Found</h4>
+                  </td>
+                </tr>
+              </tbody>
+              <ng-template #hasData>
+                <tbody>
+                  <!-- <ng-container *ngFor="let order of orderList"> -->
+                  <ng-template ngFor let-order let-i='index' let-o='odd' let-e='even' [ngForOf]="orderList"
+                    [ngForTrackBy]="trackOrder">
+                    <tr [ngClass]="{'odd-tr':o, 'even-tr':e}">
+                      <td style="max-width: 50px;">
+                        <span id="product_sidebar_toggle" (click)="openSummary('order-id-'+ order.id, 'order-icon-'+ order.id)"
+                          class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"
+                          title="View Payment">
+                          <i class="fa fa-plus-circle" id="{{'order-icon-'+order.id}}"></i>
+                        </span>
+                      </td>
+                      <td>{{order.id}}</td>
+                      <td (click)="openSidebar('edit-order/'+order.id)" style="cursor: pointer;color:#716aca">{{order.name}}</td>
+                      <td>
+                        {{formateAddress(order.address,order.city,order.state,order.zipcode,order.country)}}
+                      </td>
+                      <td>{{getDateFormate(order.created) | date:'MM/dd/yyyy, hh:mm a'}}</td>
+                      <td>{{order.total_quantity}}</td>
+                      <td>${{order.total | number: '1.2-2'}}</td>
+                      <td>
+                        <span class="m-badge m-badge--wide" [ngClass]="checkStatus(order.status)" (click)="changeStatus(order)"
+                          style="cursor: pointer;">{{getStatus(order.status)}}</span>
+                      </td>
+                      <td>
+                        <span *ngIf="order.rent && checkPickUp(order.status)" class="m-badge m-badge--wide m-badge--primary"
+                          (click)="changePickup(order, false)" style="cursor: pointer;">Pickup?</span>
+                        <span *ngIf="order.rent && order.status == 5" class="m-badge m-badge--wide m-badge--danger"
+                          (click)="changePickup(order, true)" style="cursor: pointer;">Return?</span>
+                      </td>
+                      <td>
+                        <a id="product-details-page" href="{{url}}pages/pdf?order_id={{order.id}}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"
+                          title="Download PDF">
+                          <i class="fa fa-file-pdf-o"></i>
+                        </a>
+                        <span id="product-details-page" (click)="gotoDetails(order.id)" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"
+                          title="View Order">
+                          <i class="fa fa-eye"></i>
+                        </span>
+                        <span id="product_sidebar_toggle" (click)="openSidebar('edit-order/'+order.id)" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"
+                          title="Edit Order">
+                          <i class="fa fa-pencil-square-o"></i>
+                        </span>
+                        <span id="product_sidebar_toggle" (click)="deleteOrder(order.id, i)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                          title="Delete Order">
+                          <i class="fa fa-trash"></i>
+                        </span>
+                      </td>
+                    </tr>
+                    <tr class="dis-none" id="{{'order-id-'+order.id}}">
+                      <td colspan="10">
+                        <div class="description-fields">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <p><span class="description-field-title">Order Id: </span> <span>{{order.id}}</span></p>
+                              <p><span class="description-field-title">Total Quantity: </span> <span>{{order.total_quantity}}</span></p>
+                              <p><span class="description-field-title">Pickup Store: </span> <span>{{order.pickup}}</span></p>
+                              <p><span class="description-field-title">Order Date & Time: </span> <span>{{getDateFormate(order.created)
+                                  | date:'MM/dd/yyyy, hh:mm a'}}</span></p>
+                              <p><span class="description-field-title">Delivery Date & Time: </span> <span>{{getDateFormate(order.delivery_date)
+                                  | date:'MM/dd/yyyy, hh:mm a'}}</span></p>
+                            </div>
+                            <div class="col-md-6">
+                              <p><span class="description-field-title">Sub Total: </span> <span>${{(order.sub_total ?
+                                  order.sub_total : 0) | number: '1.2-2'}} </span></p>
+                              <p><span class="description-field-title">Delivery Cost: </span> <span>${{order.delivery_charge
+                                  | number: '1.2-2'}}</span></p>
+                              <p><span class="description-field-title">Discount: </span> <span>${{(order.total_discount
+                                  ? order.total_discount : 0) | number: '1.2-2'}} {{order.total_discount ? '(' +
+                                  order?.coupon?.code + ')' : ''}}</span></p>
+                              <p><span class="description-field-title">Sales Tax: </span> <span>${{(order.tax ?
+                                  order.tax : 0) | number: '1.2-2'}}</span></p>
+                              <p><span class="description-field-title">Delivery Tax: </span> <span>${{(order.delivery_tax
+                                  ? order.delivery_tax : 0) | number: '1.2-2'}}</span></p>
+                              <p><span class="description-field-title">Deposit Amount: </span> <span>${{order.total_deposit
+                                  | number: '1.2-2'}}</span></p>
+                              <p><span class="description-field-title">Grand Total: </span> <span>${{order.total |
+                                  number: '1.2-2'}}</span></p>
+                            </div>
+                          </div>
+
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-template>
+                  <!-- </ng-container> -->
+                </tbody>
+              </ng-template>
+            </table>
+          </div>
+          <!-- pagination Start-->
+          <boot-pagination [totalSize]="pagi.total" [page]="pagi.page" [pagelimit]="pagi.limit" [listSize]="pagi.limit"
+            (pageChange)="reloadTable($event)"></boot-pagination>
+          <!-- pagination End-->
+        </div>
+      </div>
+      <!--end::Section-->
+      <!--end: Datatable -->
+    </div>
+  </div>
+  <!--end::Portlet-->
+</div>
+
+
+
+<!-- sidebar -->
+
+<div class="native-routing animated">
+  <button class="close-sidebar btn btn-sm btn-brand">
+    <i class="fa fa-chevron-right"></i>
+  </button>
+  <span class="close-sidebar-upper">
+    <i class="la la-close"></i>
+  </span>
+  <div class="native-routing-container">
+    <router-outlet></router-outlet>
+  </div>
+</div>

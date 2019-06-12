@@ -1,0 +1,37 @@
+<section class="animated" style="padding-top: 20px;">
+  <h4 *ngIf="addNew">Create Page</h4>
+  <h4 *ngIf="!addNew">Pages Contents</h4>
+  <div class="row">
+      <div class="col-md-6 form-group" *ngIf="addNew; else OldOne">
+        <label for="">Page Name</label>
+        <input type="text" class="form-control" name="name" [(ngModel)]="config.name" (ngModelChange)="createSlug()" autocomplete="off">
+      </div>
+      <ng-template #OldOne>
+        <div class="col-md-6 form-group">
+          <label for="">Select Page</label>
+          <select id="page" class="form-control m-select" name="page" [(ngModel)]="slug" (change)="changeSelect()" [disabled]="edit">
+            <option value="">-Select Page-</option>
+            <option *ngFor="let page of pages" [value]="page.slug">{{page.name}} </option>
+          </select>
+        </div>
+      </ng-template>
+      <div class="col-md-6 form-group">
+        <label for="">Meta Description</label>
+        <input type="text" class="form-control" name="meta_description" [(ngModel)]="config.meta_description" autocomplete="off">
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="">Meta Keyword</label>
+        <input type="text" class="form-control" name="meta_keyword" [(ngModel)]="config.meta_keyword" autocomplete="off">
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="status">Select Status</label>
+        <select id="status" class="form-control m-select" name="status" [(ngModel)]="config.status">
+          <option value="1">Active</option>
+          <option value="0">Inactive</option>
+        </select>
+      </div>
+  </div>
+  <div>
+    <ng-template #pageComponent></ng-template>
+  </div>
+</section>

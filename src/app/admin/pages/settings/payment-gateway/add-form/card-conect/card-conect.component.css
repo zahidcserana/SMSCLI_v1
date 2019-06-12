@@ -1,0 +1,13 @@
+.label-upper {
+    text-transform: capitalize;
+}
+.showPassword {
+    position: absolute;
+    display: flex;
+    width: 30px;
+    height: 37px;
+    align-items: center;
+    top: 30px;
+    right: 10px;
+    cursor: pointer;
+}

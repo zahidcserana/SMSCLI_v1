@@ -1,0 +1,88 @@
+.m-card-profile .m-card-profile__pic .m-card-profile__pic-wrapper{
+    margin:auto!important;
+}
+.sub-title{
+    color:#041531;
+}
+.sub-title span.btn{
+    padding:2px;
+} 
+.m-card-profile__name{
+    color: #6f727d!important
+}
+
+.info-list p.m-nav__link{
+    margin: 0px!important;
+}
+.info-list .m-nav .m-nav__item:hover:not(.m-nav__item--disabled) > .m-nav__link .m-nav__link-text{
+    color:#6f727d!important;
+}
+.user-email{
+    font-size: 15px;
+}
+.user-email span{
+    color: #041531;
+    font-weight: 400;
+}
+
+.change-avatar{
+    position: absolute;
+    display: none;
+    width: 100%;
+    text-align: center;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.3);
+    border-radius: 100%;
+}
+.change-avatar a{
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    color: #fff; 
+    font-weight: 400;
+    top:50%;
+}
+
+.m-card-profile__pic-wrapper:hover .change-avatar{
+    display:block;
+}
+
+.custom-alert{
+    position: fixed;
+    top: 90px;
+    right: 30px;
+    z-index: 5000;
+}
+
+.active .m-nav__link-icon, .active .m-nav__link-text{
+    color: #041531!important;
+}
+
+/*-- adition user profile --*/
+.m-nav.m-nav--hover-bg .m-nav__item > .m-nav__link {   
+     padding: 5px 30px;
+    }
+.m-card-profile .m-card-profile__details {    
+    padding-top: 15px;
+}
+button {    
+    margin-bottom: 15px !important ;
+}
+
+.head-section{
+    padding-top: 30px; 
+    padding-left:2.2rem;
+    padding-right:2.2rem;
+}
+
+.info-section{
+    padding-left:2.2rem;
+    padding-right:2.2rem;
+}
+
+.m-section {
+    margin: 0px!important;
+}

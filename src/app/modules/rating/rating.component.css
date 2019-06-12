@@ -1,0 +1,19 @@
+ngb-rating {
+    outline: none;
+}
+.star {
+    position: relative;
+    display: inline-block;
+    font-size: 20px;
+    color: #d3d3d3;
+    margin-left:3px;
+}
+.full {
+    color: rgb(229, 130, 34);
+}
+.half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color: rgb(229, 130, 34);
+}

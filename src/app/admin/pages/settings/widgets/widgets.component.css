@@ -1,0 +1,20 @@
+.heading-part{
+    display: flex;
+    align-items: center;
+}
+.child-head-part{
+    flex: 1;
+}
+.child-head-part img{
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+}
+.body-part {
+   padding: 10px;
+   text-align: center;
+}
+
+.body-part img{
+    width: 30px; height: 30px; object-fit: contain;
+ }

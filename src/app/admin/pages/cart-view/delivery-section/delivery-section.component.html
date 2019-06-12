@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="form-group col-sm-6" style="position: relative;">
+    <label for="ship" class="colorPurpel">Delivery By {{shippingSelect != 0 ? (shipping?.delivery_settings?.charge_by_zone ? 'Zone' : 'Location') : 'In Store'}}*</label>
+    <small style="margin-left: 10px;" *ngIf="message"><b [ngStyle]="message.color">{{message.msg}}</b></small>
+    <div *ngIf="loader" class="m-loader m-loader--brand" style="width: 30px; display: inline-block;"></div>
+    <select name="ship" id="ship" [(ngModel)]="shippingSelect" (change)="selectSgippingMethod($event)"class="form-control">
+      <option value="0">In Store Pickup</option>
+      <optgroup label="{{shipping.delivery_settings.charge_by_zone ? 'Zone' : 'Location'}}" *ngIf="shipping?.delivery_settings?.is_requiered">
+        <option [value]="method.id" *ngFor="let method of shipping.data; let i =index">{{method.name}}</option>
+      </optgroup>
+      <option *ngFor="let m of shipList" [value]="m.id">{{m.name}}</option>
+    </select>
+  </div>
+  <div class="form-group col-sm-6" *ngIf="shippingSelect==0">
+    <label for="pickup" class="colorPurpel">Pickup Store*</label>
+    <select name="pickup" id="pickup" [(ngModel)]="pickup" (change)="selectStore()"class="form-control">
+      <option [value]="pic.id" *ngFor="let pic of locationList; let i =index">{{pic.name}}</option>
+    </select>
+  </div>
+</div>
+<div class="row" style="padding:10px;" *ngIf="shipping?.delivery_settings.is_requiered && !shipping?.delivery_settings.charge_by_zone && getAddress()">
+  <div class="col-10">{{getAddress()}}</div>
+  <div class="col-2 text-right cursor-pointer" (click)="openShippingModal()">
+    <i class="fa fa-pencil"></i>
+  </div>
+</div>

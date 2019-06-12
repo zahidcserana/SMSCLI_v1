@@ -1,0 +1,100 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="animated fadeIn">
+  <div class="m-portlet__body" style="padding-bottom: 15px;">
+    <h4 class="colorPurpel">Delivery</h4>
+
+    <div>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>{{ delivery.config ? (getTitle(delivery.config.charge_by) ? 'Shipping' : 'Delivery') : ''}} Method</th>
+            <td>
+              <b>{{delivery?.config?.charge_by | uppercase}}</b>
+            </td>
+          </tr>
+          <tr>
+            <th>Delivery Charge</th>
+            <td>{{delivery?.config ? '$' + (delivery?.config.charge | number: '1.2-2') : '$0.00'}}</td>
+          </tr>
+          <tr>
+            <th>Delivery Tax</th>
+            <td>{{delivery?.config.tax ? '$' + (delivery?.config.tax | number: '1.2-2') : '$0.00'}}</td>
+          </tr>
+          <ng-container *ngIf="delivery.config && getTitle(delivery.config.charge_by)">
+            <tr>
+              <th>Delivery From</th>
+              <td>{{delivery?.config?.location.pickup_from}}</td>
+            </tr>
+          </ng-container>
+          <tr *ngIf="delivery.config && (delivery.config.charge_by == 'in-store' || getTitle(delivery.config.charge_by))">
+          <tr>
+            <th>Delivery To</th>
+            <td>{{delivery?.config?.location.delivery_to}}</td>
+          </tr>
+          <ng-container *ngIf="delivery.config && delivery.config.charge_by == 'zone'">
+            <tr>
+              <th>Selected Zone</th>
+              <td>{{delivery?.config?.location.pickup_from}}</td>
+            </tr>
+            <tr>
+              <th>Delivery To</th>
+              <td>{{delivery?.config?.location.delivery_to}}</td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="delivery.config && delivery.config.charge_by == 'location'">
+            <tr>
+              <th>Location</th>
+              <td>{{delivery?.config?.location.pickup_from}}</td>
+            </tr>
+            <tr>
+              <th>Delivery To</th>
+              <td>{{delivery?.config?.location.delivery_to}}</td>
+            </tr>
+            <tr>
+              <th>Distance</th>
+              <td>{{delivery?.config?.location.distance}} {{' ' + delivery?.config?.location.unit}}</td>
+            </tr>
+            <tr>
+              <th>Minimum Delivery Fee</th>
+              <td>{{delivery?.config?.location.min_delivery_fee ? '$' + (delivery?.config?.location.min_delivery_fee |
+                number: '1.2-2') : ''}}</td>
+            </tr>
+            <tr>
+              <th>Per Mile/Km Distance Fee</th>
+              <td>{{delivery?.config?.location.unit_price ? '$' + (delivery?.config?.location.unit_price | number:
+                '1.2-2') : ''}}</td>
+            </tr>
+          </ng-container>
+          <!-- <ng-container *ngIf="delivery.config && delivery.config.charge_by != 'in-store'">
+            <tr>
+              <td colspan="2">
+                <hr>
+              </td>
+            </tr>
+            <tr>
+              <th>Select Shiping Method</th>
+              <td>
+                <select name="" id="" class="form-control">
+                  <option selected value="1">Local</option>
+                  <option value="2">Fedex</option>
+                  <option value="3">UPS</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <th>Shiping Charge</th>
+              <td>$40.00</td>
+            </tr>
+            <tr>
+              <td colspan="2" class="text-right">
+                <button class="btn btn-dark">Submit</button>
+              </td>
+            </tr>
+          </ng-container> -->
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,327 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="animated fadeIn">
+  <div class="m-portlet__body form-panel" style="padding-bottom: 15px;">
+    <div class="header-part">
+      <h3 class="label-head colorPurpel text-uppercase" style="padding-bottom: 15px; display: inline-block;">View Cart</h3>
+      <div class="form-group admin-cart" style="display: inline-block;">
+        <ng-template #rt let-r="result" let-t="term">
+          <div>{{r.name}}</div>
+          <div class="colorPurpel" *ngIf="r.chain"><small style="font-style: italic">{{r.chain}}</small></div>
+          <div>
+            <button *ngIf="r.buy" class="btn btn-sm btn-xsm btn-outline-dark" style="margin-right: 10px;">Buy</button>
+            <button *ngIf="r.rent" class="btn btn-sm btn-xsm btn-outline-danger">Rent</button>
+          </div>
+        </ng-template>
+        <input id="typeahead-http" #autoCom name="search" type="text" class="form-control" [inputFormatter]="formatter"
+          [ngbTypeahead]="search" placeholder="Search Item by id, name, barcode and supplier product id"
+          [resultTemplate]="rt" (focus)="onFocus($event)" style="display: inline; width: 90%;" />
+        <div *ngIf="autoCom.value" (click)="autoCom.value=''; closeSearch()" style="margin: auto; padding: 5px;cursor: pointer;display: inline;">
+          <i class="fa fa-close"></i>
+        </div>
+        <div *ngIf="loader_sub" class="m-loader m-loader--brand" style="width: 30px; display: inline-block;top:-6px;"></div>
+      </div>
+      <div class="clear-cart-btn" style="display: inline-block;width: 19%;">
+        <button class="btn btn-sm btn-danger" (click)="ClearFullCart()">Clear Cart</button>
+      </div>
+    </div>
+
+
+    <!-- View Product to add -->
+    <div class="content"></div>
+    <div class="product-details-cart row" style="padding-top: 25px;" *ngIf="product && (rent || productPrice.rent.length>0)">
+      <div class="col-sm-3 pro-image-show">
+        <img *ngIf="product.images.length==0; else alter" class="img-fluid img-avatar img-thumbnail img-orgin" src="./assets/img/home/product-image-placeholder.jpg"
+          alt="Product Image" />
+        <ng-template #alter>
+          <img class="img-fluid img-avatar img-thumbnail img-orgin" src="{{imageUrl + '/' + product.id + '/' + (product.images[0] ? product.images[0].image_large : '')}}"
+            alt="Product Image" onError="this.src='./assets/img/home/product-image-placeholder.jpg';" />
+        </ng-template>
+      </div>
+      <div class="col-sm-9">
+        <h4>{{product.name}}</h4>
+        <div class="m-form__group form-group" *ngIf="product.prices && product.prices.length>0">
+          <div class="m-radio-inline">
+            <label class="m-radio" (click)="formateBuy()" *ngIf="!rent">
+              <input type="radio" name="main" [value]="1" [(ngModel)]="mode">
+              Buy
+              <span></span>
+            </label>
+            <label *ngIf="productPrice.rent.length>0 && !rent" class="m-radio" (click)="formateRent(productPrice.rent[0], 0)">
+              <input type="radio" name="main" [value]="2" [(ngModel)]="mode">
+              Rent
+              <span></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="row" style="padding-bottom: 20px;">
+          <div class="col-sm-6" *ngFor="let a of variants.variants">
+            <label *ngIf="a.attr_set_id != 1"> <span class="colorPurpel">{{a.attr_set}}:</span> {{' ' + a.attr}}</label>
+          </div>
+        </div>
+
+        <div class="rent" *ngIf="mode==2">
+          <div class="m-form__group form-group row" style="margin:0px;">
+            <div class="m-radio-list col-sm-6">
+              <label class="m-radio" *ngFor="let rent of productPrice.rent; let i ='index'" (click)="formateRent(rent, i)">
+                <input type="radio" [value]="i" name="rent" [(ngModel)]="rentPriceId">
+                ${{rent.price}} / {{rent.duration}} {{getType(rent.rent_type, rent.duration)}}
+                <span></span>
+              </label>
+            </div>
+            <div class="col-sm-6 pad-l-zero">
+              <label for="" class="colorPurpel">Rental Duration</label>
+              <div class="quantity clearfix">
+                <span class="btn btn-sm btn-dark no-m" (click)="decreaseRent()">-</span>
+                <span class="cart-qunt btn btn-sm no-m">{{item.rental_duration}}</span>
+                <span class="btn btn-sm btn-dark  no-m" (click)="increaseRent()">+</span>
+              </div>
+            </div>
+          </div>
+          <div class="m-form__group form-group row" style="margin:0px;">
+            <div class="col-sm-6 pad-l-zero">
+              <div class="form-group m-form__group">
+                <label for="" class="colorPurpel">Rental Date</label>
+                <div class="input-group date">
+                  <input type="text" class="form-control m-input" (click)="rentalDateChange()" id="Renterl-date-cart"
+                    readonly />
+                  <div class="input-group-append">
+                    <span class="input-group-text">
+                      <i class="la la-calendar-check-o"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 pad-l-zero">
+              <div class="form-group m-form__group">
+                <label class="colorPurpel">
+                  Rental Time
+                </label>
+                <div class="input-group timepicker">
+                  <input type="text" class="form-control m-input" id="Rental-time-cart" readonly placeholder="-Select Time-">
+                  <div class="input-group-append">
+                    <span class="input-group-text">
+                      <i class="la la-clock-o"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="quant row">
+          <div class="col-sm-6">
+            <label class="colorPurpel">Quantity</label>
+            <div class="quantity clearfix">
+              <span class="btn btn-sm btn-dark no-m" (click)="decreaseItemQuant()">-</span>
+              <span class="cart-qunt btn btn-sm no-m">{{item.quantity}}</span>
+              <span class="btn btn-sm btn-dark  no-m" (click)="increaseItemQuant()">+</span>
+            </div>
+
+          </div>
+          <div class="col-sm-6 price">
+            <h4>
+              Price: ${{(item.quantity * item.price * (item.rental_duration ? item.rental_duration : 1)) | number:
+              '1.2-2'}}
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div style="padding-top: 10px;">
+          <div *ngIf="loaderAdd; else addButton" class="m-loader m-loader--brand" style="width: 30px; display: inline-block;"></div>
+          <ng-template #addButton>
+            <button *ngIf="!edit" class="btn btn-brand" (click)="addItem()">Add Item</button>
+            <button *ngIf="edit" class="btn btn-brand" (click)="updateCart()">Update Item</button>
+            <button class="btn btn-danger" (click)="reset()" style="margin-left: 10px;">Cancel</button>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- View List -->
+
+  <h4 style="padding-top: 15px;padding-left: 4px;">
+    View Items
+  </h4>
+  <div class="m-portlet__body form-panel">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Description</th>
+            <th>Price & Term</th>
+            <!-- <th>Sales Tax</th> -->
+            <th style="min-width:132px;">Quantity</th>
+            <th>Subtotal</th>
+            <!-- <th>Total</th> -->
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody *ngIf="productList && productList?.cart_items?.length > 0; else NoItem">
+          <ng-container *ngFor="let cart of productList?.cart_items; let i = 'index'; trackBy: trackList">
+            <tr>
+              <td>
+                <img *ngIf="cart.product.images && cart.product.images?.length>0; else alterImage" class="img-fluid img-avatar img-thumbnail img-resize"
+                  src="{{imageUrl + '/' + cart.product.id + '/' + (cart.product.images[0] ? cart.product.images[0].image_small : '')}}"
+                  onError="this.src='./assets/img/home/product-image-placeholder.jpg';" alt="Product Image" />
+                <ng-template #alterImage>
+                  <img class="img-fluid img-avatar img-thumbnail" src="./assets/img/home/product-image-placeholder.jpg"
+                    alt="Product Image" width="100" />
+                </ng-template>
+              </td>
+              <td>
+                <h5>{{cart.product.name}}</h5>
+                <div *ngIf="cart.variant_chain_name && cart.variant_chain_name!='Unassigned'">
+                  <small>({{cart.variant_chain_name}})</small>
+                </div>
+                <div>
+                  <div *ngIf="cart.rent_start">
+                    <small>From {{getDate(cart.rent_start) | date:'MM/dd/yyyy, hh:mm a'}}</small>
+                  </div>
+                  <div *ngIf="cart.rent_end">
+                    <small>To {{getDate(cart.rent_end) | date:'MM/dd/yyyy, hh:mm a'}}</small>
+                  </div>
+                </div>
+                <div *ngIf="cart.deposit_amount>0"> Deposit Amount: ${{cart.deposit_amount | number:'1.2-2'}}
+                  {{cart.deposite_tax == 'true' ? '(Including Tax)' : ''}}</div>
+              </td>
+              <td>${{cart.price | number: '1.2-2'}}{{cart.rental_type && cart.rental_type != 'buy'? '/' + cart.term :
+                ''}} {{getType(cart.rental_type, cart.term)}}</td>
+              <td>
+                <div class="quantity clearfix">
+                  <span [ngClass]="{'block-cursor': increament == i}" class="btn btn-sm btn-dark no-m" (click)="decreaseQuant(cart, i)">-</span>
+                  <span class="cart-qunt btn btn-sm no-m" style="position: relative;">{{cart.quantity}}
+                    <div *ngIf="increament == i" class="m-loader m-loader--brand" style="position: absolute;width: 30px;top:15px; left:10px;"></div>
+                  </span>
+                  <span [ngClass]="{'block-cursor': increament == i}" class="btn btn-sm btn-dark  no-m" (click)="increaseQuant(cart, i)">+</span>
+                </div>
+              </td>
+              <td>
+                ${{cart.sub_total | number: '1.2-2'}}
+              </td>
+              <td>
+                <button (click)="addDiscount(cart.sub_total,cart.substantive_price, cart)" title="Edit Discount" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill">
+                  <i class="fa fa-percent"></i>
+                </button>
+                <button *ngIf="cart.rental_type && cart.rental_type != 'buy'" (click)="editCart(cart, i)" title="Edit Cart Item"
+                  class="btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button (click)="removeCart(cart)" title="Remove Item" class="btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+        <ng-template #NoItem>
+          <tbody>
+            <tr>
+              <td colspan="7">
+                <h5 class="text-center">No Item Found</h5>
+              </td>
+            </tr>
+          </tbody>
+        </ng-template>
+      </table>
+    </div>
+
+    <div *ngIf="cartToken" class="row" style="margin-top: 20px;">
+      <div class="col-12">
+        <div class="row">
+          <div class="form-group col-sm-12">
+            <label for="cupon" class="colorPurpel">Coupon</label>
+            <input id="cupon" type="text" name="coupon" [(ngModel)]="couponCode.code" class="form-control" placeholder="Enter Coupon Code ...">
+            <button *ngIf="!loader" type="button" [disabled]="couponCode.code == null || couponCode.code==''" (click)="applyCoupon()"
+              class="btn btn-sm btn-dark" style="margin: 10px 0px;">
+              Apply Coupon
+            </button>
+            <div *ngIf="loader" class="m-loader m-loader--brand" style="width: 30px; display: inline-block;"></div>
+          </div>
+        </div>
+        <app-delivery-section [shipping]="shipping" [locationList]="locationList" [productList]="productList" (load)="deliveryUpdate($event)"></app-delivery-section>
+      </div>
+
+      <div class="col-12" style="padding-top: 10px;">
+        <h4 class="pb-2">Cart Totals</h4>
+        <div class="table-responsive">
+          <table class="table cart">
+            <tbody>
+              <tr>
+                <td>
+                  Subtotal
+                </td>
+                <td>
+                  <span class="cart_p"><b>${{productList?.sub_total | number:'1.2-2'}}</b></span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Delivery Charge
+                </td>
+                <td>
+                  <span class="cart_p"> ${{productList?.delivery_charge | number:'1.2-2'}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Discount
+                </td>
+                <td>
+                  <span class="cart_p"> ${{productList?.total_discount | number:'1.2-2'}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Sales Tax
+                </td>
+                <td>
+                  <span class="cart_p"> ${{productList?.tax | number:'1.2-2'}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Delivery Tax
+                </td>
+                <td>
+                  <span class="cart_p"> ${{productList?.delivery_tax | number:'1.2-2'}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Total Deposit Amount
+                </td>
+                <td>
+                  <span class="cart_p"> ${{productList?.deposit_amount | number:'1.2-2' }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h5>Total</h5>
+                </td>
+                <td>
+                  <h5> <span class="cart_p">${{productList?.total | number:'1.2-2'}}</span></h5>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-12">
+        <button class="btn btn-brand" [disabled]="productList?.cart_items.length<1 || shippingSelect==0" (click)="checkOutProceed()">Proceed
+          to Checkout</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+.home {
+    width: 93%;
+}
+
+.admin-cart .dropdown-menu.show, .home .dropdown-menu.show {
+    width: 90%;
+}
+
+

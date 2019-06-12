@@ -1,0 +1,338 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div *ngIf="!orderDone; else orderCreated" class="content">
+  <h4>
+    Select Payment Type
+  </h4>
+  <div class="m-form__group form-group">
+    <div class="m-radio-inline">
+      <label class="m-radio" *ngIf="allGateways.length > 0">
+        <input type="radio" name="main" [value]="1" [(ngModel)]="mode" (click)="changeMode(1)">
+        Credit Card Entry
+        <span></span>
+      </label>
+      <label class="m-radio" *ngIf="bolt">
+        <input type="radio" name="main" [value]="2" [(ngModel)]="mode" (click)="changeMode(2)">
+        Card Swipe
+        <span></span>
+      </label>
+      <label class="m-radio">
+        <input type="radio" name="main" [value]="3" [(ngModel)]="mode" (click)="changeMode(3)">
+        Cash
+        <span></span>
+      </label>
+    </div>
+  </div>
+  <div style="width: 100%; height: 100px;" *ngIf="loaderApi">
+    <div *ngIf="loaderApi" class="table-load m-loader m-loader--brand"></div>
+  </div>
+  <div *ngIf="!loaderApi">
+    <div *ngIf="is_online; else OFFline">
+      <div class="m-portlet__body form-panel" style="margin: 0px;">
+        <div *ngIf="mode==1">
+          <div class="form-group">
+            <h5>Select Payment Gateway</h5>
+            <div class="gatewat-select">
+              <select class="form-control" name="gate" #gate style="flex: 2" (change)="changeGateway(gate.value)">
+                <option value="">-Select Gateway-</option>
+                <option [value]="gate.name" *ngFor="let gate of allGateways">{{gate.name}}</option>
+              </select>
+              <div style="flex: 1">
+                <img [src]="gateImage">
+              </div>
+            </div>
+          </div>
+          <div>
+            <ng-template #cardConect></ng-template>
+          </div>
+        </div>
+
+        <div *ngIf="mode == 2">
+          <div *ngIf="loader; else bttnSWIPE" class="m-loader m-loader--brand" style="width: 30px;display: inline-block;"></div>
+          <ng-template #bttnSWIPE>
+            <button *ngIf="responseText" type="button" (click)="submitSwipe(form)" class="btn btn-brand">Procced To
+              Order</button>
+            <button *ngIf="!responseText" type="button" (click)="changeMode(2)" class="btn btn-dark">Try Again</button>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #OFFline>
+      <div class="m-portlet__body form-panel" style="margin: 0px;">
+        <form #formOffline="ngForm" class="row">
+          <div class="row" style="margin: 0px;">
+            <div class="form-group col-sm-12">
+              <h5>
+                Cart Total: ${{cartItems.total | number : '1.2-2'}}
+              </h5>
+            </div>
+            <div class="form-group col-sm-6">
+              <label for="paymethod" class="colorPurpel">
+                Payment Method*
+              </label>
+              <select class="form-control m-input" name="paymethod" id="paymethod" [(ngModel)]="payment_method"
+                required>
+                <option *ngFor="let m of oflinePaymentmethod; let i ='index'" [value]="m">{{m}}</option>
+              </select>
+            </div>
+            <div class="form-group col-sm-6">
+              <label for="amount" class="colorPurpel">
+                Amount tendered*
+              </label>
+              <div class="input-group m-input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="table-cost-addon">
+                    $
+                  </span>
+                </div>
+                <input id="cost" class="form-control m-input" id="amount" type="text" placeholder="0.00" name="amount"
+                  [maxlength]="maxLength" numberOnly [(ngModel)]="payment_amount" (ngModelChange)="checkPayAmount()"
+                  autocomplete="off" required [disabled]="payment_method == 1">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="table-cost-addon">
+                    USD
+                  </span>
+                </div>
+              </div>
+              <span *ngIf="payment_error">
+                <small class="error">Amount should be equal or greater than cart total</small>
+              </span>
+            </div>
+            <div class="form-group col-sm-6">
+              <h5>
+                Change Amount: ${{changeAmount | number : '1.2-2'}}
+              </h5>
+            </div>
+            <div class="form-group col-sm-12">
+              <div *ngIf="loader; else bttnOff" class="m-loader m-loader--brand" style="width: 30px;display: inline-block;"></div>
+              <ng-template #bttnOff>
+                <button type="button" (click)="offlinePayment()" [disabled]="!formOffline.form.valid || payment_error"
+                  class="btn btn-brand">Submit</button>
+              </ng-template>
+            </div>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+  </div>
+
+  <h4 style="margin: 20px auto;">
+    Order Summary
+  </h4>
+  <div class="m-portlet__body form-panel" style="margin: 0px;">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Description</th>
+            <th>Price & Term</th>
+            <!-- <th>Sales Tax</th> -->
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <!-- <th>Total</th> -->
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let cart of cartItems.cart_items">
+            <td>
+              <img class="img-fluid img-avatar img-thumbnail" *ngIf="cart.product.images.length>0; else alterImage" src="{{img_url}}{{cart.store_id}}/{{cart.product.id}}/{{cart.product.images[0].image_small}}"
+                alt="Product Image" onError="this.src='./assets/img/home/product-image-placeholder.jpg';" />
+              <ng-template #alterImage>
+                <img class="img-fluid img-avatar img-thumbnail" src="./assets/img/home/product-image-placeholder.jpg"
+                  alt="Product Image" />
+              </ng-template>
+            </td>
+            <td>
+              <h5>{{cart.product.name}}</h5>
+              <div *ngIf="cart.variant_chain_name && cart.variant_chain_name!='Unassigned'">
+                <small>({{cart.variant_chain_name}})</small>
+              </div>
+              <div>
+                <div *ngIf="cart.rent_start">
+                  <small>From {{getDate(cart.rent_start) | date:'MM/dd/yyyy, hh:mm a'}}</small>
+                </div>
+                <div *ngIf="cart.rent_end">
+                  <small>To {{getDate(cart.rent_end) | date:'MM/dd/yyyy, hh:mm a'}}</small>
+                </div>
+              </div>
+              <div *ngIf="cart.deposit_amount>0"> Deposit Amount: ${{cart.deposit_amount | number:'1.2-2'}}
+                {{cart.deposite_tax == 'true' ? '(Including Tax)' : ''}}</div>
+            </td>
+            <td>${{cart.price | number: '1.2-2'}}{{cart.rental_type && cart.rental_type != 'buy'? '/' + cart.term :
+              ''}} {{getType(cart.rental_type, cart.term)}}</td>
+            <td>
+              {{cart.quantity}}
+            </td>
+            <td>
+              ${{cart.sub_total | number: '1.2-2'}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-4 pt-4 pb-3 mb-3">
+      <div class="price_show">
+        <p>Subtotal :
+          <span class="cart_p">${{cartItems.sub_total | number:'1.2-2'}}</span>
+        </p>
+      </div>
+      <div class="price_show">
+        <p>Delivery Charge :
+          <span class="cart_p">${{cartItems.delivery_charge | number:'1.2-2'}}</span>
+        </p>
+      </div>
+      <div class="price_show">
+        <p>Discount :
+          <span class="cart_p">${{cartItems.total_discount | number:'1.2-2'}}</span>
+        </p>
+      </div>
+      <div class="price_show">
+        <p>Sales Tax :
+          <span class="cart_p">${{cartItems.tax | number:'1.2-2'}}</span>
+        </p>
+      </div>
+      <div class="price_show">
+        <p>Delivery Tax :
+          <span class="cart_p">${{cartItems.delivery_tax | number:'1.2-2'}}</span>
+        </p>
+      </div>
+      <div class="price_show">
+        <p>Total Deposit Amount :
+          <span class="cart_p">${{cartItems.deposit_amount | number:'1.2-2'}}</span>
+        </p>
+      </div>
+      <div class="price_show">
+        <h4>Total :
+          <span class="cart_p">${{cartItems.total | number : '1.2-2'}}</span>
+        </h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #orderCreated>
+  <section class="main-content mrt-md mrb-md animated fadeIn content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="table-responsive col-12" style="padding-top: 20px;">
+          <table class="table cart">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Product</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <!-- <th>Sales Tax</th> -->
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container class="list" *ngFor="let cart of cartItems.cart_items; let i='index'">
+                <tr>
+                  <td>
+                    <img class="img-fluid img-avatar img-thumbnail" *ngIf="cart.product.images.length>0" style="max-width:50px;"
+                      src="{{img_url}}{{cart.store_id}}/{{cart.product.id}}/{{cart.product.images[0].image_small}}"
+                      onError="this.src='./assets/img/home/product-image-placeholder.jpg';">
+
+                    <img class="img-fluid img-avatar img-thumbnail" *ngIf="cart.product.images.length==0" style="max-width:50px;"
+                      src="./assets/img/home/product-image-placeholder.jpg" alt="Product profile" />
+
+                  </td>
+                  <td>
+                    <div class="product">
+                      {{cart.product.name}}
+                    </div>
+                    <div *ngIf="cart.deposit_amount>0" class="deposit"> Deposit Amount: ${{cart.deposit_amount |
+                      number:'1.2-2'}} {{cart.deposite_tax == 'true' ? '(Including Tax)' : ''}}</div>
+                  </td>
+                  <td>${{cart.price | number: '1.2-2' }} </td>
+                  <td>{{cart.quantity}}</td>
+                  <td>
+                    ${{cart.sub_total | number: '1.2-2'}}
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+
+        </div>
+        <div class="col-12" style="padding-top: 20px;">
+          <h4>Order Summary
+            <a href="{{api}}pages/pdf?order_id={{order_id}}" class="btn btn-sm btn-outline-orange" title="Download Pdf"><i
+                class="fa fa-file-pdf-o"></i> Download</a>
+            <button class="btn btn-sm btn-outline-brand" (click)="gotoDetails()" title="Order Details" style="margin-left: 10px"><i
+                class="fa fa-eye"></i> Details</button>
+          </h4>
+          <div class="table-responsive">
+            <table class="table cart">
+              <tbody>
+                <tr>
+                  <td>
+                    Subtotal
+                  </td>
+                  <td>
+                    <span class="cart_p"> ${{cartItems.sub_total | number:'1.2-2'}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Delivery Charge
+                  </td>
+                  <td>
+                    <span class="cart_p">${{cartItems.delivery_charge | number:'1.2-2'}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Discount
+                  </td>
+                  <td>
+                    <span class="cart_p">${{cartItems.total_discount | number:'1.2-2'}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Sales Tax
+                  </td>
+                  <td>
+                    <span class="cart_p"> ${{cartItems.tax | number:'1.2-2'}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Delivery Tax
+                  </td>
+                  <td>
+                    <span class="cart_p"> ${{cartItems.delivery_tax | number:'1.2-2'}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Total Deposit Amount
+                  </td>
+                  <td>
+                    <span class="cart_p">${{cartItems.deposit_amount | number:'1.2-2'}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <h5>Total</h5>
+                  </td>
+                  <td>
+                    <h5>
+                      <span class="cart_p"> ${{cartItems.total | number : '1.2-2'}}</span>
+                    </h5>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>

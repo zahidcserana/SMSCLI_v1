@@ -1,0 +1,44 @@
+
+.exist-user {
+    padding: 30px 17px;
+    margin: 25px 0;
+    border: 1px solid #edeff1;
+}
+.billing-address  {
+    padding-top: 2%;
+    position: relative;
+}
+.shipping-address {
+    padding-top: 5.5%;
+    position: relative;
+}
+form {
+    margin-bottom: 10%;
+}
+
+.order_details {
+    width: 100%;
+}
+.row.order_details {
+	margin-left: 0;
+	margin-right: 0;
+}
+h3 {
+	padding-left: 15px !important;
+}
+@media (max-width: 767px) {
+	.row.order_details .col-md-6,
+	.row.order_details .col-md-12 {
+		margin-left: 0;
+		margin-right: 0;
+		padding: 0;
+	}
+}
+
+.btn {
+    margin-left: 133px!important;
+}
+
+app-shipping-method {
+    width: 100%;
+}

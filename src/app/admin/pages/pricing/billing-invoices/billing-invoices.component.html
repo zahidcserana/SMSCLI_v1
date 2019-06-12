@@ -1,0 +1,119 @@
+<div class="m-content product-list animated fadeIn">
+  <div class="m-subheader">
+    <div class="d-flex align-items-center">
+      <div class="mr-auto">
+        <h3 class="m-subheader__title m-subheader__title--separator">
+          Plans
+        </h3>
+        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+          <li class="m-nav__item m-nav__item--home">
+            <a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+              <i class="m-nav__link-icon la la-home"></i>
+            </a>
+          </li>
+          <li class="m-nav__separator">
+            <i class="fa fa-angle-right"></i>
+          </li>
+          <li class="m-nav__item">
+            <a class="m-nav__link">
+              <span class="m-nav__link-text">
+                Invoice
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="m-portlet__body" style="position: relative;background: #fff;padding: 20px;">
+    <div class="m-section">
+
+      <div class="white p-4 ">
+        <div class="billing-details">
+          <div class="billing-details-top">
+            <br>
+            <p>
+              <span class="paid-status" [ngClass]="{'paid':details.paid}"> paid</span>
+            </p>
+            <a    class=" dwn-btn m-badge m-badge--wide m-badge--warning invoice-btn button lbtn-sm">Download <i  class="fa ml-2 fa-file-pdf-o"></i>
+              
+            </a>
+          </div>
+          <div class="m-portlet__body" style="position: relative;">
+              <div class="m-section">
+                <div class="m-section__content price-table">
+                  <div class="table-responsive" style="margin-bottom: 10px;">
+                    <table class="table table-hover">
+                      <thead>
+                          <th>BILLED TO</th>
+                          <th>INVOICE NUMBER</th>
+                          <th>ISSUED DATE</th>
+                          <th>FOR FERIOD</th>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td>
+                                <span>
+                                  <b>{{userData.name}}</b>
+                                  
+                                 </span>
+                                <br>
+                                <span>
+                                  {{userData.email}}
+                                </span>
+                                <br>
+                              <p class="mt-2" *ngIf="userData">
+                                  <span>Store Name : {{userData.store_name}}</span>,
+                                 
+                                </p>
+
+                                <!-- <p class="mt-2" *ngIf="userData">
+                                  <span *ngIf="userData.address1">{{userData.address1}}</span>,
+                                  <span *ngIf="userData.address2"> {{userData.address2?userData.address2:''}}</span>
+                                </p>
+                                <p *ngIf="userData">
+                                  <span *ngIf="userData.city"> {{userData.city?userData.city:''}} </span>
+                                  <br>
+                                  <span *ngIf="userData.state"> {{userData.state?userData.state :''}} </span>
+                                  <br>
+                                  <span *ngIf="userData.zip_code"> {{userData.zip_code?userData.zip_code:''}}</span>
+                                </p> -->
+                              </td>
+                              <td>{{details.number}}</td>
+                              <td>{{details.date | date }}</td>
+                              <td>{{formatDate(details.product.period.start) | date }} - {{formatDate(details.product.period.end) | date }}
+                              </td>
+                            </tr>
+        
+                      </tbody>
+                     
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          <div class="biling-price">
+            <h4 *ngIf="userData">Total summary for {{userData.name}}</h4>
+
+            <table class="table">
+              <tr>
+                <td class="text-left">{{details.product.description }}</td>
+                <td class="text-right">${{details.product.amount / 100 | number:'1.2-2' }}</td>
+              </tr>
+              <tr>
+                <td class="text-left">SubTotal</td>
+                <td class="text-right">${{details.subtotal / 100 | number:'1.2-2' }}</td>
+              </tr>
+              <tr>
+                <th class="text-left">Total</th>
+                <th class="text-right">${{details.total /100 | number:'1.2-2' }}</th>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

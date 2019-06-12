@@ -1,0 +1,101 @@
+.main-content {
+    padding-top: 100px;
+    background-color: #fff;
+    padding-bottom: 30px;
+}
+
+.linkpage-banner {
+    height: 200px;
+    padding-left: 15%;
+}
+
+.table tr td, .table tr th{
+    vertical-align: middle;
+    border-bottom: 1px solid #ebedf2!important;
+    min-width: 60px;
+    text-align: left;
+}
+.table tr th{
+    font-weight: 600;
+}
+.table tr td a{
+    text-decoration: none;
+}
+.quantity .btn{
+    border-radius: 0px;
+}
+
+.quantity .cart-qunt {
+    width: 50px;
+    border: 1px solid;
+    cursor: initial;
+}
+.cart-action button{
+    margin-left: 10px;
+}
+
+.linkpage-banner h2 {
+    padding-top: 70px;
+}
+
+.cart_p {
+    text-align: right!important;
+    display: inline-block;
+    width: 70%;
+
+}
+
+.download-btn {
+    height: 31px;
+    display: inline-block;
+    width: 137px!important;
+    padding: 3px 11px;
+    float: right;
+    font-size: 12px;
+    border-radius: 3px;
+    margin-bottom: 14px;
+}
+.deposit {
+    width:90%;
+    float: left;
+    font-weight: bold;
+    padding-left: 11%;
+    text-transform: capitalize
+}
+.total {
+    width: 50%;
+    float: left;
+    text-align: right;
+    padding-right: 2%;
+    font-weight: bold;
+}
+
+
+.img-thumbnail {
+    max-height: 95px!important;
+    transform: scale(.8);
+}
+
+@media (min-width: 200px) and (max-width: 767px) {
+    a.mbl-btn {
+        display: block;
+    }
+    a.tab-btn {
+        display: none;
+    }
+    .order-box {
+        width: 100%;
+        padding: 0!important;
+    }
+    .preview_tbl {
+         margin-top: 70px;
+    }
+}
+@media  (min-width: 768px) {
+    a.tab-btn {
+        display: block;
+    }
+    a.mbl-btn {
+        display: none;
+    }
+}

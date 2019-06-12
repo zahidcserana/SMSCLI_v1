@@ -1,0 +1,171 @@
+<div class="custom-alert" #hasAlert></div>
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        All Users
+      </h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+        <li class="m-nav__item m-nav__item--home">
+          <a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+        <li class="m-nav__separator">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+          <a class="m-nav__link">
+            <span class="m-nav__link-text">
+              User List
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content product-list animated fadeIn">
+  <!--begin::Portlet-->
+  <user-filter (loadList)="filterList($event)"></user-filter>
+  <!--end::Portlet-->
+  <!--begin::Portlet-->
+  <div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+      <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title row" style="width: 100%;">
+          <h3 class="m-portlet__head-text col-6">
+            User List
+          </h3>
+          <div class="col-6 add-list-btn text-right">
+            <button type="button" class="btn btn-brand btn-sm" (click)="creatnewUser()">
+              <i class="fa fa-plus"></i>
+              Add New
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-portlet__body" style="position: relative;">
+      <!--begin: Datatable -->
+      <!--begin::Section-->
+      <div class="m-section">
+        <div class="m-section__content price-table">
+          <div *ngIf="loader" class="table-load m-loader m-loader--brand"></div>
+          <div class="table-responsive" style="margin-bottom: 10px;">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>
+                    Avatar
+                  </th>
+                  <th>
+                    ID
+                  </th>
+                  <th>
+                    Name
+                  </th>
+                  <th>
+                    Email
+                  </th>
+                  <th>
+                    Phone
+                  </th>
+                  <th>
+                    User Type
+                  </th>
+                  <th>
+                    Created
+                  </th>
+                  <th>
+                    Status
+                  </th>
+                  <th>
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="userList.length<1; else table">
+                <tr>
+                  <td colspan="9">
+                    <h4 class="text-center">No User Found</h4>
+                  </td>
+                </tr>
+              </tbody>
+              <ng-template #table>
+                <tbody>
+                  <tr *ngFor="let user of userList; let i='index'; trackBy: tarckUser; let o='odd'; let e='even'"
+                    [ngClass]="{'odd-tr':o, 'even-tr':e}">
+                    <td>
+                      <div style="width:60px;height: 60px; border-radius: 50%;">
+                        <img *ngIf="user.image; else ALTRImage" class="img-fluid img-avatar img-thumbnail img-resize"
+                          src="{{image_url + user.image}}" onError="this.src='./assets/img/admin/logo/user.png';" alt="No Image">
+                        <ng-template #ALTRImage>
+                          <img src="./assets/img/admin/logo/user.png" class="img-fluid img-avatar img-thumbnail img-resize"
+                            alt="" />
+                        </ng-template>
+                      </div>
+                    </td>
+                    <td>{{user.id}}</td>
+                    <td>
+                      <a routerLink="/admin/user/{{user.id}}/profile">{{user.first_name}} {{user.last_name}}</a>
+                    </td>
+                    <td>
+                      {{user.email}}
+                    </td>
+                    <td>
+                      {{user.primary_addres?.phone}}
+                    </td>
+                    <td>
+                      {{findUserType(user.user_type_id)}}
+                    </td>
+                    <td>
+                      {{dateFormat(user.created)}}
+                    </td>
+                    <td>
+                      <span class="m-badge m-badge--wide" [ngClass]="{'m-badge--success': user.status==1, 'm-badge--danger': user.status!=1}">{{checkStatus(user.status)}}</span>
+                    </td>
+                    <td>
+                      <a routerLink="/admin/user/{{user.id}}/account-settings" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon 
+                            m-btn--icon-only m-btn--pill">
+                        <i class="la la-edit"></i>
+                      </a>
+                      <a id="m_quick_sidebar_toggle" (click)="archiveUserList(user.id,i)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="la la-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </ng-template>
+            </table>
+          </div>
+          <!-- pagination Start-->
+          <boot-pagination [totalSize]="pagi.total" [page]="pagi.page" [pagelimit]="pagi.limit" [listSize]="pagi.limit"
+            (pageChange)="reloadTable($event)"></boot-pagination>
+          <!-- pagination End-->
+        </div>
+      </div>
+      <!--end::Section-->
+      <!--end: Datatable -->
+    </div>
+
+  </div>
+  <!--end::Portlet-->
+</div>
+
+
+
+<div class="native-routing animated">
+  <button class="close-sidebar btn btn-sm btn-brand">
+    <i class="fa fa-chevron-right"></i>
+  </button>
+  <span class="close-sidebar-upper">
+    <i class="la la-close"></i>
+  </span>
+  <div class="native-routing-container">
+    <app-add-user [signUp]="signUp" (submit)="submitUser($event)"></app-add-user>
+  </div>
+</div>

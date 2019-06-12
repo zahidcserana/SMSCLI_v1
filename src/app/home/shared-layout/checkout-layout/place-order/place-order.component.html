@@ -1,0 +1,125 @@
+<!-- main content -->
+<section class="main-content mrt-md mrb-md animated fadeIn">
+
+  <div class="row">
+    <div class="table-responsive col-md-8 ">
+      <table class="table cart">
+        <thead>
+          <tr>
+            <th></th>
+            <th>{{contents.site_specific.cart.th_product}}</th>
+            <th>{{contents.site_specific.cart.th_unit_price}}</th>
+            <th>{{contents.site_specific.cart.th_quantity}}</th>
+            <th>{{contents.site_specific.cart.th_sales_tax}}</th>
+            <th>{{contents.site_specific.cart.th_subtotal}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container class="list" *ngFor="let cart of cartItems; let i='index'">
+            <tr>
+              <td>
+                <img class="img-fluid img-avatar img-thumbnail" *ngIf="cart.product.images.length>0" style="max-width:50px;"
+                  src="{{img_url}}{{cart.store_id}}/{{cart.product.id}}/{{cart.product.images[0].image_small}}">
+
+                <img class="img-fluid img-avatar img-thumbnail" *ngIf="cart.product.images.length==0" style="max-width:50px;"
+                  src="./assets/img/home/product-image-placeholder.jpg" alt="Product profile" />
+
+              </td>
+              <td>
+                <div class="product">
+                  <p>
+                    {{cart.product.name}}
+                  </p>
+                  <div *ngIf="cart.deposit_amount>0" class="deposit"> {{contents.site_specific.cart.deposite_amount}} :
+                    ${{cart.deposit_amount | number:'1.2-2'}} </div>
+                </div>
+              </td>
+              <td>${{cart.price}} </td>
+              <td>{{cart.quantity}}</td>
+              <td>{{cart.sales_tax}}%</td>
+              <td>
+                ${{cart.sub_total | number:'1.2-2'}}
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+
+    </div>
+    <div class="col-md-3 ml-4">
+      <h4>{{contents.site_specific.cart.lbl_total}}
+        <a href="{{api}}pages/pdf?order_id={{order_id}}" class=" download-btn theme-btn btn  ">Download Receipt </a>
+      </h4>
+      <div class="table-responsive">
+        <table class="table cart">
+          <tbody>
+            <tr>
+              <td>
+                {{contents.site_specific.cart.th_subtotal}}
+              </td>
+              <td>
+                <span class="cart_p">
+                  <b> ${{cart.sub_total | number:'1.2-2'}} </b>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {{contents.site_specific.cart.lbl_shipping}}
+              </td>
+              <td>
+
+                <span class="cart_p"> ${{cart.delivery_charge | number:'1.2-2'}} </span>
+
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {{contents.site_specific.cart.lbl_discount}}
+              </td>
+              <td>
+
+                <span class="cart_p"> ${{cart.total_discount | number:'1.2-2'}}</span>
+
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {{contents.site_specific.cart.lbl_tax}}
+              </td>
+              <td>
+
+                <span class="cart_p"> ${{cart.tax | number:'1.2-2'}}</span>
+
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {{contents.site_specific.cart.lbl_total_deposite}}
+
+              </td>
+              <td>
+
+                <span class="cart_p"> ${{cart.deposit_amount | number:'1.2-2'}}</span>
+
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5>{{contents.site_specific.cart.lbl_total}}</h5>
+              </td>
+              <td>
+                <h5>
+                  <span class="cart_p"> ${{ cart.total | number:'1.2-2'}} </span>
+                </h5>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+<!-- / main content -->

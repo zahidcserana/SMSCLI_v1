@@ -1,0 +1,84 @@
+<div class="format-instruction" *ngIf="name == 'Authorize.Net'">
+  <h4>Setup Instructions</h4>
+  <p>Connecting your Authorize.net account to RentMy is easy! Follow these simple steps to use Authorize.net as the
+    merchant processor for your RentMy transactions.</p>
+  <p>
+    <b>Step 1:</b> Log into Authorize.net
+  </p>
+  <p><b>Step 2:</b> Select “Settings” under the Account</p>
+  <div>
+    <img src="./assets/img/admin/instructions/dotnetSettings.png" alt="">
+  </div>
+  <p>
+    <b>Step 3:</b> Click API Credentials & Keys
+  </p>
+  <div>
+    <img src="./assets/img/admin/instructions/dotnetApi.png" alt="">
+  </div>
+  <p><b>Step 4:</b> Copy your API Login ID</p>
+  <div>
+    <img src="./assets/img/admin/instructions/dotnetLogin.png" alt="">
+  </div>
+  <p><b>Step 5:</b> Create a new transaction key</p>
+  <div>
+    <img src="./assets/img/admin/instructions/dotnetKey.png" alt="">
+  </div>
+  <p><b>Step 6:</b> Copy the new transaction key and paste it into the appropriate fields in your RentMy account.</p>
+  <p>Step 7: Hit the “Submit” button. Your information is saved and now your customers’ payments will be processed
+    through your Authorize.net account.</p>
+</div>
+
+<div class="format-instruction" *ngIf="name == 'PayPal'">
+  <h4>Setup Instructions</h4>
+  <p>Connecting your PayPal Pro account to RentMy is easy! Follow these simple steps to use Authorize.net as the
+    merchant processor for your Renterval transactions.</p>
+  <p>
+    <b>Step 1:</b> Log into PayPal and confirm your account type is PayPal Pro.
+  </p>
+  <p><b>Step 2:</b> Select ”Profile” next to the logout button.</p>
+  <div>
+    <img src="./assets/img/admin/instructions/paypalProfile.png" alt="">
+  </div>
+  <p>
+    <b>Step 3:</b> Choose “My selling tools”
+  </p>
+  <div>
+    <img src="./assets/img/admin/instructions/paypalTool.png" alt="">
+  </div>
+  <p><b>Step 4:</b> Click “Update” from the API access link</p>
+  <div>
+    <img src="./assets/img/admin/instructions/paypalApi.png" alt="">
+  </div>
+  <p><b>Step 5:</b> Choose “Manage API credentials” from the NVP/SOAP API integration (Classic)” method</p>
+  <div>
+    <img src="./assets/img/admin/instructions/paypalIntegration.png" alt="">
+  </div>
+  <p><b>Step 6:</b> Copy the information from the respective fields and paste them to the appropriate fields in your RentMy account.</p>
+  <p><b>Step 7:</b> Hit the “Submit” button. Your information is saved and now your customers’ payments will be processed through your PayPal Pro account.</p>
+</div>
+<div class="format-instruction" *ngIf="name == 'Stripe'">
+  <h4>Setup Instructions</h4>
+  <p>Connect Stripe to your RentMy account by following these simple steps:</p>
+
+  <p>
+    <b>Step 1:</b> Log in to your Stripe account at Stripe.com.
+  </p>
+  <div>
+    <img src="./assets/img/admin/instructions/stripe_developer.png" alt="">
+  </div>
+  <p><b>Step 2:</b> Visit the Developers area.</p>
+  <div>
+    <img src="./assets/img/admin/instructions/stripe_developer_area.png" alt="">
+  </div>
+  <p>
+    <b>Step 3:</b> Click “API keys”
+  </p>
+  <div>
+    <img src="./assets/img/admin/instructions/stripe_apikeys" alt="">
+  </div>
+  <p><b>Step 4:</b> Copy the Publishable and Secret keys</p>
+  <div>
+    <img src="./assets/img/admin/instructions/stripe_secret.png" alt="">
+  </div>
+  <p><b>Step 5:</b> Add keys to your account and click “Submit”</p>
+</div>

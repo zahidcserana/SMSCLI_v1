@@ -1,0 +1,63 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Import Inventory
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                  <i class="fa fa-angle-right"></i>
+                </li>
+                <li class="m-nav__item">
+                  <a routerLink="/admin/inventory" class="m-nav__link">
+                    <span class="m-nav__link-text">
+                      Product List
+                    </span>
+                  </a>
+                </li>
+                <li class="m-nav__separator" style="padding-left: 10px">
+                  <i class="fa fa-angle-right"></i>
+                </li>
+                <li class="m-nav__item">
+                  <a class="m-nav__link">
+                    <span class="m-nav__link-text">
+                      Import Inventory
+                    </span>
+                  </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+  <div class="m-portlet">
+    <div class="m-portlet-body">
+      <div class="row">
+        <h4 class="col-sm-7">
+          Upload CSV or Excel File <small>(Maximium File Size is 5MB)</small>
+        </h4>
+        <div class="col-sm-5">
+          <button class="btn btn-sm btn-dark float-right" style="margin-left: 10px;" (click)="gotoList()">Back</button>
+          <a [attr.href]="downloadApi" title="Download Sample" class="btn btn-sm btn-brand float-right" style="color:#fff;">Download Sample</a>
+        </div>
+      </div>
+      <div style="position: relative; padding-top: 20px;">
+        <drag-drop [multi]='false' [url]="url" [fileName]="'file'" [limit]="5" [info]="uploadInfo" [accept]="'.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'" (upload)="uploadFiles($event)" ></drag-drop>
+      </div>
+
+      <div style="position: relative; padding-top: 20px;">
+        <h4>Upload Image <small>(Maximium File Size is 5MB)</small></h4>
+        <drag-drop [multi]='true' [limit]="5" [url]="imageUrl" [fileName]="'image'" [accept]="'image/*'" (upload)="uploadImages($event)" ></drag-drop>
+      </div>
+    </div>
+  </div>
+</div>
+

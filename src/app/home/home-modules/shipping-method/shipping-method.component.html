@@ -1,0 +1,28 @@
+<div class="row pl-3 pb-3">
+  <div class="form-group " [className]="type==='cart'?'col-md-12':'col-md-6'">
+    <label>Delivery By {{selectedMethod != 0 ? (shipping.delivery_settings.charge_by_zone ? 'Zone' : 'Location') : 'In Store'}}
+      <i *ngIf="submitting" class="fa fa-spinner fa-spin fa-loader"></i></label>
+
+    <select name="ship" [(ngModel)]="selectedMethod" (change)="openModal($event)" class="form-control">
+      <option value="0">In Store Pickup</option>
+      <option *ngIf="shipping.delivery_settings.is_requiered && !shipping.delivery_settings.charge_by_zone" [value]="shipLocation">Ship By Location</option>
+      <optgroup *ngIf="shipping.delivery_settings.is_requiered && shipping.delivery_settings.charge_by_zone" label="Zone" >
+        <option [value]="method.id" *ngFor="let method of shipping.data; let i =index">{{method.name}}</option>
+      </optgroup>
+      <option *ngFor="let m of shipList" [value]="m.id">{{m.name}}</option>
+    </select>
+
+  </div>
+  <div [className]="type==='cart'?'col-md-12 mt-15':'col-md-6'" class="form-group" *ngIf="selectedMethod == 0" >
+    <label>Select Location</label>
+    <select name="loc" id="" [(ngModel)]="selectedPickup" (change)="selectStore()" class="form-control">
+      <option [value]="method.id" *ngFor="let method of locations">{{method.name}}</option>
+    </select>
+  </div>
+</div>
+<div class="row pl-3 pb-3" *ngIf="shipping.delivery_settings.is_requiered && !shipping.delivery_settings.charge_by_zone && getAddress()">
+  <div class="col-10">{{getAddress()}}</div>
+  <div class="col-2 text-right cursor-pointer" (click)="openShippingModal()">
+    <i class="fa fa-pencil"></i>
+  </div>
+</div>

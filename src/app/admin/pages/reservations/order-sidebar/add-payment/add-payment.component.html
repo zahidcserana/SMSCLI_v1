@@ -1,0 +1,168 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="animated fadeIn">
+  <div class="m-portlet__body" style="padding-bottom: 15px;">
+    <h4 class="colorPurpel" *ngIf="edit; else head">Update Payment</h4>
+    <ng-template #head>
+      <h4 class="colorPurpel">Add Payment</h4>
+    </ng-template>
+      <!--begin::Form-->
+      <form class="m-form m-form--fit m-form--label-align-right" 
+        #form="ngForm">
+        <div class="row" style="margin: 0px;">
+          <div class="form-group m-form__group col-sm-6">
+            <label for="payment_method" class="colorPurpel">
+              Payment Method
+            </label>
+            <select class="form-control m-input" name="payment_method" id="payment_method" [(ngModel)]="payment.payment_method" required>
+              <option value="null">-Select Payment Method-</option>
+              <option *ngFor="let m of methodsAmount.payment_method; let i ='index'" [value]="m" [disabled]="i==0">{{m}}</option>
+            </select>
+          </div>
+          <div class="form-group m-form__group col-sm-6">
+            <label for="amount" class="colorPurpel">
+              Payment Amount
+            </label>
+            <div class="input-group m-input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="table-cost-addon">
+                  $
+                </span>
+              </div>
+              <input id="cost" class="form-control m-input" id="amount" type="text" placeholder="0.00"
+              name="amount" numberOnly [(ngModel)]="payment.payment_amount" autocomplete="off" required>
+              <div class="input-group-append">
+                <span class="input-group-text" id="table-cost-addon">
+                   USD
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group m-form__group">
+          <label for="note" class="colorPurpel">
+            Note
+          </label>
+          <textarea class="form-control m-input" id="note" type="text" autocomplete="off"
+          name="note" [(ngModel)]="payment.note"></textarea>
+        </div>
+
+        <div style="padding: 0px 5px;">
+            <div *ngIf="loader; else addCus" class="m-loader m-loader--brand"
+                style="width: 30px; display: inline-block;"></div>
+            <ng-template #addCus>
+              <button *ngIf="edit; else add" type="button" (click)="updatePayment()"
+              [disabled]="!form.form.valid" class="btn btn-sm btn-brand">Update</button>
+              <ng-template #add>
+                <button type="button" [disabled]="!form.form.valid" (click)="submitPayment(form)"
+                class="btn btn-sm btn-brand">Submit</button>
+              </ng-template>
+              <button type="reset" class="btn btn-sm btn-danger" (click)="initAdd()" style="margin-left: 5px;">Cancel</button>
+            </ng-template>
+        </div>
+      </form>
+      <!--end::Form-->
+  </div>
+
+  <h4 class="colorPurpel" style="padding-top: 20px;">
+    View Payment
+  </h4>
+  <div class="m-portlet__body">
+    <div class="row" style="padding-bottom: 10px">
+      <div class="col-4">
+        <h6>Total Amount: ${{methodsAmount.total_amount | number: '1.2-2'}}</h6>
+      </div>
+      <div class="col-4">
+        <h6>Total Paid: ${{getTotalPaid(paymentList) | number: '1.2-2'}}</h6>
+      </div>
+      <div class="col-4">
+        <h6>Due Amount: ${{(methodsAmount.total_amount - getTotalPaid(paymentList)) | number: '1.2-2'}}</h6>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Payment Type</th>
+            <th>Payment Status</th>
+            <th>Paid Amount</th>
+            <th>Note</th>
+            <th>Action</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="paymentList && paymentList.length>0; else NoPay">
+          <ng-template ngFor let-pay let-i='index' [ngForOf]="paymentList" [ngForTrackBy]="trackPayment">
+            <tr>
+              <td style="max-width: 50px;">
+								<span *ngIf="pay.type==1" id="product_sidebar_toggle" (click)="openSummary('pay-id-'+ pay.id, 'pay-icon-'+ pay.id)"
+								class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View Payment">
+									<i class="fa fa-plus-circle" id="{{'pay-icon-'+pay.id}}"></i>
+								</span>
+							</td>
+              <td>{{pay.content_method}}</td>
+              <td>{{pay.payment_method}}</td>
+              <td>${{pay.payment_amount | number:'1.2-2'}}</td>
+              <td>{{pay.note && pay.note != 0 ? pay.note : ''}}</td>
+              <td>
+                <div *ngIf="pay.type==2; else Online">
+                  <button type="button" (click)="refund(pay)" class="btn btn-sm btn-outline-brand">
+                      Refund
+                    </button>
+                </div>
+                <ng-template #Online>
+                  <div *ngIf="pId == pay.id; else BTNLoad" class="m-loader m-loader--brand"
+                    style="width: 30px; display: inline-block;"></div>
+                  <ng-template #BTNLoad>
+                    <div *ngIf="pay.payment_method=='Authorized'">
+                        <button type="button" (click)="captured(pay)" style="margin-right: 5px" class="btn btn-sm btn-outline-success">
+                        Capture
+                        </button>
+                        <button *ngIf="status" type="button" (click)="refund(pay)" style="margin-right: 5px" class="btn btn-sm btn-outline-brand">
+                          Refund
+                        </button>
+                        <button type="button" (click)="voidBtn(pay)" class="btn btn-sm btn-outline-dark">
+                          Void
+                        </button>
+                    </div>
+                  </ng-template>
+                </ng-template>
+              </td>
+              <td>
+                <div *ngIf="pay.type==2">
+                  <button (click)="editPayment(pay, i)"
+                    class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill">
+                    <i class="fa fa-pencil-square-o"></i>
+                  </button>
+                  <button (click)="deletePayment(pay.id,i)"
+                    class="btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr class="dis-none" id="{{'pay-id-'+pay.id}}">
+              <td colspan="7">
+                <div class="row">
+                    <div class="col-6" *ngFor="let text of getTextResponse(pay.response_text); trackBy: trackbyText">
+                      <b style="font-weight: 500; text-transform: capitalize;">{{text.key}} :</b> {{text.value}}
+                    </div>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </tbody>
+        <ng-template #NoPay>
+          <tbody>
+            <tr>
+              <td colspan="7">
+                <h5 class="text-center">No Payment Found</h5>
+              </td>
+            </tr>
+          </tbody>
+        </ng-template>
+      </table>
+    </div> 
+  </div>
+</div>

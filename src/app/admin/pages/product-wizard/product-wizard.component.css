@@ -1,0 +1,94 @@
+.btn-text{
+    margin: 0 10px;
+}
+.decoration-none:hover{
+    text-decoration: none!important;
+}
+.product-list-right-btn>.first-child-btn{
+    margin-right: 30px;
+}
+
+
+.product-list .search-panel input{
+    text-align: center;
+}
+.product-list .search-panel select{
+    text-align-last: center;
+    padding-right: 29px;
+}
+
+.product-list .search-panel .form1-search-btn{
+    padding-left: 2.6rem!important;
+}
+
+.product-list .search-panel .form-group,.product-list .search-panel .m-form__group {
+    padding:1rem;
+}
+
+.search-panal-action button{
+    margin-right: 10px; 
+}
+
+.custom-alert{
+    position: fixed;
+    top: 90px;
+    right: 30px;
+    z-index: 5000;
+}
+
+
+.m-portlet__head-title{
+    width: 100%;
+}
+
+.w-100{
+    width: 100%;
+}
+.p-ib{
+    padding-left: 10px;
+    padding-right: 10px;
+    display: inline-block;
+    min-width: 75px;
+    margin-bottom: 0px;
+}
+
+/* .pagination .input-group .input-group-append > .input-group-text, .pagination .input-group .input-group-prepend > .input-group-text {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+} */
+
+.img-thumbnail{
+    max-width: 100px!important;
+    height: 100px!important;
+    object-fit: contain;
+}
+
+.form-group {
+    padding-left: 0px;
+}
+
+.max-110 {
+    min-width: 100px!important;
+    max-width: 100px!important;
+}
+
+.m-product-title {
+    padding-top: 2.2rem!important;
+    padding-bottom: 2.2rem!important;
+}
+
+/*-- adition product list --*/
+@media (max-width: 575px) {
+    .mr-auto {
+        width: 80%
+    }
+    .first-child-btn {
+        margin-bottom: 10px;
+    }
+    .m-portlet .m-portlet__body {
+        padding: 15px 15px;
+    }
+}
+
+

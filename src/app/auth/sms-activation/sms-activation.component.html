@@ -1,0 +1,38 @@
+<div class="m-login__signin animated fadeIn">
+  <div class="row sign-up-content sms-section">
+    <div class="col-md-6 hidden-div">
+      <div class="login-shape">
+        <img src="assets/img/home/graphic4.svg">
+      </div>
+    </div>
+    <div class="col-md-6 login-side animated fadeIn" style="position: relative;">
+      <div class="custom-alert" style="margin-top: 20px;" #hasAlert></div>
+      <div class="success-message animated zoomIn" *ngIf="message">
+        {{message}} <br> <a routerLink="/auth/login" class="m-link" style="font-weight: 500;">Go To Login</a>
+      </div>
+      <form #form="ngForm" class="m-login__form m-form" *ngIf="!message">
+        <div class="form-group m-form__group" *ngIf="smsSend; else phoneSection">
+          <h5 class="text-left" for="code">Enter Activation Code From SMS</h5>
+          <input type="text" id="code" class="form-control m-input" placeholder="Place your code here" autocomplete="off"
+            name="code" #code="ngModel" [(ngModel)]="activationCode" required>
+        </div>
+        <ng-template #phoneSection>
+          <div class="form-group m-form__group">
+            <h5 class="text-left" style="margin-bottom: 15px;">Enter Your Phone Number</h5>
+            <app-phone-number-input (onPressNumber)="phoneSelect($event)"></app-phone-number-input>
+          </div>
+        </ng-template>
+
+        <div class="form-group m-form__group" style="margin-top: 20px;">
+          <button *ngIf="smsSend; else anotherBtn" type="submit" class="btn btn-dark m-btn--icon" [disabled]="loading || !form.form.valid" 
+            [ngClass]="{'m-loader m-loader--light m-loader--right': loading}" (click)="submitCode()">Submit</button>
+          <ng-template #anotherBtn>
+            <button type="submit" class="btn btn-dark m-btn--icon" [disabled]="loading || !validPhone || !activationInfo.mobile" 
+            [ngClass]="{'m-loader m-loader--light m-loader--right': loading}" (click)="submitPhone()">Submit</button>
+          </ng-template>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<div class="m-portlet m-portlet--full-height">
+  <div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+      <div class="m-portlet__head-title">
+        <h3 class="m-portlet__head-text colorPurpel">
+          Transaction History
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="m-portlet__body">
+    <div class="m-section" style="margin: 0px;">
+      <div class="m-section__content price-table">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>
+              </th>
+              <th>
+                Date
+              </th>
+              <th>
+                Type
+              </th>
+              <th>
+                Amount
+              </th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="transactions.length > 0; else noData">
+            <tr *ngFor="let re of transactions; let i ='index'">
+              <td>
+                {{i+1}}
+              </td>
+              <td>
+                {{getDate(re?.created) | date:'MM/dd/yyyy, hh:mm a'}}
+              </td>
+              <td>
+								{{re?.action_name ? re.action_name : ''}}
+              </td>
+              <td>
+                {{re?.api_request ? '$' + (getTransactionAmount(re.api_request) | number: '1.2-2') : ''}}
+              </td>
+              <td>
+								{{re?.options ? re.options : ''}}
+              </td>
+            </tr>
+          </tbody>
+          <ng-template #noData>
+            <tbody>
+              <tr>
+                <td colspan="5">
+                  <h5 class="text-center">
+                    No Transaction Found
+                  </h5>
+                </td>
+              </tr>
+            </tbody>
+          </ng-template>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

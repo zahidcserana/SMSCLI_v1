@@ -1,0 +1,18 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<section style="padding:30px 25px;">
+  <h4  style="padding-bottom: 20px;">Change Store Logo</h4>
+  <div *ngIf="logo; else uplogo" class="company-logo">
+    <img class="img-fluid img-avatar img-thumbnail" [src]="logo"
+    onError="this.src='./assets/img/admin/logo/store_logo.png';" style="cursor:pointer;">
+    <div class="change-logo" (click)="changeLogo()">Change Logo</div>
+  </div>
+  <ng-template #uplogo>
+    <label class="upload-title">
+      Upload logo <br/><small>(Maximum file size 1MB)</small><br/>
+      <small>250pxX100px recommended</small>
+    </label>
+    <button *ngIf="tempLogo" type="button" class="btn btn-sm btn-outline-dark" title="Cancel" (click)="cancelUpload()">Cancel</button>
+    <drag-drop [class]="'col-md-6'" [resetOff]="true" [multi]='false' [width]="300" [height]="200" [url]="url" [limit]="1" [fileName]="'image'" [accept]="'image/*'" (upload)="uploadLogo($event)" ></drag-drop>
+  </ng-template>
+</section>

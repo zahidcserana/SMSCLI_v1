@@ -1,0 +1,15 @@
+<app-header-nav></app-header-nav>
+<!-- begin::Body -->
+
+	<router-outlet></router-outlet>
+
+<!-- end:: Body -->
+<app-footer></app-footer>
+
+<div class="bacdrop-payment dis-none">
+	<div class="content text-center">
+		<h3 class="text-center" style="color: #E58222"> Waiting for Bolt...</h3><br>
+		<div *ngIf="loader" class="m-loader m-loader--brand" style="width: 30px;display: inline-block;"></div>
+		<button *ngIf="!loader" class="btn btn-danger" (click)="cancelBolt()">Cancel</button>
+	</div>
+</div>

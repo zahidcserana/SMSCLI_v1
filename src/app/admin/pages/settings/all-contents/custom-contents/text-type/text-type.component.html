@@ -1,0 +1,31 @@
+<h5>Text:</h5>
+<form [formGroup]="textForm" (ngSubmit)="save()">
+  <div formArrayName="contents">
+    <div class="row" *ngFor="let item of textArray.controls; let i=index" [formGroupName]="i" style="margin-top:20px">
+      <div class="col-10 form-group">
+        <input type="text" class="form-control m-input" placeholder="Enter Text" name="text" formControlName="text" autocomplete="off">
+      </div>
+      <div class="col-2 form-group">
+        <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" (click)="addNewText()">
+          <i class="fa fa-plus"></i>
+        </button>
+        <button *ngIf="i!=0" type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" (click)="deleteText(i)">
+          <i class="fa fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="m-portlet__foot m-portlet__foot--fit">
+    <div class="m-form__actions m-form__actions" style="padding: 30px 0px;">
+      <div class="m-loader m-loader--brand"  *ngIf="loader; else btnSubmit" style="width: 30px; padding-left: 30px; display: inline-block;"></div>
+      <ng-template #btnSubmit>
+        <button type="submit" class="btn btn-brand">
+          <i class="fa fa-save"></i>
+          <span style="padding-left:10px;">Submit</span>
+        </button>
+      </ng-template>
+    </div>
+  </div>
+  
+</form>
+

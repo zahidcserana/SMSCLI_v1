@@ -1,0 +1,85 @@
+<div class="m-subheader">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        Rental Calendar
+      </h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+        <li class="m-nav__item m-nav__item--home">
+          <a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+        <li class="m-nav__separator">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+					<a class="m-nav__link">
+						<span class="m-nav__link-text">
+							Reservations
+						</span>
+					</a>
+        </li>
+        <li class="m-nav__separator" style="padding-left: 10px">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+          <a routerLink="/admin/reservations/all" class="m-nav__link">
+            <span class="m-nav__link-text">
+              Order List
+            </span>
+          </a>
+        </li>
+        <li class="m-nav__separator" style="padding-left: 10px">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+          <a class="m-nav__link">
+            <span class="m-nav__link-text">
+              Rental Calendar
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<div class="m-content animated fadeIn">
+	<div class="row">
+		<div class="col-lg-12">
+			<!--begin::Portlet-->
+			<div class="m-portlet" id="m_portlet">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-caption">
+						<div class="m-portlet__head-title">
+							<span class="m-portlet__head-icon">
+								<i class="flaticon-map-location"></i>
+							</span>
+							<h3 class="m-portlet__head-text">
+								Rental Calendar
+							</h3>
+						</div>
+          </div>
+          <div class="m-portlet__head-tools">
+						<ul class="m-portlet__nav">
+							<li class="m-portlet__nav-item">
+								<div class="form-group mb-0">
+                  <select name="status" class="form-control w-100" [(ngModel)]="status">
+                    <option value="pickup">Pickup</option>
+                    <option value="return">Returned</option>
+                  </select>
+                </div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="m-portlet__body">
+					<app-calander [status]="status"></app-calander>
+				</div>
+			</div>
+			<!--end::Portlet-->
+		</div>
+	</div>
+</div>

@@ -1,0 +1,32 @@
+.custom-alert{
+    position: fixed;
+    top: 90px;
+    right: 30px;
+    z-index: 5000;
+}
+
+.m-5px {
+    margin: 5px;
+}
+
+.flex-div {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    width: 50px;
+    text-align: center;
+}
+
+.shipAccount {
+    border-top: 1px solid #f2f2f2; padding: 10px 0px;
+}
+
+.shipDisLoader {
+    width: 30px; padding-left: 30px; display: inline-block; top: -4px;
+}
+
+b {
+    font-weight: 500;
+}

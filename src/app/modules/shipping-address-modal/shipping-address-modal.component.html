@@ -1,0 +1,89 @@
+<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('')">
+  <span aria-hidden="true">&times;</span>
+</button>
+<div class="modal-body">
+  <form [formGroup]="billingForm">
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="Shfname" class="colorPurpel">
+          First Name*
+        </label>
+        <div class="form-group m-form__group">
+          <input class="form-control m-input" id="Shfname" type="text" autocomplete="nope" placeholder="First Name"
+            formControlName="shipping_first_name">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <label for="Shlname" class="colorPurpel">
+          Last Name*
+        </label>
+        <div class="form-group m-form__group">
+          <input class="form-control m-input" id="Shlname" type="text" autocomplete="nope" placeholder="Last Name"
+            formControlName="shipping_last_name">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <label for="Shmobile" class="colorPurpel">
+          Mobile number*
+        </label>
+        <div class="form-group m-form__group">
+          <input numberOnly class="form-control m-input" id="Shmobile" type="text" autocomplete="nope" placeholder="Mobile number"
+            formControlName="shipping_mobile">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <label for="Shaddress1" class="colorPurpel">
+          Address Line 1*
+        </label>
+        <div class="form-group m-form__group">
+          <input class="form-control m-input" id="Shaddress1" type="text" autocomplete="nope" placeholder="Address"
+            formControlName="shipping_address1">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <label for="Shaddress2" class="colorPurpel">
+          Address Line 2
+        </label>
+        <div class="form-group m-form__group">
+          <input class="form-control m-input" id="Shaddress2" type="text" autocomplete="nope" placeholder="Address"
+            formControlName="shipping_address2">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <label for="Shcity" class="colorPurpel">
+          City*
+        </label>
+        <div class="form-group m-form__group">
+          <input class="form-control m-input" id="Shcity" type="text" autocomplete="nope" placeholder="City"
+            formControlName="shipping_city">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <label for="Shstae" class="colorPurpel">
+          State*
+        </label>
+        <div class="form-group m-form__group">
+          <input class="form-control m-input" id="Shstae" type="text" autocomplete="nope" placeholder="State"
+            formControlName="shipping_state">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <label for="Shzipcode" class="colorPurpel">
+          Zip Code*
+        </label>
+        <div class="form-group m-form__group">
+          <input class="form-control m-input" id="Shzipcode" type="text" autocomplete="nope" placeholder="Zip Code"
+            formControlName="shipping_zipcode">
+        </div>
+      </div>
+    </div>
+    <div class="closing-btn text-center" style="padding: 20px;">
+      <button type="button" [disabled]="!billingForm.valid" class="btn btn-dark" (click)="submit()">
+        Submit
+      </button>
+      <button type="button" class="btn btn-danger" (click)="activeModal.close(null)">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

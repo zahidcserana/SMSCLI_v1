@@ -1,0 +1,289 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader product-section-list">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title m-subheader__title--separator">
+				Records
+			</h3>
+			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+				<li class="m-nav__item m-nav__item--home">
+					<a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+						<i class="m-nav__link-icon la la-home"></i>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					<i class="fa fa-angle-right"></i>
+				</li>
+				<li class="m-nav__item">
+					<a class="m-nav__link">
+						<span class="m-nav__link-text">
+							Student List
+						</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="-table-right-btn">
+			<div class="first-child-btn m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+			 data-dropdown-toggle="hover" aria-expanded="true" style="margin-right: 10px;">
+				<button class="m-portlet__nav-link m-dropdown__toggle decoration-none btn m-btn--pill m-btn--air btn-light btn-sm">
+					<span class="btn-text">Actions</span>
+					<span class="btn btn-brand btn-sm btn-sm  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill">
+						<i class="la la-plus m--hide"></i>
+						<i class="la la-angle-down"></i>
+					</span>
+				</button>
+				<div class="m-dropdown__wrapper">
+					<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+					<div class="m-dropdown__inner">
+						<div class="m-dropdown__body">
+							<div class="m-dropdown__content">
+								<ul class="m-nav">
+									<li class="m-nav__item">
+										<a [routerLink]="['/admin/inventory/add']" class="m-nav__link">
+											<i class="m-nav__link-icon flaticon-share"></i>
+											<span class="m-nav__link-text">
+												Add Student
+											</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+			 data-dropdown-toggle="hover" aria-expanded="true">
+				<button class="m-portlet__nav-link m-dropdown__toggle decoration-none btn m-btn--pill m-btn--air btn-light btn-sm">
+					<span class="btn-text">Tools</span>
+					<span class="btn btn-brand btn-sm  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill">
+						<i class="la la-plus m--hide"></i>
+						<i class="la la-angle-down"></i>
+					</span>
+				</button>
+				<div class="m-dropdown__wrapper">
+					<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+					<div class="m-dropdown__inner">
+						<div class="m-dropdown__body">
+							<div class="m-dropdown__content">
+								<ul class="m-nav">
+									<!--<li class="m-nav__item">
+										<a [routerLink]="['/admin/inventory/import-inventory']" class="m-nav__link">
+											<i class="m-nav__link-icon la la-cloud-upload"></i>
+											<span class="m-nav__link-text">
+												Import Record
+											</span>
+										</a>
+									</li>-->
+									<!--<li class="m-nav__item">
+										<a class="m-nav__link" style="cursor: pointer;" (click)="export()">
+											<i class="m-nav__link-icon la la-cloud-download"></i>
+											<span class="m-nav__link-text">
+												Export Record
+											</span>
+										</a>
+									</li>-->
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content product-list animated fadeIn">
+	<product-search #searchPro [checkFilter]="reloadFilter" (search)="loadSearchData($event)"></product-search>
+	<!--begin::Portlet-->
+	<div class="m-portlet m-portlet--mobile">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title m-product-title stocklist-body">
+					<h3 class="m-portlet__head-text">
+						<div class="row">
+							<div class="col-md-4" style="padding: 15px;">
+								Register List
+							</div>
+							<div class="col-md-8 col-12">
+								<form #serForm="ngForm" class="row">
+									<div class="form-group col-8" style="margin: 0px; padding: 5px; display: inherit;">
+										<input type="text" class="form-control" placeholder="Search by id, name, email and mobile"
+										 #searchAll="ngModel" name="search" [(ngModel)]="search" style="display: inline;">
+										<div *ngIf="searchAll.dirty || search" (click)="reset(serForm)" style="margin: auto; padding: 5px;cursor: pointer;display: inline;">
+											<i class="fa fa-close"></i>
+										</div>
+									</div>
+									<div class="form-group col-4" style="margin: 0px; padding-top: 8px;">
+										<button type="submit" class="btn btn-sm btn-brand" (click)="searchList(serForm.value)">Search</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</h3>
+					<div class="add-list-btn text-right">
+						<a class="btn btn-brand btn-sm" [routerLink]="['/admin/inventory/add']">
+							<i class="fa fa-plus"></i>
+							Add New
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="m-portlet__body">
+			<!--begin: Datatable -->
+			<div class="m-section">
+				<div class="m-section__content price-table" style="position: relative;">
+					<!-- pagination Start-->
+					<boot-pagination [totalSize]="pagi.total" [page]="pagi.page" [listSize]="pagi.limit" [pagelimit]="pagi.limit"
+					 (pageChange)="reloadTable($event)"></boot-pagination>
+					<!-- pagination End-->
+					<div *ngIf="loader" class="table-load m-loader m-loader--brand"></div>
+					<div class="table-responsive" style="margin-bottom: 10px;">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th class="text-center">
+										<label class="m-checkbox m-checkbox--check-bold m-checkbox--state-brand">
+											<input type="checkbox" (click)="checkAll($event)">
+											<span></span>
+										</label>
+									</th>
+									<th>No</th>
+									<th>
+										Image
+									</th>
+									<th>
+										Name
+									</th>
+									<th>
+										Class
+									</th>
+									<th>
+										Section
+									</th>
+									<th>
+										Roll
+									</th>
+									<th>
+										Mobile
+									</th>
+									<th>
+										Batch
+									</th>
+									<th>
+										Status
+									</th>
+									<th>
+										Actions
+									</th>
+								</tr>
+							</thead>
+							<tbody *ngIf="productList.length<1; else table">
+								<tr *ngIf="!loader">
+									<td colspan="11">
+										<h4 class="text-center">No Data Found</h4>
+									</td>
+								</tr>
+							</tbody>
+							<ng-template #table>
+								<tbody>
+									<tr *ngFor="let pro of productList; let i='index'; trackBy: tarckProduct; let o='odd'; let e='even'" [ngClass]="{'odd-tr':o, 'even-tr':e}">
+										<td class="text-center">
+											<label class="m-checkbox m-checkbox--check-bold m-checkbox--state-primary">
+												<input type="checkbox" [attr.name]="'pro_'+pro.id" [(ngModel)]="pro.check" (click)="checkOne($event, i)">
+												<span></span>
+											</label>
+										</td>
+										<th>{{i+1}}</th>
+										<td (click)="gotoProduct(pro)">
+											<img *ngIf="pro.image" class="img-fluid img-avatar img-thumbnail img-resize-tum" src="{{image + '/' + pro.id + '/' + pro.image}}"
+											 onError="this.src='./assets/img/home/product-image-placeholder.jpg';" style="cursor:pointer;">
+											<img *ngIf="!pro.image" class="img-fluid img-avatar img-thumbnail img-resize-tum" src="./assets/img/home/product-image-placeholder.jpg"
+											 style="cursor:pointer;">
+										</td>
+										<th style="cursor:pointer;" (click)="openSidebar(pro, 'description')">
+											<b>{{pro.name}}</b>
+											<input type="text" class="hide-copy-input" [value]="'/product/' + pro.uuid + '/' + pro.url" readonly #copyText>
+										</th>
+										<td>
+											<span class="m-badge m-badge--wide m-badge--primary" style="cursor:pointer;">
+												{{pro.class.name ? pro.class.name : 0}}
+											</span>
+										</td>
+										<td>
+											{{ pro.section.name ? pro.section.name : 0 }}
+										</td>
+										<td>
+											{{ pro.class_roll }}
+										</td>
+										<td>
+											{{ pro.mobile }}
+										</td>
+										<td>
+											{{pro.batch}}
+										</td>
+										<td>
+											<span class="m-badge m-badge--wide" [ngClass]="checkStatus(pro.status)">{{getStatus(pro.status)}}</span>
+										</td>
+										<td>
+											<a *ngIf="pro.status == 5; else OtyherAC" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+											 title="Delete Product" (click)="permanentDeleteProductList(pro.id)">
+												<i class="fa fa-trash"></i>
+											</a>
+											<ng-template #OtyherAC>
+												<!--<a (click)="copyUrl(copyText)" title="Copy" class="m-portlet__nav-link btn m-btn m-btn&#45;&#45;hover-brand m-btn&#45;&#45;icon m-btn&#45;&#45;icon-only m-btn&#45;&#45;pill">
+													<i class="fa fa-copy"></i>
+												</a>-->
+												<!--<a routerLink="/admin/inventory/{{pro.id}}/details" title="Product Details" class="m-portlet__nav-link btn m-btn m-btn&#45;&#45;hover-primary m-btn&#45;&#45;icon m-btn&#45;&#45;icon-only m-btn&#45;&#45;pill">
+													<i class="fa fa-eye"></i>
+												</a>-->
+												<a (click)="openSidebar(pro, 'description')" title="Edit Product" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+													<i class="fa fa-edit"></i>
+												</a>
+												<!--<a (click)="openSidebar(pro, 'calendar')" title="Calender" class="m-portlet__nav-link btn m-btn m-btn&#45;&#45;hover-dark m-btn&#45;&#45;icon m-btn&#45;&#45;icon-only m-btn&#45;&#45;pill">
+													<i class="fa fa-calendar"></i>
+												</a>-->
+												<a title="Archive Product" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+												 (click)="deleteProductList(pro.id)">
+													<i class="fa fa-trash"></i>
+												</a>
+											</ng-template>
+										</td>
+									</tr>
+								</tbody>
+							</ng-template>
+						</table>
+					</div>
+					<!-- pagination Start-->
+					<boot-pagination [totalSize]="pagi.total" [page]="pagi.page" [listSize]="pagi.limit" [pagelimit]="pagi.limit"
+					 (pageChange)="reloadTable($event)"></boot-pagination>
+					<!-- pagination End-->
+				</div>
+			</div>
+			<!--end: Datatable -->
+		</div>
+	</div>
+	<!--end::Portlet-->
+</div>
+
+<!-- sidebar -->
+
+<div class="native-routing product-section-sidebar">
+	<button class="close-sidebar btn btn-sm btn-brand">
+		<i class="fa fa-chevron-right"></i>
+	</button>
+	<span class="close-sidebar-upper">
+		<i class="la la-close"></i>
+	</span>
+	<div class="native-routing-container">
+		<router-outlet></router-outlet>
+	</div>
+</div>
+<!-- <div class="backdrop animated"></div> -->
+
+<!-- delete Dialog -->

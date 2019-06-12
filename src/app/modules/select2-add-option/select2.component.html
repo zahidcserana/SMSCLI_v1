@@ -1,0 +1,9 @@
+<div id="{{'select2_add_option_parent' + domId}}" style="position: relative;">
+    <select class="form-control m-select2" id="{{'select2_add_option' + domId}}" name="param">
+        <option *ngIf="!multi" value="0">-Select {{placeholder}}-</option>
+        <ng-template ngFor let-v [ngForOf]="data">
+            <option [value]="v.id">{{v.name}}</option>
+        </ng-template>
+    </select>
+    <div *ngIf="loader" class="m-loader m-loader--brand loader"></div>
+</div>

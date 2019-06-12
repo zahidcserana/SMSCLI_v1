@@ -1,0 +1,219 @@
+<!-- services -->
+<section class="innerpage-banner" [ngStyle]="bannerImage">
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-10 col-10">
+        <div class="w-100 innaerpage-title">
+          <h2>{{contents.site_specific.cart.title}}</h2>
+          <ul>
+            <li><a href="#">Home</a>/</li>
+            <li>{{contents.site_specific.cart.page_breadcrumb}}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-xl-6 col-md-6">
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- / header section -->
+<div class="wraper animated fadeIn">
+  <section class="main-content cart-content pb-5 animated fadeIn" *ngIf="cartItems.length>0 ; else nocarts ">
+
+    <div class="container-fluid">
+
+      <div class="row justify-content-center">
+        <div class="custom-alert col-md-4 mt-5 mb-5 " #hasAlert></div>
+      </div>
+      <div class="table-responsive">
+        <table class="table mb-5 pb-5 cart table-border">
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th>{{contents.site_specific.cart.th_product}}</th>
+              <th>{{contents.site_specific.cart.th_unit_price}}</th>
+              <th>{{contents.site_specific.cart.th_sales_tax}}</th>
+              <th>{{contents.site_specific.cart.th_quantity}}</th>
+              <th>{{contents.site_specific.cart.th_subtotal}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container class="list" *ngFor="let cart of cartItems">
+              <tr>
+                <td>
+                  <a (click)="removeCart(cart)" class=" btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                    <i class="fa fa-trash "></i>
+                  </a>
+
+                </td>
+                <td>
+
+                  <img *ngIf="cart.product.images.length && cart.product.images[0].image_small!=''; else placeholder"
+                    class="img-fluid img-avatar img-thumbnail" src="{{img_url}}{{cart.store_id}}/{{cart.product.id}}/{{cart.product.images.length && cart.product.images[0].image_small}}"
+                    onError="this.src='./assets/img/home/product-image-placeholder.jpg';">
+                  <ng-template #placeholder>
+                    <img class="img-fluid img-avatar img-thumbnail" src="./assets/img/home/product-image-placeholder.jpg" />
+                  </ng-template>
+                </td>
+                <td>
+                  <div class="product">
+                    {{cart.product.name}}
+                    <div class="rent_time" *ngIf="cart.rental_duration">
+                      <small>{{contents.site_specific.cart.rental_start}}: {{formate(cart.rent_start) |
+                        date:'MM/dd/yyyy'}} </small>
+                      <br>
+                      <small>{{contents.site_specific.cart.rental_end}}: {{formate(cart.rent_end) | date:'MM/dd/yyyy'}}</small>
+                    </div>
+                    <div class="p_variants" *ngIf="cart.variant_chain_name">
+                      <span *ngIf="cart.variant_chain_name!='Unassigned'">
+                        <small>{{cart.variant_chain_name}} </small>
+                      </span>
+                    </div>
+                    <div *ngIf="cart.deposit_amount>0" class="deposit">
+                      <p>{{contents.site_specific.cart.deposite_amount}} : ${{cart.deposit_amount | number:'1.2-2'}}
+                        <span *ngIf="cart.deposite_tax==='true'">
+                          <small>(Sales Tax Included)</small>
+                        </span>
+                      </p>
+
+                    </div>
+                  </div>
+                </td>
+                <td>${{cart.price}}</td>
+                <td>{{cart.sales_tax}}%</td>
+                <td>
+                  <div class="quantity clearfix">
+                    <span class="btn btn-sm btn-dark no-m" (click)="decreaseQuant(cart,i)">-</span>
+                    <span class="cart-qunt btn btn-sm no-m">{{cart.quantity}}</span>
+                    <span class="btn btn-sm btn-dark  no-m" (click)="increaseQuant(cart,i)">+</span>
+                  </div>
+                  <span class="available">
+                    <small>{{contents.site_specific.cart.available}}: {{checkReservedQuantity(cart)}}</small>
+                  </span>
+                </td>
+                <td>
+                  ${{cart.sub_total | number:'1.2-2' }}
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <div class="col-md-5 col-sm-5">
+          <form class="form row" (ngSubmit)="applyCoupon(form)" #form="ngForm">
+            <div class="form-group col-7">
+              <input type="text" name="couponCode" ngModel required class="form-control" placeholder="{{contents.site_specific.cart.txt_coupon}}"
+                style="width: 95%">
+            </div>
+            <div class="form-group col-5" style="padding: 0px">
+              <button type="submit" [disabled]="!form.valid" class="btn theme-btn caps">
+                {{contents.site_specific.cart.btn_coupon}}
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="custom-alert col-md-4 col-sm-2  mb-5 " #CouponAlert></div>
+        <div class="col-md-3 col-sm-4 cart-action text-right">
+          <button (click)="checkOut()" class="btn theme-btn caps">{{contents.site_specific.cart.btn_checkout}}</button>
+
+        </div>
+      </div>
+      <div class="row pt-5">
+        <div class="col-lg-4 col-12 mt-2 ">
+          <app-shipping-method (onSelectShipping)="selectSgippingMethod($event)" [shipping]="shipping"></app-shipping-method>
+          <div class="form-group" #shippingAlert></div>
+        </div>
+        <div class="col-lg-7 offset-lg-1 pl-5 col-12">
+          <h4 class="pb-2 totals-title">{{contents.site_specific.cart.lbl_cart_total}}</h4>
+          <div class="table-responsive">
+            <table class="table cart">
+              <tbody>
+                <tr>
+                  <td>
+                    {{contents.site_specific.cart.th_subtotal}}
+                  </td>
+                  <td>
+                    <span class="cart_p">
+                      <b>${{cart.sub_total | number:'1.2-2'}}</b>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    {{contents.site_specific.cart.lbl_shipping}}
+                  </td>
+                  <td>
+                    <span class="cart_p"> ${{cart.delivery_charge | number:'1.2-2'}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    {{contents.site_specific.cart.lbl_discount}}
+                  </td>
+                  <td>
+                    <span class="cart_p"> ${{cart.total_discount | number:'1.2-2'}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    {{contents.site_specific.cart.lbl_tax}}
+                  </td>
+                  <td>
+                    <span class="cart_p"> ${{cart.tax | number:'1.2-2'}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Delivery Tax
+                  </td>
+                  <td>
+                    <span class="cart_p"> ${{cart.delivery_tax | number:'1.2-2'}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    {{contents.site_specific.cart.lbl_total_deposite}}
+
+                  </td>
+                  <td>
+                    <span class="cart_p"> ${{cart.deposit_amount | number:'1.2-2' }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <h5>{{contents.site_specific.cart.lbl_total}}</h5>
+                  </td>
+                  <td>
+                    <h5>
+                      <span class="cart_p">${{cart.total | number:'1.2-2'}}</span>
+                    </h5>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<ng-template #nocarts>
+  <section class=" mt-5 pt-5 mb-5 pb-5 main-content mrt-md mrb-md animated fadeIn">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 mb-7 pb-7 ">
+          <div class="card">
+            <div class="card-body">
+              <h4 style="text-align: center;">{{contents.site_specific.cart.empty_cart}}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>

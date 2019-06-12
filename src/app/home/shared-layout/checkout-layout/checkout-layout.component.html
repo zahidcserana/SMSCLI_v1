@@ -1,0 +1,51 @@
+<!-- services -->
+<section class="innerpage-banner" [ngStyle]="bannerImage">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-10 col-10">
+                <div class="w-100 innaerpage-title">
+                    <h2>{{contents.site_specific.checkout_info.title}}</h2>
+                    <ul>
+                        <li>
+                            <a href="#">Home</a>/</li>
+                        <li>{{contents.site_specific.checkout_info.page_breadcrumb}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xl-6 col-md-6">
+
+            </div>
+        </div>
+    </div>
+</section>
+<div class="wraper">
+    <!-- main content -->
+    <section class="main-content cart-content pb-5 pt-5">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 mt-5 pt-5 mb-5 ">
+                    <div class="checkout-steps clearfix">
+                        <div [ngClass]="billing_success ? 'confirm-billing':''" class="step-block step-1 active ">
+                            <span class="step-number">1</span>
+                            <span class="step-name">{{contents.site_specific.checkout_info.step_one}}</span>
+                        </div>
+                        <div [ngClass]="payment_success ? 'confirm-payment':''" class="step-block step-2 ">
+                            <span class="step-number">2</span>
+                            <span class="step-name">{{contents.site_specific.checkout_info.step_two}}</span>
+                        </div>
+                        <div class="step-block step-3">
+                            <span class="step-number">3</span>
+                            <span class="step-name">{{contents.site_specific.checkout_info.step_three}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <app-delivery-details *ngIf="!billing_success" (confirBilling)="confirmBilling()" [contents]="contents"></app-delivery-details>
+                <app-payment-info (paymentConfirm)="confirmPayment()" *ngIf="billing_success && !payment_success"  [contents]="contents"></app-payment-info>
+                <app-place-order *ngIf="payment_success && billing_success"   [contents]="contents"></app-place-order>
+            </div>
+        </div>
+    </section>
+</div>
+

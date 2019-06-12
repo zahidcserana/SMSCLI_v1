@@ -1,0 +1,39 @@
+.colorPurpel{
+    color:#041531;
+}
+
+.product-sidebar-attr {
+    padding: 0px;
+}
+.product-sidebar-attr .col-form-label{
+    color:#041531;
+}
+.attribute-type{
+    visibility: hidden;
+}
+
+select option[value=""][disabled] {
+    display: none;
+    color: #888;
+}
+.m-form__group {
+    padding: 0px!important;
+}
+
+.m-form__actions {
+    padding: 0 0 30px 0;
+    border-bottom: 1px solid #ebedf2!important;
+}
+
+
+.custom-alert{
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 5000;
+}
+
+.m-form .m-form__group{
+    padding-bottom: 0px;
+    padding-top: 10px;
+}

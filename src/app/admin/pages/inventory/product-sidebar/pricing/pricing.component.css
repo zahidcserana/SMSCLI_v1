@@ -1,0 +1,58 @@
+.product-sidebar-pricing{
+    padding: 0px;
+}
+
+.product-sidebar-pricing .m-portlet__foot{
+    border: 0px!important;
+}
+.product-sidebar-pricing .m-portlet__foot .m-form__actions{
+    padding: 0px 0px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ebedf2;
+}
+.product-sidebar-pricing .m-portlet__body .col-lg-3{
+    padding-right: 5px;
+    padding-left: 5px;
+}
+.product-sidebar-pricing select option[data-default] {
+    color: #888;
+}
+.product-sidebar-pricing select option[value=""][disabled] {
+    display: none;
+}
+.product-sidebar-pricing input{
+    text-align: center;
+}
+.product-sidebar-pricing select{
+    text-align-last: center;
+    padding-right: 29px;
+}
+.product-sidebar-pricing .colorPurpel, label{
+    color:#041531;
+}
+
+#table-cost-addon{
+    padding:0.65rem 0.3rem!important;
+}
+.cost-table table tr th, .cost-table table tr td{
+    min-width:150px;
+    border: none!important;
+}
+
+#delete-image{
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.custom-alert{
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 5000;
+}
+.max-width{
+    max-width: 60px!important;
+}
+
+h5 {
+    margin-bottom: 15px;
+}

@@ -1,0 +1,104 @@
+<div class="custom-alert" #hasAlert></div>
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title m-subheader__title--separator">
+				Store Profile
+			</h3>
+			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+				<li class="m-nav__item m-nav__item--home">
+					<a routerLink="/partner/dashboard" class="m-nav__link m-nav__link--icon">
+						<i class="m-nav__link-icon la la-home"></i>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					<i class="fa fa-angle-right"></i>
+				</li>
+				<li class="m-nav__item">
+					<a routerLink="/partner/users" class="m-nav__link">
+						<span class="m-nav__link-text">
+							User List
+						</span>
+					</a>
+				</li>
+				<li class="m-nav__separator" style="padding-left: 10px">
+					<i class="fa fa-angle-right"></i>
+				</li>
+				<li class="m-nav__item">
+					<a class="m-nav__link">
+						<span class="m-nav__link-text">
+							Store Profile
+						</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content animated fadeIn">
+	<div class="row">
+		<div class="col-xl-3 col-lg-4">
+			<div class="m-portlet m-portlet">
+				<div class="m-portlet__body">
+					<div class="m-card-profile">
+						<div class="m-card-profile__title m--hide">
+							Your Profile
+						</div>
+						<div class="m-card-profile__pic">
+							<div class="m-card-profile__pic-wrapper" style="position: relative;">
+								<img *ngIf="image_url; else alter" onError="this.src='./assets/img/admin/logo/user.png';" [src]="image_url" alt=""/>
+								<ng-template #alter>
+									<img src="./assets/img/admin/logo/user.png" alt=""/>
+								</ng-template>
+							</div>
+						</div>
+						<div class="m-card-profile__details">
+							<span class="m-card-profile__name">
+								Store Name
+							</span>
+							<p class="sub-title">
+                <span class="btn btn-sm" [ngClass]="{'btn-success': true,'btn-danger':false}">Active</span>
+              </p>
+						</div>
+					</div>
+					<ul class="m-nav m-nav--hover-bg m-portlet-fit--sides">
+            <li class="m-nav__separator m-nav__separator--fit"></li>
+            <li class="m-nav__item">
+							<a routerLink="./details" routerLinkActive="active" class="m-nav__link">
+								<i class="m-nav__link-icon flaticon-settings-1"></i>
+								<span class="m-nav__link-text">
+									Overview
+								</span>
+							</a>
+						</li>
+						<li class="m-nav__item">
+							<a routerLink="./inventory-summary" routerLinkActive="active" class="m-nav__link">
+								<i class="m-nav__link-icon flaticon-layers"></i>
+								<span class="m-nav__link-text">
+									Inventory
+								</span>
+							</a>
+						</li>
+						<li class="m-nav__item">
+							<a routerLink="./order-summary" routerLinkActive="active" class="m-nav__link">
+								<i class="m-nav__link-icon flaticon-business"></i>
+								<span class="m-nav__link-text">
+									Order
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+    		</div>
+		</div>
+
+		<div class="col-xl-9 col-lg-8">
+			<div class="m-portlet m-portlet--full-height" style="padding: 2.5rem;">
+				<router-outlet></router-outlet>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,133 @@
+<!-- main content -->
+<section class="main-content animated fadeIn">
+  <div class="container-fluid">
+    <h2 class="text-center p-5">Order Summary </h2>
+    <div class="row justify-content-center">
+      <a href="{{api}}pages/pdf?order_id={{order_id}}" class="download-btn mbl-btn alert-success ">Download
+        Receipt </a>
+    </div>
+    <div class="row order-box p-5">
+      <div class="table-responsive  col-md-8 ">
+        <table class="table cart">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Product</th>
+              <th>Unit Price</th>
+              <th>Quanity</th>
+              <th>Sales Tax</th>
+              <th>Subotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container class="list" *ngFor="let cart of cartItems; let i='index'">
+              <tr>
+                <td>
+                  <img class="img-fluid img-avatar img-thumbnail" *ngIf="cart.product.images.length>0" style="max-width:50px;"
+                    src="{{img_url}}{{cart.store_id}}/{{cart.product.id}}/{{cart.product.images[0].image_small}}">
+
+                  <img class="img-fluid img-avatar img-thumbnail" *ngIf="cart.product.images.length==0" style="max-width:50px;"
+                    src="./assets/img/home/product-image-placeholder.jpg" alt="Product profile" />
+
+                </td>
+                <td>
+                  <div class="product">
+                    <p>
+                      {{cart.product.name}}
+                    </p>
+                    <div *ngIf="cart.deposit_amount>0" class="deposit"> Deposit Amount :
+                      ${{cart.deposit_amount | number:'1.2-2'}} </div>
+                  </div>
+                </td>
+                <td>${{cart.price}} </td>
+                <td>{{cart.quantity}}</td>
+                <td>{{cart.sales_tax}}%</td>
+                <td>
+                  ${{cart.sub_total | number:'1.2-2'}}
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="col-md-3  ml-4">
+        <h4 style=" margin-top: -46px;">
+          <a href="{{api}}pages/pdf?order_id={{order_id}}" class="download-btn tab-btn alert-success ">Download
+            Receipt </a>
+        </h4>
+        <div class="table-responsive">
+          <table class="table preview_tbl cart">
+            <tbody>
+              <tr>
+                <td>
+                  Subtotal
+                </td>
+                <td>
+                  <span class="cart_p">
+                    <b> ${{totalSubTotal | number:'1.2-2'}} </b>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Delivery Fee
+                </td>
+                <td>
+                  <span class="cart_p"> ${{shippingCharge | number:'1.2-2'}} </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Discount
+                </td>
+                <td>
+                  <span class="cart_p"> ${{discount | number:'1.2-2'}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Sales Tax
+                </td>
+                <td>
+                  <span class="cart_p"> ${{salesTax | number:'1.2-2'}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Delivery Tax
+                </td>
+                <td>
+                  <span class="cart_p"> ${{deliveryTax | number:'1.2-2'}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Total Deposit Amount
+                </td>
+                <td>
+                  <span class="cart_p"> ${{depositAmount | number:'1.2-2'}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h5>Total</h5>
+                </td>
+                <td>
+                  <h5>
+                    <span class="cart_p"> ${{salesTax+depositAmount + shippingCharge +
+                      (totalSubTotal-discount) | number:'1.2-2'}} </span>
+                  </h5>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="row   justify-content-center">
+            <button class="btn mt-5 mb-5  col-md-4 btn-orange"> Place Order </button>
+          </div> -->
+</section>
+<!-- / main content -->

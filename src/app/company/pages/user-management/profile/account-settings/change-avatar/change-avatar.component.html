@@ -1,0 +1,12 @@
+<div class="animated fadeIn change-avatar">
+  <h4 class="colorPurpel info-heading">Change Avatar</h4>
+
+    <label>
+      Upload Image <small>(Maximum file size 2MB)</small>
+    </label>
+
+    <drag-drop [multi]='false' [width]="150" [height]="150" 
+     [url]="url" [fileName]="'image'" [accept]="'image/*'" 
+     (upload)="uploadAvatar($event)" ></drag-drop>
+        
+</div>

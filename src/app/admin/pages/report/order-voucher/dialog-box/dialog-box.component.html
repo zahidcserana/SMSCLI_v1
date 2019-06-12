@@ -1,0 +1,75 @@
+<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('')">
+        <span aria-hidden="true">&times;</span>
+</button> 
+<div class="modal-body" style="padding: 40px;">
+    <h4>Items</h4>
+     <div class="m-portlet__body">
+        <div *ngIf="loader" class="table-load m-loader m-loader--brand"></div>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Description</th>
+                    <th>Price & Term</th>
+                    <th>Sales Tax</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <!-- <th>Total</th> -->
+                </tr>
+                </thead>
+                <tbody *ngIf="productList && productList.order_items.length > 0; else NoItem">
+                <ng-container *ngFor="let order of productList?.order_items; let i = 'index'; trackBy: trackList">
+                    <tr>
+                    <td>
+                        <img *ngIf="order.product.images && order.product.images.length>0; else alterImage" class="img-fluid img-avatar img-thumbnail img-resize" src="{{imageUrl +  order.store_id + '/' + order.product.id + '/' + order.product.images[0].image_small}}" onError="this.src='./assets/img/home/product-image-placeholder.jpg';" alt="Product Image" onError="this.src='./assets/img/home/product-image-placeholder.jpg';"/>
+                        <ng-template #alterImage>
+                        <img class="img-fluid img-avatar img-thumbnail img-resize" src="./assets/img/home/product-image-placeholder.jpg" alt="Product Image" />
+                        </ng-template>
+                    </td>
+                    <td>
+                        <h5>{{order.product.name}}</h5>
+                        <div *ngIf="order.attribute_chain_name && order.attribute_chain_name!='Unassigned'">
+                            <small>({{order.attribute_chain_name}})</small>
+                        </div>
+                        <div>
+                        <div *ngIf="order.rent_start">
+                            <small>From {{getDate(order.rent_start) | date:'mediumDate'}}</small>
+                        </div>
+                        <div *ngIf="order.rent_end">
+                            <small>To {{getDate(order.rent_end) | date:'mediumDate'}}</small>
+                        </div>
+                        </div>
+                        <div *ngIf="order.deposit_amount > 0">
+                        Deposited Amount: ${{order.deposit_amount | number: '1.2-2'}} {{order.deposite_tax == 'true'? '(Including Tax)' : ''}}
+                        </div>
+                    </td>
+                    <td>${{order.price | number: '1.2-2'}}{{order.rental_type && order.rental_type != 'buy'? '/' + order.term : ''}} {{getType(order.rental_type)}}</td>
+                    <td>{{order.sales_tax}}% <br> ${{order.sales_tax_price | number: '1.2-2'}}</td>
+                    <td>{{order.quantity}}</td>
+                    <td>
+                        ${{order.sub_total | number: '1.2-2'}}
+                    </td>
+                    <!-- <td>${{order.total | number: '1.2-2'}}</td> -->
+                    </tr>
+                </ng-container>
+                </tbody>
+                <ng-template #NoItem>
+                <tbody>
+                    <tr *ngIf="!loader">
+                    <td colspan="6">
+                        <h5 class="text-center">No Item Found</h5>
+                    </td>
+                    </tr>
+                </tbody>
+                </ng-template>
+            </table>
+        </div> 
+    </div>
+    <div style="padding-top: 20px;">
+        <button type="button" class="btn btn-dark btn-sm" (click)="activeModal.close(false)">
+           Close
+        </button>
+    </div>
+</div>
+

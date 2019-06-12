@@ -1,0 +1,54 @@
+<div class="custom-alert" #hasCusAlert></div>
+<div class="m-portlet">
+  <div class="m-portlet__body">
+    <h4>Store Hours</h4>
+    <div class="m-section" style="margin: 0px; margin-top: 20px;">
+      <div class="m-section__content">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Open?</th>
+                <th>Always open?</th>
+                <th>Open?</th>
+                <th>Close</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let w of weekDays">
+                <td class="text-left">{{w.weekName}}</td>
+                <td>
+                  <input id="open-{{w.day}}" data-switch="true" data-size="small" type="checkbox" name="isOpen"
+                    [attr.checked]="w.is_open ? 'checked' : null" [attr.data-on-text]="'Yes'" data-off-text="No"
+                    [attr.data-on-color]="'success'" [attr.data-off-color]="'danger'">
+                </td>
+                <td>
+                  <input id="always-{{w.day}}" data-switch="true" data-size="small" type="checkbox"
+                    [attr.checked]="w.always_open ? 'checked' : null" [attr.data-on-text]="'Yes'" data-off-text="No"
+                    [attr.data-on-color]="'success'" [attr.data-off-color]="'danger'">
+                </td>
+                <td>
+                  <select *ngIf="w.is_open && !w.always_open" name="hourStart" class="form-control" [(ngModel)]="w.start_time">
+                    <option *ngFor="let h of hoursGroup" [value]="h.value">{{h.text}}</option>
+                  </select>
+                </td>
+                <td>
+                  <select *ngIf="w.is_open && !w.always_open" name="hourEnd" class="form-control" [(ngModel)]="w.end_time">
+                    <option *ngFor="let h of hoursGroup" [value]="h.value">{{h.text}}</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="5" class="text-right">
+                  <button type="button" class="btn btn-dark" [ngClass]="{'m-loader m-loader--light m-loader--right': loading}"
+                    (click)="submit()">Submit</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

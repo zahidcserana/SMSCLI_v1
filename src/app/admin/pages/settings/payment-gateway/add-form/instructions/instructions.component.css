@@ -1,0 +1,12 @@
+.format-instruction {
+    padding: 10px;
+}
+.format-instruction h5, .format-instruction div {
+    margin: 10px;
+}
+
+.format-instruction div img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+}

@@ -1,0 +1,79 @@
+<div class="custom-alert" #hasAlert></div>
+<!-- BEGIN: Subheader -->
+<div class="m-content product-list animated fadeIn">
+
+  <div class="m-subheader">
+    <div class="d-flex align-items-center">
+      <div class="mr-auto">
+        <h3 class="m-subheader__title m-subheader__title--separator">
+          Plans
+        </h3>
+        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+          <li class="m-nav__item m-nav__item--home">
+            <a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+              <i class="m-nav__link-icon la la-home"></i>
+            </a>
+          </li>
+          <li class="m-nav__separator">
+            <i class="fa fa-angle-right"></i>
+          </li>
+          <li class="m-nav__item">
+            <a class="m-nav__link">
+              <span class="m-nav__link-text">
+                Billing History
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="m-portlet m-portlet--mobile mt-5 pt-5 ">
+    <div class="m-portlet__head">
+      <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title">
+          <h3 class="m-portlet__head-text">
+            Billing History
+          </h3>
+        </div>
+      </div>
+    </div>
+    <div class="m-portlet__body" style="position: relative;">
+      <div class="m-section">
+        <div class="m-section__content price-table">
+          <div class="table-responsive" style="margin-bottom: 10px;">
+            <table class="table table-hover">
+              <thead>
+                <th *ngFor="let title of titles" class="greenbg">{{title}}</th>
+              </thead>
+              <tbody *ngIf="billings.length;else noFound">
+                <tr *ngFor="let billing of billings">
+                  <td> {{billing.created | date }} {{billing.created | date:'shortTime' }}</td>
+                  <td> {{getTransactionId(billing.transaction_id) }} </td>
+                  <td> {{billing.seller_message }} </td>
+                  <td> ${{billing.amount/100 | number:'1.2-2'}} </td>
+                  <td>
+                    <span [ngClass]="{'succeeded':billing.charge_status=='succeeded', 'normal':billing.charge_status!='succeeded'}">
+                      {{billing.charge_status }}</span>
+                  </td>
+                  <td>
+                    <a class="btn m-btn--pill m-btn--air btn-brand btn-sm" [routerLink]="['../','billing-invoice',billing.invoice_id]">view details</a>
+                  </td>
+                </tr>
+
+              </tbody>
+              <ng-template #noFound>
+                <tbody>
+                  <tr>
+                    <td colspan="6" class="text-center">No Data Found</td>
+                  </tr>
+                </tbody>
+              </ng-template>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,56 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('')">
+  <span aria-hidden="true">&times;</span>
+</button>
+
+<section style="padding:20px;">
+  <div style="padding:10px 0px;">
+    <h5>Location Address</h5>
+  </div>
+  <form class="mt-3 m-form m-form--fit m-form--label-align-right" [formGroup]="distanceForm" (ngSubmit)="submitForm()"
+    style="position: relative;">
+    <div *ngIf="loader" class="table-load m-loader m-loader--brand" style="z-index:99999;"></div>
+    <div class="row">
+      <div class="col-md-12 form-group">
+        <label for="address">Address*</label>
+        <input id="address" type="text" class="form-control m-input" name="address" formControlName="address"
+          autocomplete="nope">
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="phone">Phone*</label>
+        <input id="phone" type="text" class="form-control m-input" name="phone" formControlName="phone" autocomplete="nope">
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="city">City*</label>
+        <input id="city" type="text" class="form-control m-input" name="city" formControlName="city" autocomplete="nope">
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="state">State*</label>
+        <input id="state" type="text" class="form-control m-input" name="state" formControlName="state" autocomplete="nope">
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="zipcode">Zip Code*</label>
+        <input id="zipcode" type="text" class="form-control m-input" name="zipcode" formControlName="zipcode"
+          autocomplete="nope">
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="country">Country*</label>
+        <input id="country" type="text" class="form-control m-input" name="country" formControlName="country"
+          autocomplete="nope">
+      </div>
+    </div>
+
+    <div class="m-portlet__foot m-portlet__foot--fit">
+      <div class="m-form__actions m-form__actions" style="padding: 20px 0px;">
+        <button type="submit" [disabled]="!distanceForm.valid || !locationId" class="btn btn-dark" [ngClass]="{'m-loader m-loader--light m-loader--right': loading}"
+          style="margin-right:5px;">
+          Submit
+        </button>
+        <button type="button" class="btn btn-danger" (click)="activeModal.close()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</section>

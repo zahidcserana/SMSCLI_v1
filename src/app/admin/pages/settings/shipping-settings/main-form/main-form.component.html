@@ -1,0 +1,15 @@
+<section style="padding-top: 35px;">
+  <div class="row">
+    <div class="col-sm-6">
+      <h4>Shipping Settings</h4>
+      <div class="form-group" style="margin: 15px 0px;">
+        <h6>ShipEngine api key*</h6>
+        <input class="form-control" type="text" name="api_key" placeholder="Please enter shipEngine api key" [(ngModel)]="shipping.config.api_key">
+      </div>
+      <ng-template #cardConect></ng-template>
+    </div>
+    <div class="col-sm-6">
+      <app-instruction-section></app-instruction-section>
+    </div>
+  </div>
+</section>

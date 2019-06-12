@@ -1,0 +1,82 @@
+<div class="m-login__signin animated fadeIn">
+  <div class="row">
+    <div class="col-md-6 hidden-div">
+      <div class="login-shape">
+        <img src="assets/img/home/graphic4.svg">
+      </div>
+    </div>
+    <div class="col-md-6 login-side">
+      <div class="m-login__head">
+        <h2 class="text-left">Welcome</h2>
+        <h3 class="m-login__title text-left">
+          Login to Your Account
+        </h3>
+      </div>
+      <div class="custom-alert" #hasAlert></div>
+
+      <form (ngSubmit)="authanticate()" #logForm="ngForm" class="m-login__form m-form" autocomplete="nope" *ngIf="!authanticateUser">
+        <div class="form-group m-form__group">
+          <input class="form-control m-input" type="email" placeholder="Email" name="email" [(ngModel)]="signInModel.email"
+            #email="ngModel" autocomplete="nope" required>
+        </div>
+        <div class="form-group m-form__group">
+          <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password"
+            autocomplete="new-password" name="password" [(ngModel)]="signInModel.password" #password="ngModel" required>
+        </div>
+        <div class="d-flex" style="align-items: center; padding: 20px 10px 0px;">
+          <div class="text-left" style="flex:1;">
+            <button type="submit" [disabled]="loading || !logForm.form.valid" id="m_login_signin_submit" class="btn m-btn--pill btn-secondary btn-lg m-btn--icon"
+              [ngClass]="{'m-loader m-loader--skin-dark m-loader--right': loading}" style="margin-top: 0px;">
+              <span>
+                <i class="fa fa-sign-in"></i>
+                <span>
+                  Submit
+                </span>
+              </span>
+            </button>
+          </div>
+          <div class="text-right" style="flex:1;">
+            <a [routerLink]="['/auth/forgot-password']" class="m-link">
+              Forgot Password
+            </a>
+          </div>
+        </div>
+      </form>
+      <div class="m-form authanticateUser" *ngIf="authanticateUser" style="margin: 2rem auto!important;">
+        <div class="form-group m-form__group" *ngIf="length" style="position: relative;">
+          <button class="btn btn-secondary btn-block text-left" type="button" (click)="carte=!carte"
+            [attr.aria-expanded]="carte" aria-controls="collapseExample" [ngClass]="{'m-loader m-loader--skin-dark m-loader--right': loading}"
+            style="position: relative;">
+            <p><b>{{currentStroe.name}}</b></p>
+            <p><small>{{getDomain(currentStroe.slug)}}</small></p>
+            <span *ngIf="!loading" class="cartePart"><i class="fa" [ngClass]="{'fa-caret-up': carte, 'fa-caret-down': !carte}"></i></span>
+          </button>
+          <div class="collapse" id="collapseExample" [ngbCollapse]="!carte">
+            <ul class="list-group">
+              <li *ngFor="let s of stores" class="list-group-item cursor-pointer" [ngClass]="{'active': currentStroe.id == s.id}"
+                (click)="signIn(s)">
+                <p><b>{{s.name}}</b></p>
+                <p><small>{{getDomain(s.slug)}}</small></p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-group m-form__group" *ngIf="!length">
+          <button class="btn btn-secondary btn-block text-left" type="button" (click)="signIn(currentStroe)" [ngClass]="{'m-loader m-loader--skin-dark m-loader--right': loading}">
+            <p><b>{{currentStroe.name}}</b></p>
+            <p><small>{{getDomain(currentStroe.slug)}}</small></p>
+          </button>
+        </div>
+      </div>
+      <!--<div class="row m-login__form-sub" style="position: absolute;bottom: 0;">
+        <div class="col m&#45;&#45;align-left m-login__form-left">
+          <a routerLink="/auth/sign-up" class="m-link">
+            New to Dream Soft? Get Started
+          </a>
+        </div>
+      </div>-->
+    </div>
+  </div>
+</div>
+
+<!--  -->

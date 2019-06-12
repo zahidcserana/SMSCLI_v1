@@ -1,0 +1,78 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-content product-sidebar-images" *ngIf="!noData">
+    <!--begin::Portlet-->
+    <div>
+      <!--<h5 class="colorPurpel" *ngIf="!unassign" style="padding: 5px 0px;">Selected Variant:</h5>-->
+      <div class="m-portlet__body add-image" style="padding:0px;">
+        <!--<form class="m-form m-form&#45;&#45;fit m-form&#45;&#45;label-align-right" *ngIf="!unassign">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <select class="form-control m-input" name="attribute" [(ngModel)]="selectedId.variants_products_id" (change)="attributeChange()">
+                  <xoption *ngFor="let a of attributeList" [value]="a.id">
+                      {{a.chain}}
+                  </option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label class="m-checkbox">
+                  <input type="checkbox" name="all" [(ngModel)]="applyAll" (change)="applyToAll()">
+                    Apply For All
+                  <span></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>-->
+        <h5 class="colorPurpel" style="padding: 5px 0px;">Add Image:</h5>
+        <div style="position: relative;">
+          <drag-drop [multi]='true' [url]="upload_url + 'products/'+ pro_id +'/media/upload'" [info]="selectedId" [fileName]="'image'" 
+           [accept]="'image/*'" (upload)="uploadImages()" ></drag-drop>
+        </div>
+      </div>
+    </div>
+    <!--end::Portlet-->
+
+    <!--begin::Portlet-->
+    <h5 class="colorPurpel" style="padding-top:20px;">Image List</h5>
+    <div style="position: relative; border: 1px solid #ebedf2; padding: 20px;">
+      <div *ngIf="listLoader" class="table-load m-loader m-loader--brand" ></div>
+      <div class="m-portlet__body" *ngIf="!listLoader" style="padding:0px;">
+        <div class="row text-center text-lg-left" *ngIf=" imageList.length>0; else noimage">
+            <div class="col-lg-4 col-md-4 col-xs-6 " 
+              *ngFor="let img of imageList; let i ='index'">
+              <div class="d-block mb-4 image-thumbnail" [ngClass]="{'b-Brand':img.status==2}">
+                <img class="img-fluid img-thumbnail" [src]= "url +store_id+'/' + pro_id + '/' + img.image_original" alt="No Image" 
+                  (click)="showBigImage(img)">
+                <span class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--outline-2x m-btn--pill cancel-image"
+                (click)="removeImage(img, i)" >
+                    <i class="fa fa-close"></i>
+                </span>
+                <div class="feature-image" *ngIf = 'img.status==1'>
+                  <ng-template #button>
+                    <span class="btn btn-brand btn-sm"
+                      (click)="featureImage(img)" >
+                        Make Feature
+                    </span>
+                  </ng-template>
+                  <div *ngIf="loader; else button" class="loader-image m-loader m-loader--brand" 
+                    style="width: 30px; display: inline-block;"></div>
+                </div>
+              </div>
+            </div>     
+        </div>
+        <ng-template #noimage>
+            <h5 class="text-center">No Image Found</h5>
+        </ng-template>
+      </div>
+    </div>
+    <!--end::Portlet-->
+    
+  
+  
+</div>
+
+<div class="m-content product-sidebar-images" *ngIf="noData">
+  <h3 class="colorPurpel">To add images, please add product variant at variants section.</h3>
+</div>

@@ -1,0 +1,145 @@
+<div class="custom-alert" #hasAlert></div>
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title m-subheader__title--separator">
+				User Profile
+			</h3>
+			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+				<li class="m-nav__item m-nav__item--home">
+					<a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+						<i class="m-nav__link-icon la la-home"></i>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					<i class="fa fa-angle-right"></i>
+				</li>
+				<li class="m-nav__item">
+					<a routerLink="/admin/user/all" class="m-nav__link">
+						<span class="m-nav__link-text">
+							User List
+						</span>
+					</a>
+        </li>
+        <li class="m-nav__separator" style="padding-left: 10px">
+					<i class="fa fa-angle-right"></i>
+				</li>
+        <li class="m-nav__item">
+					<a class="m-nav__link">
+						<span class="m-nav__link-text">
+							User Profile
+						</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content animated fadeIn">
+	<div class="row">
+		<div class="col-xl-3 col-lg-4">
+			<div class="m-portlet m-portlet">
+				<div class="m-portlet__body">
+					<div class="m-card-profile">
+						<div class="m-card-profile__title m--hide">
+							Your Profile
+						</div>
+						<div class="m-card-profile__pic">
+							<div class="m-card-profile__pic-wrapper" style="position: relative;">
+									<img *ngIf="image_url; else alter" onError="this.src='./assets/img/admin/logo/user.png';" [src]="image_url" alt=""/>
+									<ng-template #alter>
+										<img src="./assets/img/admin/logo/user.png" alt=""/>
+									</ng-template>
+								<div class="change-avatar">
+									<a routerLink="./account-settings/change-avatar">Change Avatar</a>
+								</div>
+							</div>
+						</div>
+						<div class="m-card-profile__details">
+							<span class="m-card-profile__name">
+								{{user?.first_name}} {{user?.last_name}}
+							</span>
+							<p class="sub-title">
+								{{findUserType(user?.user_type_id)}} / <span class="btn btn-sm" 
+									[ngClass]="{'btn-success':user?.status==1,'btn-danger':user?.status!=1}">{{checkStatus(user?.status)}}</span>
+              </p>
+						</div>
+					</div>
+					<ul class="m-nav m-nav--hover-bg m-portlet-fit--sides">
+						<li class="m-nav__item">
+							<a routerLink="./profile" routerLinkActive="active" class="m-nav__link">
+								<i class="m-nav__link-icon la la-home"></i>
+								<span class="m-nav__link-text">
+									Overview
+								</span>
+							</a>
+						</li>
+						<li class="m-nav__item">
+							<a routerLink="./account-settings" routerLinkActive="active" class="m-nav__link">
+								<i class="m-nav__link-icon la la-cog"></i>
+								<span class="m-nav__link-text">
+									Account Settings
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+      </div>
+      
+      <div class="m-portlet m-portlet info-list">
+				<div class="m-portlet__body">
+          <div class="m-card-profile">
+						<div class="m-card-profile__details">
+							<span class="m-card-profile__name text-left">
+								{{user?.first_name}} {{user?.last_name}}
+							</span>
+						</div>
+          </div>
+          <span style="display: block;">{{user?.social_type}}</span>
+					<ul class="m-nav">
+						<li class="m-nav__item">
+							<p class="m-nav__link">
+                <span class="m-nav__link-text">
+                  <strong>Registered: </strong> {{dateFormat(user?.created)}}
+                </span>
+              </p>
+            </li>
+            <!-- <li class="m-nav__item">
+							<p class="m-nav__link">
+                <span class="m-nav__link-text">
+                  <strong>Last Login: </strong> 5/5/18, 1:22 PM, Mobile, Handheld Browser, Android
+                </span>
+              </p>
+						</li>
+						<li class="m-nav__item">
+              <p class="m-nav__link">
+                <span class="m-nav__link-text">
+                  <strong>Last Login IP: </strong> 103.129.65.52
+                </span>
+              </p>
+						</li> -->
+          </ul>
+          <p class="user-email">
+            <i class="fa fa-envelope" style="padding-right: 10px;"></i>
+            <span style="word-wrap: break-word;">{{user?.email}}</span>
+          </p>
+					
+					<div *ngIf="loader; else button" class="m-loader m-loader--brand" style="width: 30px; display: inline-block;"></div>
+					<ng-template #button>
+						<button class="btn btn-sm btn-info" (click)="resendPassword(user?.email)" 
+						style="white-space: normal;">Resend Password Activation Email</button>
+					</ng-template>
+				</div>
+      </div>
+      
+		</div>
+		<div class="col-xl-9 col-lg-8">
+			<div class="m-portlet m-portlet--full-height">
+				<router-outlet></router-outlet>
+			</div>
+		</div>
+	</div>
+</div>

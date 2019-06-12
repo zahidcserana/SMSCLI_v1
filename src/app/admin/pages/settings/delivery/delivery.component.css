@@ -1,0 +1,27 @@
+.custom-alert{
+    position: fixed;
+    top: 90px;
+    right: 30px;
+    z-index: 5000;
+}
+
+.heading-part{
+    padding: 10px 0px;
+    border-bottom: 1px solid #eef1f5;
+}
+.d-settings {
+    padding: 10px 0px;
+}
+
+.d-settings .row {
+    padding: 10px 0px;
+}
+
+.d-settings .form-group {
+    padding-right: 0px!important;
+    text-align: right!important;
+}
+
+.m-portlet__foot.m-portlet__foot--fit {
+    border: none;
+}

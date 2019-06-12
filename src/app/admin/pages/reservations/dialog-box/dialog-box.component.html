@@ -1,0 +1,23 @@
+<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('')">
+        <span aria-hidden="true">&times;</span>
+      </button> 
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right" >
+                    <h5>Change Order Status</h5>
+                    <div class="form-group m-form__group">
+                        <label for="status">Select Status</label>
+                        <select id="status" class="form-control m-input" name="status" [(ngModel)] ="orderStatus">
+                            <option *ngFor="let s of status; let i = 'index'" [value]="i+1">{{s}}</option>
+                        </select>
+                    </div>
+                    <div class="closing-btn text-center" style="padding: 20px;">
+                        <button type="button" class="btn btn-brand btn-sm" (click)="activeModal.close(orderStatus)">
+                            Yes
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="activeModal.close(false)">
+                            No
+                        </button>
+                    </div>
+                </form>
+            </div>
+

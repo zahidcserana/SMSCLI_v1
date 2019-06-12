@@ -1,0 +1,133 @@
+<div class="custom-alert" #hasCusAlert></div>
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="row" style="width: 100%;">
+            <div class="col-10">
+                <h3 class="welcome-title">PLANS</h3>
+            </div>
+            <div class="col-2 text-right">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+
+    <!--begin::Portlet-->
+    <div class="m-portlet">
+        <div class="m-portlet__body m-portlet__body--no-padding">
+            <div class="m-pricing-table-4">
+                <div class="m-pricing-table-4__top">
+                    <div class="m-pricing-table-4__top-container m-pricing-table-4__top-container--fixed">
+                        <!-- <div class="m-pricing-table-4__top-header">
+                            <div class="m-pricing-table-4__top-title m--font-light">
+                                <h1>Transparent & Simple Pricing</h1>
+                            </div>
+                        </div> -->
+                        <div class="m-pricing-table-2">
+                            <div class="m-pricing-table-2__head pb-5">
+                                <div class="m-pricing-table-2__title m--font-light">
+                                    <h1>Transparent &amp; Simple Pricing</h1>
+                                </div>
+                                <div class="btn-group nav m-btn-group m-btn-group--pill m-btn-group--air" role="group">
+                                    <button type="button" (click)="changeSubsPeriod('monthly')"
+                                            [ngClass]="{'active show ':isMonthly}"
+                                            class="btn m-btn--pill m-btn--wide m-btn--uppercase m-btn--bolder ">
+                                        Monthly Plans
+                                    </button>
+                                    <button type="button" (click)="changeSubsPeriod('yearly')"
+                                            [ngClass]="{'active show' :!isMonthly}"
+                                            class="btn m-btn--pill m-btn--wide m-btn--uppercase m-btn--bolder">
+                                        Yearly Plans
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- <div class="tab-content">
+                                  <div class="tab-pane active show" id="m-pricing-table_content1" aria-expanded="true">
+                                      Monthly Plans
+                                  </div>
+                                  <div class="tab-pane" id="m-pricing-table_content2" aria-expanded="false">
+                                      Year Plans
+                                  </div>
+                              </div> -->
+                        </div>
+                        <div class="m-pricing-table-4__top-body">
+                            <div class="m-pricing-table-4__top-items">
+                                <!--begin::Pricing Item-->
+                                <div class="m-pricing-table-4__top-item" *ngFor="let plan of plans   let i='index'">
+                                    <span class="m-pricing-table-4__icon m--font-info">
+                                        <i class="fa {{ plan.icon }}"></i>
+                                    </span>
+                                    <h2 class="m-pricing-table-4__subtitle">{{ plan.name }}</h2>
+                                    <div class="m-pricing-table-4__features">
+                                    </div>
+                                    <span class="m-pricing-table-4__price">${{ isMonthly? plan.price_monthly : plan.price_yearly }}</span>
+                                    <div class="m-pricing-table-4__btn" *ngIf="plan.plan_id">
+                                        <upgrade-subscription [isNew]="isNew"
+                                                              *ngIf="!current_plan || current_plan!=plan.name ;else currentPlan "
+                                                              (onLoad)="onLoad($event)"
+                                                              (showAlert)="showAlert($event)"
+                                                              [btnText]="getBtnName(plan.price_monthly)"
+                                                              [planId]=" isMonthly? plan.plan_id.month :plan.plan_id.year "
+                                                              (onUpgrade)="onUpgrade($event)"
+                                                              [subscription]="getSubsCription()"
+                                                              [accountType]="plan.name"></upgrade-subscription>
+                                        <ng-template #currentPlan>
+                                            <button type="button" style="cursor: text"
+                                                    class="btn m-btn--pill  btn-primary m-btn--uppercase m-btn--bolder m-btn--md">
+                                                Current Plan
+                                            </button>
+                                        </ng-template>
+                                    </div>
+
+                                    <div class="m-pricing-table-4__top-items-mobile">
+                                        <div class="m-pricing-table-4__top-item-mobile"
+                                             *ngFor="let feature of featurelist;">
+                                            <span> {{ feature.name }}</span>
+                                            <br>
+                                            <span [innerHTML]="feature.values[i].name"></span>
+                                        </div>
+                                        <div class="m-pricing-table-4__top-btn" *ngIf="plan.plan_id">
+                                            <upgrade-subscription [isNew]="getBtnName()==='DOWNGRADE'"
+                                                                  *ngIf="!current_plan || current_plan!=plan.name ;else currentPlan "
+                                                                  (onLoad)="onLoad($event)"
+                                                                  (showAlert)="showAlert($event)"
+                                                                  [btnText]="getBtnName(plan.price_monthly)"
+                                                                  [planId]="plan.plan_id"
+                                                                  [accountType]="plan.name"></upgrade-subscription>
+                                            <ng-template #currentPlan>
+                                                <button type="button" style="cursor: text"
+                                                        class="btn m-btn--pill  btn-info m-btn--wide m-btn--uppercase m-btn--bolder m-btn--lg">
+                                                    Current Plan
+                                                </button>
+                                            </ng-template>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-pricing-table-4__bottom">
+                    <div class="m-pricing-table-4__bottom-container m-pricing-table-4__bottom-container--fixed">
+                        <div class="m-pricing-table-4__bottom-items" *ngFor="let feature of featurelist;">
+                            <div class="m-pricing-table-4__bottom-item feature_name">
+                                {{ feature.name }}
+                            </div>
+                            <div class="m-pricing-table-4__bottom-item" *ngFor="let planFeature of feature.values;">
+                                <span [innerHTML]="planFeature.name"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="preload" *ngIf="Loader">
+    <app-preloader></app-preloader>
+</div>

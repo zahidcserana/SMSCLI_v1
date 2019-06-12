@@ -1,0 +1,72 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-content product-sidebar-categories">
+		<!--begin::Portlet-->
+		<div class="m-portlet__foot m-portlet__foot--fit row">
+			<h5 class="colorPurpel col-sm-6">Selected Categories:</h5>
+      <div class="m-form__actions col-sm-6 text-right">
+				<button type="button" (click)="gotoAddCategory()"
+				class="btn btn-brand m-btn--pill m-btn--air btn-sm">
+					<i class="fa fa-plus"></i> 
+					<span style="padding-left:10px;">Manage</span>
+        </button>
+      </div>
+    </div>
+    
+    <div>
+      <div class="m-portlet__body">
+        <!--begin::Section-->
+					<div class="m-section">
+							<!--begin::Preview-->
+
+									<div class="m-list-timeline">
+										<div class="m-list-timeline__items" *ngIf="categoryList.length>0; else noData">
+											<div class="m-list-timeline__item" *ngFor="let list of categoryList; let i = index; trackBy:listTrackby">
+												<span class="m-list-timeline__text">
+													{{i+1}}. {{list.category_chain}}
+												</span>
+												<span class="m-list-timeline__time">
+													<a id="m_quick_sidebar_toggle" (click)="deleteTreeItem(list, i)"
+														class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+															<i class="la la-trash"></i>
+														</a>
+												</span>
+											</div>
+										</div>
+										<ng-template #noData>
+											<h5 class="text-center">
+												No Category Found
+											</h5>
+										</ng-template>
+									</div>
+
+							<!--end::Preview-->
+					</div>
+					<!--end::Section-->  
+      </div>
+    </div>
+        <!--end::Portlet-->
+  
+    <!--begin::Portlet-->
+		<h5 class="colorPurpel">Select Category</h5>
+		
+    <div id="category-jsTree" class="tree-demo"></div>
+		
+		<div class="m-portlet__foot m-portlet__foot--fit text-right">
+			<div *ngIf="loader; else button" class="m-loader m-loader--brand" 
+				style="width: 30px; display: inline-block;"></div>
+			<ng-template #button>
+				<button type="button" (click)="saveSelectedCategory()" [disabled] = "!addTrue"
+				class="btn btn-brand m-btn--pill m-btn--air">
+					<i class="fa fa-save"></i> 
+					<span style="padding-left:10px;">Save</span>
+				</button>
+			</ng-template>
+		</div>
+		
+    
+  
+  
+	</div>
+	
+	

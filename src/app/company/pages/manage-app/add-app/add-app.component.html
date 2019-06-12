@@ -1,0 +1,78 @@
+
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-subheader">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        {{htmlname.header}}
+      </h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+        <li class="m-nav__item m-nav__item--home">
+          <a routerLink="/partner/dashboard" class="m-nav__link m-nav__link--icon">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+        <li class="m-nav__separator" *ngIf="edit">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item" *ngIf="edit">
+          <a [routerLink]="['/partner/app/list']" class="m-nav__link">
+            <span class="m-nav__link-text">
+              App List
+            </span>
+          </a>
+        </li>
+        <li class="m-nav__separator" [ngClass]="{'m-l-10': edit}">
+					<i class="fa fa-angle-right"></i>
+				</li>
+				<li class="m-nav__item">
+					<a class="m-nav__link">
+						<span class="m-nav__link-text">
+							{{htmlname.header}}
+						</span>
+					</a>
+				</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content row">
+  <div class="m-portlet col-md-9 col-lg-8">
+    <div class="m-portlet-body">
+	<!--begin::Portlet-->
+      <form class="m-form m-form--fit m-form--label-align-right" [formGroup]="appForm" (ngSubmit)="appForm.valid && storeId.value && submitApp()">
+        
+        <div class="form-group m-form__group" style="position: relative;">
+          <label for="store">Select Store*</label>
+          <select id="store" class="form-control m-select" formControlName="store_id">
+            <option value="0">-Setelct Store-</option>
+            <option *ngFor="let s of allStore" [value]="s.id">{{s.name}}</option>
+          </select>
+        </div>
+        
+        <div class="form-group m-form__group">
+          <label for="name">App Name*</label>
+          <input type="text" id="name" class="form-control m-input" name="app_name" formControlName="app_name" autocomplete="off">
+          <div *ngIf="appName.invalid && appName.touched">
+            <small *ngIf="appName.errors.required" class="error">App Name Required</small>
+          </div>
+        </div>
+
+        <div class="form-group m-form__group">
+          <label for="site">Your Domain*</label>
+          <input type="text" id="site" class="form-control m-input" name="site_url" formControlName="site_url" autocomplete="off">
+          <div *ngIf="siteUrl.invalid && siteUrl.touched">
+            <small *ngIf="siteUrl.errors.required" class="error">Domain Required</small>
+          </div>
+        </div>
+        
+        <div class="form-group m-form__group">
+          <button type="submit" class="btn btn-brand" [ngClass]="{'m-loader m-loader--light m-loader--right': loading}" [disabled]="loading">{{htmlname.submitBtn}}</button>
+        </div>
+      </form>
+            <!--end::Form-->
+    </div>
+  </div>
+</div>

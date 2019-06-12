@@ -1,0 +1,70 @@
+<div class="m-section card-section info-section animated fadeIn">
+  <div class="m-section__content">
+    <h4 class="colorPurpel info-heading">Summary
+    </h4>
+    <section class="row user-card">
+      <div class="col-xl-4 col-md-6 col-sm-6">
+        <div class="small-box bg-aqua">
+          <div class="inner">
+            <h4>50</h4>
+            <p>Store</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-fort-awesome"></i>
+          </div>
+          <a class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+        
+      <div class="col-xl-4 col-md-6 col-sm-6">
+        <div class="small-box bg-green">
+          <div class="inner">
+            <h4>100</h4>
+            <p>Inventory</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-list-alt"></i>
+          </div>
+          <a class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+       
+      <div class="col-xl-4 col-md-6 col-sm-6"> 
+        <div class="small-box bg-yellow">
+          <div class="inner">
+            <h4>10</h4>
+            <p>Order</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-ship"></i>
+          </div>
+          <a class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="row" style="padding-top: 20px;">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header"><h4>Store</h4></div>
+          <div class="card-body">
+            <div>
+              <canvas #canvasBar>{{ chart['bar'] }}</canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header"><h4>Inventory</h4></div>
+          <div class="card-body">
+            <div>
+              <canvas #canvasDou>{{ chart['dou'] }}</canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>

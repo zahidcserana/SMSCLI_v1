@@ -1,0 +1,30 @@
+
+.product-sidebar-related {
+    padding:0px;
+}
+
+.product-sidebar-related .col-form-label{
+    color:#041531;
+}
+.m-portlet .m-portlet__foot:not(.m-portlet__no-border){
+    border: none;
+}
+.m-form{
+    margin: 15px 0px;
+}
+
+#delete-related-product{
+    background: rgba(0,0,0,0.2);
+}
+
+.custom-alert{
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 5000;
+}
+.img-thumbnail{
+    max-width: 100px!important;
+    height: 100px!important;
+    object-fit: contain;
+}

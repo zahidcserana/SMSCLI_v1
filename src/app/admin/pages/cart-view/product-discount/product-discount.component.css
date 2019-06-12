@@ -1,0 +1,23 @@
+.discount {
+    /* background: url(../../../../../assets/img/admin/discount.jpg);
+    min-height: 300px;
+    background-position: 3px -214px; */
+}
+
+
+.discount-form {
+    min-height: 300px;
+    margin: 14px;
+    padding: 25px;
+}
+
+ label {
+    padding-left: 10px;
+    font-size: 14px;
+ }
+ .close {
+    margin-right: 20px;
+ }
+ .m-radio {
+     padding-left: 30px;
+ }

@@ -1,0 +1,121 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Tags
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+              <li class="m-nav__item m-nav__item--home">
+                <a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+                  <i class="m-nav__link-icon la la-home"></i>
+                </a>
+              </li>
+              <li class="m-nav__separator">
+                <i class="fa fa-angle-right"></i>
+              </li>
+              <li class="m-nav__item">
+                <a class="m-nav__link">
+                  <span class="m-nav__link-text">
+                    Settings
+                  </span>
+                </a>
+              </li>
+              <li class="m-nav__separator" style="padding-left: 10px">
+                <i class="fa fa-angle-right"></i>
+              </li>
+              <li class="m-nav__item">
+                <a class="m-nav__link">
+                  <span class="m-nav__link-text">
+                    Tags
+                  </span>
+                </a>
+              </li>
+            </ul>
+        </div>
+    </div>
+  </div>
+  <!-- END: Subheader -->
+  <div class="m-content animated fadeIn">
+    <div class="m-portlet">
+      <div class="m-portlet__body">
+        <div style="padding: 20px 0px;">
+          <button class="btn btn-brand" (click)="AddTag()">
+            Add Tag
+          </button>
+          <span *ngIf="copyDone" class="float-right success-mgs"><b>Url is copied</b></span>
+        </div>
+          <!--begin::Section-->
+        <div class="m-section">
+          <div class="m-section__content price-table">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>
+                    Name
+                  </th>
+                  <th>
+                    Status
+                  </th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="tagsList.length>0; else noData">
+                  <tr *ngFor="let tag of tagsList; let i = 'index'; trackBy: trackTag; let o='odd'; let e='even'" [ngClass]="{'odd-tr':o, 'even-tr':e}">
+                    <td>
+                      {{tag?.name}}
+                      <input type="text" class="hide-copy-input" [value]="'/tag/' + tag.url" readonly #copyText>
+                    </td>
+                    <td>
+                      <span [ngClass]="{'green': tag?.is_shown_in_nav, 'red': !tag?.is_shown_in_nav}">
+                        {{tag?.is_shown_in_nav ? 'Shown' : 'Not Shown'}}
+                      </span>
+                    </td>
+                    <td>  
+                      <a (click)="copyUrl(copyText)" title="Copy"
+                        class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="fa fa-copy"></i>
+                      </a>      
+                      <a (click)="editTag(tag)" title="Edit"
+                        class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="fa fa-edit"></i>
+                      </a>
+                      <a (click)="deleteTag(tag.id, i)" title="Delete"
+                        class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="fa fa-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+                <ng-template #noData>
+                  <tbody><tr><td colspan="3"><h5 class="text-center">No Tag Found</h5></td></tr></tbody>
+                </ng-template>
+            </table>
+          </div>
+        </div>
+			<!--end::Section-->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- sidebar -->
+
+<div class="native-routing animated">
+	<button class="close-sidebar btn btn-sm btn-brand">
+		<i class="fa fa-chevron-right"></i>
+  </button>
+  <span class="close-sidebar-upper">
+    <i class="la la-close"></i>
+  </span>
+    <div class="native-routing-container">
+        <add-tag (submitForm)="SubmitTag($event)"></add-tag>
+    </div>
+
+</div> 
+
+
+
+
+  

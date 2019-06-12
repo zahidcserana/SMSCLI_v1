@@ -1,0 +1,71 @@
+<footer class="footer" >
+  <div class="top-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-5 col-sm-5 col-12 footer-contact" *ngIf="contents && contents.site_specific">
+              <h4>Contact Us</h4>
+              <!-- <div class="footer-line"> -->
+              <ul class="contact-us" >
+                <li>
+                  <a href="mailto:{{contents.site_specific.general?.email}}">
+                    <i class="fa fa-envelope"></i> {{contents.site_specific && contents.site_specific.general?.email?contents.site_specific.general.email :''}}</a>
+                </li>
+                <li>
+                  <i class="fa fa-map-marker"></i> {{contents.site_specific && contents.site_specific.general?.address ?contents.site_specific.general.address :''}} </li>
+                <li>
+                  <i class="fa fa-phone"></i>  {{ contents.site_specific && contents.site_specific.general?.phone ?  contents.site_specific.general.phone :''}} </li>
+              </ul>
+            </div>
+            <div class="col-md-7 col-sm-7">
+              <div class="row">
+                <div class="col-md-6 col-sm-6 col-6 footer-links">
+                  <h4>Quick links</h4>
+                  <ul>
+                    <li *ngFor="let q of footer.quick">
+                      <a [routerLink]="['/' + q.content_url]"> {{q.label}}</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-6 col-sm-6 col-6 footer-links">
+                  <h4>More links</h4>
+                  <ul>
+                    <li *ngFor="let q of footer.more">
+                      <a [routerLink]="['/' + q.content_url]"> {{q.label}}</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12 col-12 footer-links">
+          <h4>NEWSLETTER</h4>
+
+          <p>Get news and receive 20% off for your next buy!</p>
+          <form>
+            <div class="form-group">
+              <input type="email" class="form-control" placeholder="Your Email Address" name="newsLetter" [(ngModel)]="newsLetter">
+              <small *ngIf="message" style="color: #fff;">{{message}}</small>
+            </div>
+            <div class="form-group">
+              <button type="button" [disabled]="loading || !newsLetter" class="btn button theme-btn banner-button m-btn--icon" 
+                [ngClass]="{'m-loader m-loader--light m-loader--right': loading}" (click)="submit()">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-devided"></div>
+  <div class="bottom-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <p [innerHtml]="contents.site_specific?.footer?.copyright_text"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

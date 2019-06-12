@@ -1,0 +1,86 @@
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+      <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title">
+          <h3 class="m-portlet__head-text">
+            <i class="la la-search"></i>
+            Search
+          </h3>
+        </div>
+      </div>
+    </div>
+    <div class="m-portlet__body search-panel">
+      <!--begin::Form-->
+      <form class="m-form m-form--fit m-form--label-align-right second-form" 
+        #form="ngForm" (ngSubmit)="submitSearch()">
+        <div class="row">
+          <div class="col-md-4 col-sm-6">
+            <div class="form-group m-form__group">
+              <select class="form-control m-input" name="Oid" [(ngModel)]="register.location_id" autocomplete="off">
+                <option value="">-Select Location-</option>
+                <option *ngFor="let s of stores" [value]="s.id">{{s.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="form-group m-form__group">
+              <select class="form-control m-input" name="Oid" [(ngModel)]="register.terminal_id" autocomplete="off">
+                <option value="">-Select Terminal-</option>
+                <option *ngFor="let s of terminals" [value]="s.id">{{s.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="form-group m-form__group">
+              <div class="m-input-icon pull-right" id="m_daterangepicker_3">
+                <input type="text" class="form-control m-input" placeholder="Enter Date Range" autocomplete="off" readonly>
+                <span class="m-input-icon__icon m-input-icon__icon--right">
+                  <span>
+                    <i class="la la-calendar-check-o"></i>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="form-group m-form__group">
+              <input class="form-control m-input" type="text" placeholder="Enter Opening Amount" name="amount_open" [(ngModel)]="register.amount_open" autocomplete="off">
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="form-group m-form__group">
+              <input class="form-control m-input" type="text" placeholder="Enter Closing Amount" name="amount_close" [(ngModel)]="register.amount_close" autocomplete="off">
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="form-group m-form__group">
+              <input class="form-control m-input" type="text" placeholder="Enter Net Amount" name="net" [(ngModel)]="register.amount_net" autocomplete="off">
+            </div>
+          </div>
+          <!-- <div class="col-md-4 col-sm-6">
+            <div class="form-group m-form__group">
+              <label class="m-checkbox">
+                <input type="checkbox" name="exclude_order" [(ngModel)]="register.exclude_order">
+                Exclude Online Orders
+                  <span></span>
+              </label>
+            </div>
+          </div> -->
+          <div class="col-12">
+            <div class="form-group m-form__group">
+              <button type="submit" class="btn m-btn--pill m-btn--air btn-brand btn-sm"
+              style="margin-right:10px">
+                <i class="fa fa-calendar-check-o"></i>
+                  Search
+              </button>
+              <button type="reset" class="btn m-btn--pill m-btn--air btn-danger btn-sm" (click)="resetSearch()">
+                <i class="fa fa-history"></i>
+                  Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!--end::Form-->
+    </div>
+  </div>

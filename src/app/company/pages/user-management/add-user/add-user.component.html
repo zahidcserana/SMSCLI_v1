@@ -1,0 +1,122 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+          <h3 class="m-subheader__title m-subheader__title--separator">
+              Add User
+          </h3>
+          <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+            <li class="m-nav__item m-nav__item--home">
+              <a routerLink="/partner/dashboard" class="m-nav__link m-nav__link--icon">
+                <i class="m-nav__link-icon la la-home"></i>
+              </a>
+            </li>
+            <li class="m-nav__separator">
+					    <i class="fa fa-angle-right"></i>
+				    </li>
+            <li class="m-nav__item">
+              <a class="m-nav__link">
+                <span class="m-nav__link-text">
+                  Add User
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+  <div class="m-portlet">
+    <div class="m-portlet-body">
+      <form #form="ngForm" (ngSubmit)="createAccount(form)">
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="finame" class="colorPurpel">
+              First Name*
+            </label>
+            <div class="form-group m-form__group">
+              <input id="finame" type="text" class="form-control" placeholder="First Name" name="f-name" autocomplete="off" #fname="ngModel" [(ngModel)]="signUp.first_name" required>
+              <span *ngIf="fname.errors && fname.touched">
+                <small *ngIf="fname.errors.required" class="error">First Name Required</small>
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="flaname" class="colorPurpel">
+              Last Name*
+            </label>
+            <div class="form-group m-form__group">
+              <input id="flaname" type="text" class="form-control" placeholder="Last Name" name="l-name" autocomplete="off" #lname="ngModel" [(ngModel)]="signUp.last_name" required>
+              <span *ngIf="lname.errors && lname.touched">
+                <small *ngIf="lname.errors.required" class="error">Last Name Required</small>
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="ema" class="colorPurpel">
+              Email*
+            </label>
+            <div class="form-group m-form__group">
+              <input id="ema" type="email" class="form-control" placeholder="Email" name="email" autocomplete="off" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$"  #email="ngModel" [(ngModel)]="signUp.email" required>
+              <span *ngIf="email.errors && email.touched">
+                <small *ngIf="email.errors.required" class="error">Email required</small>
+                <small *ngIf="email.errors.pattern" class="error">Please enter correct email</small>
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="pass" class="colorPurpel">
+              Password*
+            </label>
+            <div class="form-group m-form__group">
+              <input id="pass" autocomplete="off" type="password" class="form-control" placeholder="Password" [(ngModel)]="password" #pass="ngModel" name="pass" 
+              minlength="6" required>
+              <span *ngIf="pass.valid">
+                <password-strength-bar [passwordToCheck]="password" [showText]="true"></password-strength-bar>
+              </span>
+              <span *ngIf="pass.errors && pass.touched">
+                <small *ngIf="pass.errors.required" class="error">Password Required</small>
+                <small *ngIf="pass.errors.minlength" class="info">Password must be 6 characters long</small>
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="con" class="colorPurpel">
+              Confirm Password*
+            </label>
+            <div class="form-group m-form__group">
+              <input id="con" autocomplete="off" type="password" class="form-control" placeholder="Confirm Password" name="passConf" #confirm="ngModel" [(ngModel)]="signUp.password" required>
+              <span *ngIf="confirm.valid">
+                <small *ngIf="checkPassword(password,signUp.password)" class="error">Mismatched Password</small>
+              </span>
+              <span *ngIf="confirm.errors && confirm.touched">
+                <small *ngIf="confirm.errors.required" class="error">Confirm Password Required</small>
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="con" class="colorPurpel">
+              Select User Type*
+            </label>
+            <div class="form-group m-form__group">
+              <select class="form-control m-input" name="user_type_id" [(ngModel)]="signUp.user_type_id">
+                <option value="1">Super Admin</option>
+                <!-- <option value="2">Company Admin</option> -->
+                <option value="3">Store Admin</option>	
+                <!-- <option value="4">Cash Register</option>
+                <option value="5">Customer</option>	 -->
+              </select>
+            </div>
+          </div>
+        </div>
+        <div style="padding-top: 10px;">
+          <button type="submit" [disabled]="loader || checkPassword(password,signUp.password) || !form.valid" 
+            class="btn btn-brand m-btn--icon" [ngClass]="{'m-loader m-loader--light m-loader--right': loader}">Create Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

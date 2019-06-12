@@ -1,0 +1,153 @@
+
+.form-panel{
+    padding: 0px 0px 10px 3px;
+}
+
+.m-form__group{
+    padding: 0px 0px 10px 0px!important;
+}
+
+.label-head{
+    width: 20%;
+    margin-right: 5px;
+}
+.admin-cart{
+    width: 60%;
+}
+
+.table tr td, .table tr th{
+    vertical-align: middle;
+    border-bottom: 1px solid #ebedf2!important;
+    min-width: 60px;
+}
+.table tr th{
+    font-weight: 600;
+}
+.table tr td a{
+    text-decoration: none;
+}
+
+.quantity {
+    margin-bottom: 10px;
+}
+
+.quantity .btn{
+    border-radius: 0px;
+}
+
+.quantity .cart-qunt {
+    width: 50px;
+    border: 1px solid;
+    cursor: initial;
+}
+
+
+.form-group{
+    margin-bottom: 0px;
+}
+
+.quant .price{
+    padding-top: 5%;
+}
+.pad-l-zero {
+    padding-left: 0px;
+}
+
+.custom-alert{
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    z-index: 99000;
+}
+
+.quantity .btn{
+    border-radius: 0px;
+}
+
+.quantity .cart-qunt {
+    width: 50px;
+    border: 1px solid;
+    cursor: initial;
+}
+
+.deposit {
+    width: 50%;
+    float: left;
+    font-weight: bold;
+    padding-left: 10%;
+    text-transform: capitalize
+}
+.total {
+    width: 50%;
+    float: left;
+    text-align: right;
+    padding-right: 10%;
+    font-weight: bold;
+}
+
+.header-part{
+    position: absolute;
+    top: 1px;
+    background: white;
+    padding-top: 20px;
+    padding-right:20px;
+    border-bottom: 1px solid #ebedf2;
+    z-index: 9;
+    /* overflow: hidden; */
+    /* width:90.5%; */
+}
+
+.block-cursor {
+    pointer-events: none;
+}
+
+/* .content {
+    margin-top: 60px;
+} */
+.clear-cart-btn{
+    text-align: right;
+}
+
+.img-resize{
+    max-width: 100px!important;
+    height: 100px!important;
+    object-fit: contain;
+}
+
+.img-orgin{
+    max-width: 100%!important;
+    height: auto!important;
+}
+
+@media screen and (max-width: 992px) {
+    /* .content {
+        margin-top: 90px;
+    } */
+    .label-head{
+        width: 30%;
+    }
+    .admin-cart{
+        width: 60%;
+    }
+    .clear-cart-btn{
+        text-align: left;
+    }
+    .header-part{
+        padding-bottom: 15px;
+    }
+}
+
+@media only screen and (max-width: 575px){
+
+    .quant .price{
+        padding-top: 0px;
+    }
+    .pro-image-show {
+        padding-bottom: 15px;
+        text-align: center;
+    }
+    .pro-image-show img{
+        width: 200px;
+    }
+
+}

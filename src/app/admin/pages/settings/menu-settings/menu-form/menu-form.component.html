@@ -1,0 +1,53 @@
+<section class="animated" style="padding-top: 20px;">
+  <h4 *ngIf="!edit">Create Menu</h4>
+  <h4 *ngIf="edit">Edit Menu</h4>
+  <form class="mt-3 m-form m-form--fit m-form--label-align-right" #form="ngForm">
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label for="label">Menu Label*</label>
+        <input type="text" class="form-control" name="label" [(ngModel)]="menu.label" autocomplete="off" required>
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="content_type">Select Type*</label>
+        <select id="content_type" class="form-control m-select" name="content_type" [(ngModel)]="type" (change)="changeType()" [disabled]="edit">
+          <option value="">-Select Type-</option>
+          <option value="Tag">Tag</option>
+          <option value="Category">Category</option>
+          <option value="Page">Page</option>
+          <option value="External">External</option>
+        </select>
+      </div>
+      <div class="col-md-6 form-group" *ngIf="type=='External'">
+        <label for="content_url">External Url*</label>
+        <input type="text" class="form-control" name="content_url" [(ngModel)]="menu.content_url" autocomplete="off">
+      </div>
+      <div class="col-md-6 form-group" *ngIf="type && !(type=='External')">
+        <label for="content_url">Select {{type}}*</label>
+        <select id="content_url" class="form-control m-select" name="content_url" [(ngModel)]="selectUrl" (change)="changeUrl()" >
+          <option *ngFor="let sel of selectTypeArray" [value]="sel.url">{{sel.name}}</option>
+        </select>
+        <!-- <small class="info">{{menu.content_url}}</small> -->
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="status">Select Status</label>
+        <select id="status" class="form-control m-select" name="status" [(ngModel)]="menu.status">
+          <option value="1">Active</option>
+          <option value="0">Inactive</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <div class="m-portlet__foot m-portlet__foot--fit">
+          <div class="m-form__actions m-form__actions" style="padding: 30px 0px;">
+            <div class="m-loader m-loader--brand"  *ngIf="loader; else btnSubmit" style="width: 30px; padding-left: 30px; display: inline-block;"></div>
+            <ng-template #btnSubmit>
+              <button type="submit" class="btn btn-brand" (click)="save()" [disabled]="!form.valid">
+                <i class="fa fa-save"></i>
+                <span style="padding-left:10px;">Submit</span>
+              </button>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

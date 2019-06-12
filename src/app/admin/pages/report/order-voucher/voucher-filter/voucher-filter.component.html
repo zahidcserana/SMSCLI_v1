@@ -1,0 +1,70 @@
+<div class="m-portlet m-portlet--mobile">
+  <div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+      <div class="m-portlet__head-title">
+        <h3 class="m-portlet__head-text">
+          <i class="la la-search"></i>
+          Search
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="m-portlet__body search-panel">
+    <!--begin::Form-->
+    <form class="m-form m-form--fit m-form--label-align-right second-form" 
+      #form="ngForm" (ngSubmit)="submitSearch()">
+      <div class="row">
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" type="text" placeholder="Enter Order Id" name="Oid" [(ngModel)]="voucher.order_id" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" type="email" placeholder="Enter Transaction Id" name="Tid" [(ngModel)]="voucher.transaction_id" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group m-form__group">
+            <div class="input-group m-input-group">
+							<div class="input-group-prepend">
+                <select class="form-control m-input" name="type" id="trx-amountType">
+                  <option value="1">Greater or equal</option>
+                  <option value="2">Less or equal</option>
+                  <option value="3">Equal</option>
+                </select>
+              </div>
+							<input class="form-control m-input" type="amount" placeholder="Enter Transaction Amount" name="Tid" [(ngModel)]="voucher.amount" autocomplete="off">
+						</div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group m-form__group">
+            <div class="m-input-icon pull-right" id="m_daterangepicker_3">
+              <input type="text" class="form-control m-input" placeholder="Select Date Range" autocomplete="off" readonly>
+              <span class="m-input-icon__icon m-input-icon__icon--right">
+                <span>
+                  <i class="la la-calendar-check-o"></i>
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group m-form__group">
+            <button type="submit" class="btn m-btn--pill m-btn--air btn-brand btn-sm"
+            style="margin-right:10px">
+              <i class="fa fa-calendar-check-o"></i>
+                Search
+            </button>
+            <button type="reset" class="btn m-btn--pill m-btn--air btn-danger btn-sm" (click)="resetSearch()">
+              <i class="fa fa-history"></i>
+                Reset
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <!--end::Form-->
+  </div>
+</div>

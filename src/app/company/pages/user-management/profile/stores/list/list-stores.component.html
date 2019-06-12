@@ -1,0 +1,60 @@
+<div class="m-section card-section info-section animated fadeIn">
+  <div class="m-section__content">
+    <h4 class="colorPurpel info-heading">Store List
+    </h4>
+    <section style="position: relative;">
+      <div *ngIf="loader" class="table-load m-loader m-loader--brand"></div>
+      <div class="table-responsive" style="margin-bottom: 10px;">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Store Name</th>
+              <th>Store Url</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="stores.length<1; else table">
+            <tr *ngIf="!loader">
+              <td colspan="5">
+                <h4 class="text-center">No Store Found <a *ngIf="user?.user_type_id != 4 || user?.user_type_id != 5"
+                    class="btn btn-sm btn-dark" routerLink="/partner/users/{{user_id}}/stores/add">Add Store</a></h4>
+              </td>
+            </tr>
+          </tbody>
+          <ng-template #table>
+            <tbody>
+              <tr *ngFor="let str of stores; let o='odd'; let e='even'; trackBy: trackStore" [ngClass]="{'odd-tr':o, 'even-tr':e}">
+                <td>
+                  <img *ngIf="str.logo" class="img-fluid img-avatar img-thumbnail img-resize-tum" [src]="str.logo"
+                    onError="this.src='./assets/img/admin/logo/store_logo.png';" style="cursor:pointer;">
+                  <img *ngIf="!str.logo" class="img-fluid img-avatar img-thumbnail img-resize-tum" src="./assets/img/admin/logo/store_logo.png"
+                    style="cursor:pointer;">
+                </td>
+                <th>{{str.slug}}</th>
+                <td>{{str.name + hoshName}}</td>
+                <td>
+                  <span class="m-badge m-badge--wide" [ngClass]="{'m-badge--success': str.status==1, 'm-badge--danger': str.status==0}">{{str.status==1
+                    ? 'Active' : 'Inactive'}}</span>
+                </td>
+                <td>
+                  <div *ngIf="deleteId == str.id; else deleteS" class="m-loader m-loader--brand" style="width: 30px; display: inline-block;"></div>
+                  <ng-template #deleteS>
+                    <a [routerLink]="['/partner/store-profile/', str.id]" class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill"
+                      title="View Store">
+                      <i class="fa fa-eye"></i>
+                    </a>
+                    <a (click)="getDomain(str)" title="Store Dashboard" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill">
+                      <i class="fa fa-dashboard"></i>
+                    </a>
+                  </ng-template>
+                </td>
+              </tr>
+            </tbody>
+          </ng-template>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>

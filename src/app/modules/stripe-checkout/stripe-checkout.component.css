@@ -1,0 +1,54 @@
+
+.m-accordion.m-accordion--bordered .m-accordion__item, .m-accordion.m-accordion--default .m-accordion__item {
+    border: none
+}
+
+.m-portlet {
+    box-shadow: none;
+    background: transparent;
+}
+form {
+    padding: 15px 20px;
+}
+.card-header {
+    padding: 0;
+}
+
+.accordion_btn {
+    width: 100%;
+    text-align: left;
+    padding: 2.5% 5%;
+}
+
+.card {
+    margin: 3% 0;
+}
+
+
+
+
+ .partial_payment {
+    height: 105px;
+ }
+
+ #cardnumber {
+    position: relative;
+}
+.credicardImg {
+    width: 44px;
+    position: absolute;
+    top: 29px;
+    right: 1px;
+
+}
+.order-error p {
+    text-align: center;
+    color: #fff;
+}
+.payment_container {
+    position: relative;
+}
+
+ img {
+    width: 110px;
+ }

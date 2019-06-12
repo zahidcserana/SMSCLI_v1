@@ -1,0 +1,110 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Classes
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+              <li class="m-nav__item m-nav__item--home">
+                <a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+                  <i class="m-nav__link-icon la la-home"></i>
+                </a>
+              </li>
+              <li class="m-nav__separator">
+                <i class="fa fa-angle-right"></i>
+              </li>
+              <li class="m-nav__item">
+                <a class="m-nav__link">
+                  <span class="m-nav__link-text">
+                    Settings
+                  </span>
+                </a>
+              </li>
+              <li class="m-nav__separator" style="padding-left: 10px">
+                <i class="fa fa-angle-right"></i>
+              </li>
+              <li class="m-nav__item">
+                <a class="m-nav__link">
+                  <span class="m-nav__link-text">
+                    Classes
+                  </span>
+                </a>
+              </li>
+            </ul>
+        </div>
+    </div>
+  </div>
+  <!-- END: Subheader -->
+  <div class="m-content animated fadeIn">
+    <div class="m-portlet">
+      <div class="m-portlet__body">
+        <div style="padding: 0px 0px 20px 0px;">
+          <button class="btn btn-brand" (click)="addTerminal()">
+            Add Class
+          </button>
+        </div>
+          <!--begin::Section-->
+        <div class="m-section">
+          <div class="m-section__content price-table table-responsive" style="position:relative">
+              <table class="table table-hover" style="padding-bottom: 10px;">
+                <thead>
+                  <tr>
+                    <th>
+                      id
+                    </th>
+                    <th>
+                      Name
+                    </th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="terminals.length > 0; else noDate">
+                  <tr *ngFor="let cop of terminals; let i = 'index'; trackBy: trackTerminal; let o='odd'; let e='even'" [ngClass]="{'odd-tr':o, 'even-tr':e}">
+                    <td>
+                      {{cop.id}}
+                    </td>
+                    <td>
+                      {{cop.name}}
+                    </td>
+                    <td>
+                      <a id="m_quick_sidebar_toggle" (click)="editTerminal(cop)"
+                        class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="fa fa-edit"></i>
+                      </a>
+                      <a id="m_quick_sidebar_toggle" (click)="deleteTerminal(cop.id)"
+                        class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="fa fa-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+                <ng-template #noDate>
+                  <tbody><tr><td colspan="6"><h5 class="text-center">No Data Found</h5></td></tr></tbody>
+                </ng-template>
+              </table>
+          </div>
+
+        </div>
+			<!--end::Section-->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- sidebar -->
+
+<div class="native-routing animated">
+	<button class="close-sidebar btn btn-sm btn-brand">
+		<i class="fa fa-chevron-right"></i>
+  </button>
+  <span class="close-sidebar-upper">
+    <i class="la la-close"></i>
+  </span>
+    <div class="native-routing-container">
+        <app-add-terminal *ngIf="sideBarName=='add'" [terminal]="terminal" [edit]="edit" (submit)="submitTerminal($event)"></app-add-terminal>
+        <terminal-view *ngIf="sideBarName=='view'" (alert)="alert($event)" [store]="terminal"></terminal-view>
+    </div>
+</div>
+

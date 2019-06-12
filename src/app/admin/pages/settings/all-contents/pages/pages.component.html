@@ -1,0 +1,74 @@
+<div class="custom-alert" #hasCusAlert></div>
+<!-- END: Subheader -->
+<div class="animated fadeIn">
+
+  <div style="padding-bottom: 20px;">
+    <!-- <button class="btn btn-brand btn-sm" (click)="addContent()" style="margin-right: 10px;">
+      Add Page Content
+    </button> -->
+    <button class="btn btn-brand btn-sm" (click)="addNewPage()">
+      Create New Page
+    </button>
+  </div>
+  <div class="m-section">
+    <div class="m-section__content price-table" style="position:relative">
+      <div *ngIf="loader" class="table-load m-loader m-loader--brand" ></div>
+      <table class="table table-hover" style="padding-bottom: 10px;">
+        <thead>
+          <tr>
+            <th>Page</th>
+            <th>Page Url</th>
+            <th>Meta Description</th>
+            <th>Meta Keyword</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="pageList.length > 0; else noFound">
+          <tr *ngFor="let page of pageList; let i = 'index'; trackBy: trackPage; let o='odd'; let e='even'" [ngClass]="{'odd-tr':o, 'even-tr':e}">
+            <td>{{page.name}}</td>
+            <td>{{getUrl(page.slug)}}</td>
+            <td>{{page.meta_description}}</td>
+            <td>{{page.meta_keyword}}</td>
+            <td [ngClass]="{'success-mgs': page.status, 'error': !page.status}">{{page?.status ? 'Active' : 'Inactive'}}</td>
+            <td>
+              <div class="m-loader m-loader--brand"  *ngIf="deleteId===page.id; else btnSubmit" style="width: 30px; padding-left: 30px; display: inline-block;"></div>
+              <ng-template #btnSubmit>
+                <button (click)="editContent(page)" class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button *ngIf="isAllowDelete(page.slug)" (click)="deleteContent(page.id)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+        <ng-template #noFound>
+          <tbody>
+            <tr *ngIf="!loader">
+              <td colspan="5"><h4 class="text-center">No Data Found</h4></td>
+            </tr>
+          </tbody>
+        </ng-template>
+
+      </table>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- sidebar -->
+
+<div class="native-routing animated">
+  <button class="close-sidebar btn btn-sm btn-brand">
+    <i class="fa fa-chevron-right"></i>
+  </button>
+  <span class="close-sidebar-upper">
+    <i class="la la-close"></i>
+  </span>
+  <div class="native-routing-container">
+    <ng-template #pageFormComponent></ng-template>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+ <div style="padding-top: 35px;">
+    <h4 class="colorPurpel" *ngIf="edit; else add">Update Coupon</h4>
+    <ng-template #add class="colorPurpel">
+      <h4 class="colorPurpel">Add Coupon</h4>
+    </ng-template>
+    <form class="m-form m-form--fit m-form--label-align-right">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group m-form__group">
+            <label for="Start-date">Start Date</label>
+            <div class="input-group date">
+              <input type="text" class="form-control m-input" (click)="startDate()" 
+              placeholder="-Start date-" id="Start-date" readonly>
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <i class="la la-calendar-check-o"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group m-form__group">
+            <label for="End-date">End Date</label>
+            <div class="input-group date">
+              <input type="text" class="form-control m-input" (click)="endDate()" 
+              placeholder="-End Date-" id="End-date" readonly>
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <i class="la la-calendar-check-o"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group m-form__group">
+            <label for="unit">Unit Type</label>
+            <select class="form-control m-input" id="unit" name="unit_type" [(ngModel)] ="coupon.unit_type">
+              <option value="1">Percentage (%)</option>
+              <option value="2">Dollar Sign ($)</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-6" *ngIf="coupon.unit_type == 2; else perce">
+          <div class="form-group m-form__group">
+            <label for="amo">Amount</label>
+            <div class="input-group m-input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="table-cost-addon">
+                  $
+                </span>
+              </div>
+              <input class="form-control m-input" numberOnly type="text" id="amo" placeholder="Enter Amount" name="amount" [(ngModel)] ="coupon.amount" autocomplete="off">
+              <div class="input-group-append">
+                <small class="input-group-text" id="table-cost-addon">
+                  USD
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-template #perce>
+          <div class="col-sm-6">
+            <div class="form-group m-form__group">
+              <label for="per">Percentage Amount </label>
+              <div class="input-group m-input-group">
+                <input class="form-control m-input" numberOnly id="per" type="text" placeholder="Enter Percentage (ex: 10)" name="amount" [(ngModel)] ="coupon.amount" autocomplete="off">
+                <div class="input-group-append">
+                  <small class="input-group-text" id="table-cost-addon">
+                    %
+                  </small>
+                </div>
+              </div> 
+            </div>
+          </div>
+        </ng-template>
+        <div class="col-sm-6">
+          <div class="form-group m-form__group">
+            <label for="code">Coupon Code</label>
+            <input class="form-control m-input" id="code" type="text" placeholder="Enter Code" name="code" [(ngModel)] ="coupon.code" autocomplete="off">
+          </div>
+        </div>
+      </div>
+      <div class="m-portlet__foot m-portlet__foot--fit">
+        <div class="m-form__actions m-form__actions" style="padding: 30px 0px;">
+          <div *ngIf="loader; else button" class="m-loader m-loader--brand"
+              style="width: 30px; padding-left: 30px; display: inline-block;"></div>
+          <ng-template #button>
+            <button type="button" class="btn btn-brand"  *ngIf="edit; else addbtn" (click)="update()">
+              <i class="fa fa-save"></i> <span style="padding-left:10px;">Update</span>
+            </button>
+            <ng-template #addbtn>
+              <button type="button" class="btn btn-brand" (click)="submit()">
+                <i class="fa fa-save"></i> <span style="padding-left:10px;">Submit</span>
+                </button>
+            </ng-template>
+          </ng-template>
+        </div>
+      </div>
+    </form>
+  </div>	
+  
+  

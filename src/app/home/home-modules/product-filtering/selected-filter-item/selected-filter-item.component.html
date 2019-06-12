@@ -1,0 +1,15 @@
+<div class="row justify-content-center" *ngIf="list.length">
+  <div class="col-md-12">
+    <div class="filter-search-result">
+      <ul>
+        <li *ngFor="let subCategory of list; let i='index'">
+          {{subCategory.name}}
+          <span class="btn btn-outline-metal m-btn m-btn--icon m-btn--icon-only" 
+           style="border-radius: 100%">
+            <i (click)="removeItem(i,subCategory.id)" class="fa fa-times"></i>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

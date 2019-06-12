@@ -1,0 +1,140 @@
+<div class="custom-alert" #hasAlert></div>
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title m-subheader__title--separator">
+				Sales Report
+			</h3>
+			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+				<li class="m-nav__item m-nav__item--home">
+					<a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+						<i class="m-nav__link-icon la la-home"></i>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					<i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+					<a class="m-nav__link">
+						<span class="m-nav__link-text">
+							Reports 
+						</span>
+					</a>
+        </li>
+        <li class="m-nav__separator" style="padding-left: 10px">
+					<i class="fa fa-angle-right"></i>
+        </li>
+				<li class="m-nav__item">
+					<a class="m-nav__link">
+						<span class="m-nav__link-text">
+							Sales Report
+						</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content product-list animated fadeIn">
+	<!--begin::Portlet-->
+	<sales-report-filter [status]="status" [stores]="stores" [terminals]="terminals" (loadList)="filterList($event)"></sales-report-filter>
+	<!--end::Portlet-->
+	<!--begin::Portlet-->
+	<div class="m-portlet m-portlet--mobile">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						Sales Report
+          </h3>
+          <div class="button-midle float-right">
+            <div *ngIf="loaderExport; else ExportBTN" class="m-loader m-loader--brand" style="width: 30px; display: inline-block;"></div>
+            <ng-template #ExportBTN>
+              <button type="button" class="btn btn-success btn-sm" (click)="exportSales()">
+                <i class="m-nav__link-icon la la-cloud-download"></i>
+                <span class="m-nav__link-text">
+                  Export Report
+                </span>
+              </button>
+            </ng-template>
+					</div>
+				</div>
+			</div>
+    </div>
+
+      <div class="m-portlet__body" style="position: relative;">
+        <!--begin: Datatable -->
+        <!--begin::Section-->
+          <div class="m-section">
+            <div class="m-section__content price-table">
+              <div *ngIf="loader" class="table-load m-loader m-loader--brand"></div>
+                <div class="table-responsive" style="margin-bottom: 10px;">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>
+                          Created
+                        </th>
+                        <th>
+                          Order Id 
+                        </th>
+                        <th>
+                          Quantity
+                        </th>
+                        <th>
+                          Order Status
+                        </th>
+                        <th>
+                          Payment Status
+                        </th>
+                        <th>
+                          Grand Total
+                        </th>
+                        <th>
+                          Paid Amount
+                        </th>
+                        <th>
+                          Deposit
+                        </th>
+                        <th>Tax</th>
+                        <th>Discount</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="salesReport.length<1; else table">
+                      <tr *ngIf="!loader"><td colspan="10"><h4 class="text-center">No Data Found</h4></td></tr>
+                    </tbody>
+                    <ng-template #table>
+                      <tbody>
+                        <tr *ngFor="let sale of salesReport; let o='odd'; let e='even'; trackBy: trackReport" [ngClass]="{'odd-tr':o, 'even-tr':e}">
+                          <td >{{getDate(sale.created) | date}}</td>
+                          <td>{{sale.id}}</td>
+                          <td>{{sale.total_quantity}}</td>
+                          <td>{{sale.status}}</td>
+                          <td>{{sale.payments?.payment_method}} {{sale.payments?.content_method ? '(' + sale.payments.content_method + ')' : ''}}</td>
+                          <td>${{getTotal(sale.sub_total, sale.tax, sale.total_deposit, sale.total_discount) | number:'1.2-2'}}</td>
+                          <td>${{(sale.payments?.payment_amount ? sale.payments.payment_amount : 0) | number:'1.2-2'}}</td>
+                          <td>${{sale.total_deposit | number:'1.2-2'}}</td>
+                          <td>${{sale.tax | number:'1.2-2'}}</td>
+                          <td>${{sale.total_discount | number:'1.2-2'}}</td>
+                        </tr>
+                      </tbody>
+                    </ng-template>
+                  </table>
+                </div>
+              <!-- pagination Start-->
+              <boot-pagination [totalSize]="pagi.total" [page]="pagi.page" [pagelimit]="pagi.limit" [listSize]="pagi.limit" (pageChange)="reloadTable($event)"></boot-pagination>
+              <!-- pagination End-->
+            </div>
+          </div>
+          <!--end::Section-->
+        <!--end: Datatable -->
+      </div>
+      
+	</div>
+		<!--end::Portlet-->
+</div>
+
+
+

@@ -1,0 +1,69 @@
+<!-- category product content -->
+<section class="home-mainproduct pb-5" *ngIf="list ;else featuredProducts">
+    <h4 class="featured-title mt-5">Featured Products</h4>
+    <div class="container-fluid">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="5000">
+            <div class="carousel-inner">
+                <div class="carousel-item" [ngClass]="{'active':i===0}" *ngFor="let product of list; let i='index'">
+                    <div class="row">
+                        <div class="" [ngClass]="'col-' + grid.c" *ngFor="let pro of product; trackBy: trackProduct">
+                            <div class="category-product-box">
+                                <div class="category-img">
+                                    <img class="transition" [src]="pro.image"
+                                         onError="this.src='./assets/img/home/product-image-placeholder.jpg'">
+                                    <div class="overlow transition">
+                                        <a [routerLink]="['/product/',pro.uuid , pro.url]"
+                                           class="button details-btn lbtn-sm lbtn-xsradius mrt-smallxs">
+                                            <i class="fa fa-search-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="category-body">
+                                    <h5 class="cp-name" (click)="goToDetails(pro)">{{pro.name}}</h5>
+                                    <h4 class="cp-price mrt-smallxs">{{formatPrice(pro.price)}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <a class="carousel-control-prev theme-btn" href="#carouselExampleControls" role="button" data-slide="prev">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            <a class="carousel-control-next theme-btn" href="#carouselExampleControls" role="button" data-slide="next">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+<ng-template #featuredProducts>
+    <section class="home-mainproduct pb-5">
+        <h4 class="featured-title mt-5">Featured Products</h4>
+        <div class="container-fluid">
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="5000">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row">
+                            <div class="col-md-3" *ngFor="let number of [0,1,2,3]">
+                                <div class="category-product-box">
+                                    <div class="category-img">
+                                        <img class="transition" src='./assets/img/home/product-image-small-placeholder.jpg'>
+                                        <div class="overlow transition">
+                                        </div>
+                                    </div>
+                                    <div class="category-body">
+                                        <h5 class="cp-name">My Test Product {{ number+1 }}</h5>
+                                        <h4 class="cp-price mrt-smallxs">$10.00</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</ng-template>
+<!-- services -->

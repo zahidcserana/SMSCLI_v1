@@ -1,0 +1,112 @@
+<div style="padding-top: 35px;">
+  <div *ngIf="openForm">
+    <h5 class="colorPurpel" *ngIf="edit; else add">Update Terminal
+      <button class="btn btn-brand btn-sm" (click)="initAddTerminal()">
+        Add New Terminal
+      </button>
+    </h5>
+    <ng-template #add class="colorPurpel">
+      <h5 class="colorPurpel">Add Terminal</h5>
+    </ng-template>
+    <form class="m-form m-form--fit m-form--label-align-right" #addForm="ngForm">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group m-form__group">
+            <label for="sName">Terminal Name</label>
+            <input class="form-control m-input" id="sName" type="text" placeholder="Terminal Name" name="name" [(ngModel)] ="terminal.name" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group m-form__group">
+            <label for="hsn">Terminal HSN</label>
+            <input class="form-control m-input" id="hsn" type="text" placeholder="Terminal HSN" name="hsn" [(ngModel)] ="terminal.hsn" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group m-form__group">
+            <label for="status">Status</label>
+            <select class="form-control m-input" id="status" name="status" [(ngModel)] ="terminal.status">
+              <option value="null">-Select Status-</option>
+              <option value="0">Inactive</option>
+              <option value="1">Active</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="m-portlet__foot m-portlet__foot--fit">
+        <div class="m-form__actions m-form__actions" style="padding: 30px 0px;">
+          <div *ngIf="loader; else button" class="m-loader m-loader--brand"
+      				style="width: 30px; padding-left: 30px; display: inline-block;"></div>
+          <ng-template #button>
+            <button type="button" class="btn btn-brand" (click)="updateTerminal()" *ngIf="edit; else addbtn">
+              <i class="fa fa-save"></i> <span style="padding-left:10px;">Update</span>
+            </button>
+            <ng-template #addbtn>
+              <button type="button" class="btn btn-brand" (click)="submitTerminal()">
+                <i class="fa fa-save"></i> <span style="padding-left:10px;">Submit</span>
+                </button>
+            </ng-template>
+          </ng-template>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="!openForm" style="padding: 20px 0px;">
+    <button class="btn btn-brand btn-sm" (click)="initAddTerminal()">
+      Add New Terminal
+    </button>
+  </div>
+
+  <h5>Terminal List of <strong class="colorPurpel">{{store.name}}</strong></h5>
+  <div class="m-section">
+    <div class="m-section__content price-table table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>
+              Name
+            </th>
+            <th>
+              HSN
+            </th>
+            <th>
+              Status
+            </th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="store?.stores_terminals?.length>0; else noDate">
+          <tr *ngFor="let cop of store?.stores_terminals; let i='index'; trackBy: trackAtt">
+            <td>
+              {{cop.name}}
+            </td>
+            <td>
+              {{cop.hsn}}
+            </td>
+            <td>
+              <span [ngClass]="{'green': cop?.status == 1, 'red': cop?.status == 0}">
+                {{cop?.status == 1 ? 'Active' : 'Inactive'}}
+              </span>
+            </td>
+            <td>     
+              <a id="m_quick_sidebar_toggle" (click)="editTerminal(cop,i)"
+                class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill">
+                <i class="fa fa-edit"></i>
+              </a>
+              <a id="m_quick_sidebar_toggle" (click)="deleteTerminal(cop.id, i)"
+                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                <i class="fa fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+        <ng-template #noDate>
+          <tbody><tr><td colspan="4"><h5 class="text-center">No Terminal Found</h5></td></tr></tbody>
+        </ng-template>
+      </table>
+    </div>
+
+  </div>
+</div>
+  

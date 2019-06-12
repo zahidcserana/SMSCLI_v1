@@ -1,0 +1,45 @@
+
+<div style="padding-top: 35px;">
+  <h4 *ngIf="edit; else heading">Update Content</h4>
+  <ng-template #heading>
+    <h4>Add Content</h4>
+  </ng-template>
+  <form class="mt-3 m-form m-form--fit m-form--label-align-right">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="tag">Tag Name</label>
+          <input id="tag" type="text" class="form-control" name="tag" [(ngModel)]="config.label" autocomplete="off" (ngModelChange)="createTag()" [readonly]="edit">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="type">Select Type</label>
+          <select id="type" class="form-control m-select" name="type" [(ngModel)]="type" [disabled]="!config.tag || edit">
+            <option value="">-Select Type-</option>
+            <option value="text">Text</option>
+            <option value="link">Links</option>
+            <option value="content">Content</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="status">Select Status</label>
+          <select id="status" class="form-control m-select" name="status" [(ngModel)]="config.status">
+            <option value="1">Active</option>
+            <option value="0">Inactive</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="padding-top:20px;">
+      <div class="col-12">
+        <app-text-type [config]="config" [contents]="contentData" [contentId]="contentId" (submit)="showMessage($event)" *ngIf="type=='text'"></app-text-type>
+        <app-link-type [config]="config" [contents]="contentData" [contentId]="contentId" (submit)="showMessage($event)" *ngIf="type=='link'"></app-link-type>
+        <app-textarea-type [config]="config" [contents]="contentData" [contentId]="contentId" (submit)="showMessage($event)" *ngIf="type=='content'"></app-textarea-type>
+      </div>
+    </div>
+  </form>
+</div>

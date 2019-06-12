@@ -1,0 +1,8 @@
+<div class="input-group m-input-group" style="width: 300px;">
+    <input class="form-control" [placeholder]="placeholder" ngbDatepicker (click)="d.toggle()" [(ngModel)]="rental_date" 
+    (ngModelChange)="selectDate(rental_date)" name="dp" #d="ngbDatepicker">
+    <div class="input-group-append" style="top:9px; cursor: pointer;" (click)="d.toggle()">
+        <i class="fa fa-calendar"></i>
+    </div>
+</div>
+

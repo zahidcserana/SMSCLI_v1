@@ -1,0 +1,30 @@
+<!-- services -->
+<section class="innerpage-banner"  [ngStyle]="bannerImage">
+	<div class="container-fluid">
+		<div class="row align-items-center">
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-10 col-10">
+				<div class="w-100 innaerpage-title">
+					<h2>{{page.heading}}</h2>
+					<ul>
+						<li><a routerLink="/home">Home</a>/</li>
+						<li>{{page.name}}</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-xl-6 col-md-6">
+				<div class="w-100 innerpage-banner-img">
+					<!--<img src="./assets/img/home/layout1/cart.png" class="img-fluid banner-cart">-->
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- / header section -->
+<div class="wraper animated fadeIn">
+	<section class="category-content">
+		<div *ngIf="loader" class="table-load m-loader m-loader--skin-dark"></div>
+		<div class="container-fluid" style="padding-top: 30px;padding-bottom: 30px;">
+			<app-inner-html-component [html]="page.contents"></app-inner-html-component>
+		</div>
+ 	</section>
+</div>

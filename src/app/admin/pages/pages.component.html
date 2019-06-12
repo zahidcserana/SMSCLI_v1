@@ -1,0 +1,15 @@
+<app-aside-nav></app-aside-nav>
+<div class="m-grid__item m-grid__item--fluid m-wrapper global-sidebar-wrapper">
+	<router-outlet></router-outlet>
+	<div class="native-routing-cart animated">
+		<button class="close-sidebar-cart btn btn-sm btn-brand">
+			<i class="fa fa-chevron-right"></i>
+		</button>
+		<span class="close-sidebar-upper-cart">
+			<i class="la la-close"></i>
+		</span>
+		<div class="native-routing-container-cart">
+			<cart-view></cart-view>
+		</div>
+	</div>
+</div>

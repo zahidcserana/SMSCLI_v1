@@ -1,0 +1,46 @@
+<div class="m-login__signin animated fadeIn">
+  <div class="row">
+    <div class="col-md-6 hidden-div">
+      <div class="login-shape">
+        <img src="assets/img/home/graphic4.svg">
+      </div>
+    </div>
+    <div class="col-md-6 login-side">
+      <div class="m-login__head">
+        <!-- <img src="assets/img/home/bluelogo.png"> -->
+        <h2 class="text-left">Welcome</h2>
+        <h3 class="m-login__title text-left">
+          Login to Your Account
+          <!-- <i class="fa fa-long-arrow-down"></i> -->
+
+        </h3>
+      </div>
+
+      <div class="custom-alert" #hasAlert></div>
+
+      <form (ngSubmit)="signIn()" #f="ngForm" class="m-login__form m-form" autocomplete="off">
+        <div class="form-group m-form__group">
+          <input class="form-control m-input" autofocus type="email" placeholder="Email" name="email" [(ngModel)]="model.email"
+            #email="ngModel" autocomplete="nope" required>
+        </div>
+        <div class="form-group m-form__group">
+          <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password"
+            autocomplete="new-password" name="password" [(ngModel)]="model.password" #password="ngModel" required>
+        </div>
+        <div class="d-flex" style="align-items: center; padding: 20px 10px 0px;">
+          <div class="text-left" style="flex:1;">
+            <button type="submit" [disabled]="loading || !f.form.valid" id="m_login_signin_submit" class="btn m-btn--pill btn-secondary btn-lg m-btn--icon" [ngClass]="{'m-loader m-loader--skin-dark m-loader--right': loading}" style="margin-top: 0px;">
+              <span>
+                <i class="fa fa-sign-in"></i>
+                <span>
+                  Sign In
+                </span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+<div class="flex-div shipAccount">
+  <div style="width: 100px;">
+    <img class="carrier-service-logo" alt="UPS® logo" src="./assets/img/admin/shipping/fedex.svg" width="64" height="64">
+  </div>
+  <div style="flex: 1">
+    <h4>FedEx</h4>
+  </div>
+</div>
+
+<form class="mt-3 m-form m-form--fit m-form--label-align-right" [formGroup]="shipForm" (ngSubmit)="save()">
+  <div class="form-group">
+    <label class="label-upper" for="service_code">FedEx Service*</label>
+    <select id="service_code" class="form-control" name="service_code" formControlName="service_code">
+      <option value="">-Select Service-</option>
+      <option *ngFor="let s of fedService" [value]="s.value">{{s.name}}</option>
+    </select>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label class="label-upper" for="nickname">Account nickname*</label>
+      <input id="nickname" type="text" class="form-control m-input" name="nickname" formControlName="nickname"
+        autocomplete="nope">
+    </div>
+    <div class="form-group col-md-6">
+      <label class="label-upper" for="account_number">FedEx account no*</label>
+      <input id="account_number" type="text" class="form-control m-input" name="account_number" formControlName="account_number"
+        autocomplete="nope">
+    </div>
+    <div class="form-group col-md-6">
+      <label class="label-upper" for="first_name">First name*</label>
+      <input id="first_name" type="text" class="form-control m-input" name="first_name" formControlName="first_name"
+        autocomplete="nope">
+    </div>
+    <div class="form-group col-md-6">
+      <label class="label-upper" for="last_name">Last name*</label>
+      <input id="last_name" type="text" class="form-control m-input" name="last_name" formControlName="last_name"
+        autocomplete="nope">
+    </div>
+    <div class="form-group col-md-6">
+      <label class="label-upper" for="company">Company</label>
+      <input id="company" type="text" class="form-control m-input" name="company" formControlName="company"
+        autocomplete="nope">
+    </div>
+    <div class="form-group col-md-6">
+      <label class="label-upper" for="address1">Address line 1*</label>
+      <input id="address1" type="text" class="form-control m-input" name="address1" formControlName="address1"
+        autocomplete="nope">
+    </div>
+    <div class="form-group col-md-6">
+      <label class="label-upper" for="address2">Address line 2</label>
+      <input id="address2" type="text" class="form-control m-input" name="address2" formControlName="address2"
+        autocomplete="nope">
+    </div>
+    <div class="form-group col-md-6">
+      <label class="label-upper" for="city">City*</label>
+      <input id="city" type="text" class="form-control m-input" name="city" formControlName="city" autocomplete="nope">
+    </div>
+    <div class="form-group col-md-6">
+      <label class="label-upper" for="state">State*</label>
+      <input id="state" type="text" class="form-control m-input" name="state" formControlName="state" autocomplete="nope">
+      <small>Should be two character. Ex: NY, TX</small>
+    </div>
+    <div class="form-group col-md-6">
+      <label class="label-upper" for="postal_code">Postal code*</label>
+      <input id="postal_code" type="text" class="form-control m-input" name="postal_code" formControlName="postal_code"
+        autocomplete="nope">
+    </div>
+    <div class="form-group col-md-6">
+      <label class="label-upper" for="country_code">Country code*</label>
+      <input id="country_code" type="text" class="form-control m-input" name="country_code" formControlName="country_code"
+        autocomplete="nope">
+    </div>
+    <div class="form-group col-md-6">
+      <label class="label-upper" for="email">Email*</label>
+      <input id="email" type="email" class="form-control m-input" name="email" formControlName="email" autocomplete="nope">
+    </div>
+    <div class="form-group col-md-6">
+      <label class="label-upper" for="phone">Phone number*</label>
+      <input id="phone" type="text" class="form-control m-input" name="phone" formControlName="phone" autocomplete="nope">
+    </div>
+    <div class="form-group col-md-6">
+      <label class="m-checkbox" style="margin-top: 27px;">
+        <input type="checkbox" name="agree_to_eula" formControlName="agree_to_eula">
+        FedEx EULA
+        <span></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="m-portlet__foot m-portlet__foot--fit">
+    <div class="m-form__actions m-form__actions" style="padding: 20px 0px;">
+      <div class="m-loader m-loader--brand" *ngIf="loader; else btnSubmit" style="width: 30px; padding-left: 30px; display: inline-block;"></div>
+      <ng-template #btnSubmit>
+        <button type="submit" class="btn btn-brand" [disabled]="!shipForm.valid">
+          <i class="fa fa-save"></i>
+          <span style="padding-left:10px;">Submit</span>
+        </button>
+      </ng-template>
+    </div>
+  </div>
+
+</form>

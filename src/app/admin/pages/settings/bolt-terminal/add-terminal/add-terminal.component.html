@@ -1,0 +1,34 @@
+ <div style="padding-top: 35px;">
+    <h4 class="colorPurpel" *ngIf="edit; else add">Update Location</h4>
+    <ng-template #add class="colorPurpel">
+      <h4 class="colorPurpel">Add Class</h4>
+    </ng-template>
+    <form class="m-form m-form--fit m-form--label-align-right">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group m-form__group">
+            <label for="sName">Name</label>
+            <input class="form-control m-input" id="sName" type="text" placeholder="Class Name" name="name" [(ngModel)] ="terminal.name" autocomplete="off">
+          </div>
+        </div>
+      </div>
+      <div class="m-portlet__foot m-portlet__foot--fit">
+        <div class="m-form__actions m-form__actions" style="padding: 30px 0px;">
+          <div *ngIf="loader; else button" class="m-loader m-loader--brand"
+              style="width: 30px; padding-left: 30px; display: inline-block;"></div>
+          <ng-template #button>
+            <button type="button" class="btn btn-brand"  *ngIf="edit; else addbtn" (click)="update()">
+              <i class="fa fa-save"></i> <span style="padding-left:10px;">Update</span>
+            </button>
+            <ng-template #addbtn>
+              <button type="button" class="btn btn-brand" (click)="submit()">
+                <i class="fa fa-save"></i> <span style="padding-left:10px;">Submit</span>
+                </button>
+            </ng-template>
+          </ng-template>
+        </div>
+      </div>
+    </form>
+  </div>	
+  
+  

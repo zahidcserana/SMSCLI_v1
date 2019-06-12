@@ -1,0 +1,277 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="animated fadeIn">
+  <div class="m-portlet__body form-panel" style="padding-bottom: 15px;">
+    <div class="row">
+        <h4 class="colorPurpel col-md-3"><span *ngIf="edit">Update Item</span><span *ngIf="!edit">Add Item</span></h4>
+        <div class="form-group admin-cart col-md-9" style="display: inline-block;">
+          <ng-template #rt let-r="result" let-t="term">
+              <div>{{r.name}}</div>
+              <div class="colorPurpel" *ngIf="r.chain"><small style="font-style: italic">{{r.chain}}</small></div>
+          </ng-template>
+          <input id="typeahead-http" #autoCom name="search" type="text" class="form-control" [inputFormatter]="formatter" [ngbTypeahead]="search"  placeholder="Search Item" [resultTemplate]="rt" (selectItem)="changeValue($event)" style="display: inline; width: 90%;"/> 
+          <div *ngIf="autoCom.value" (click)="autoCom.value=''; loader_sub=false" style="margin: auto; padding: 5px;cursor: pointer;display: inline;">
+            <i class="fa fa-close"></i>
+          </div> 
+          <div *ngIf="loader_sub" class="m-loader m-loader--brand" style="width: 30px; display: inline-block;top:-6px;"></div>
+        </div>
+
+    </div>
+
+    <!-- View Product to add -->
+
+    <div class="row" style="padding-top: 15px;" *ngIf = "product"> 
+      <div class="col-sm-3 pro-image-show">
+        <img *ngIf="product.images.length==0; else alter" class="img-fluid img-avatar img-thumbnail img-orgin" src="./assets/img/home/product-image-placeholder.jpg" alt="Product Image"/>
+        <ng-template #alter>
+          <img class="img-fluid img-avatar img-thumbnail img-orgin" src="{{imageUrl +  product.store_id + '/' + product.id + '/' + product.images[0]?.image_large}}" alt="Product Image" onError="this.src='./assets/img/home/product-image-placeholder.jpg';"/>
+        </ng-template>
+      </div>
+      <div class="col-sm-9">
+        <h4>{{product.name}}</h4>
+        <div class="m-form__group form-group" *ngIf = "product.prices && product.prices.length>0">
+          <div class="m-radio-inline">
+            <label class="m-radio" (click)="formateBuy()" *ngIf="base && !edit">
+              <input type="radio" name="main" [value]="1" [(ngModel)]="mode">
+              Buy
+              <span></span>
+            </label>
+            <label *ngIf="productPrice.rent.length>0" class="m-radio" (click)="formateRent(productPrice.rent[0], 0)">
+              <input type="radio" name="main" [value]="2" [(ngModel)]="mode">
+              Rent
+              <span></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="row" style="padding-bottom: 20px;">
+          <div class="col-sm-6" *ngFor="let a of variants.variants">
+            <label *ngIf="a.attr_set_id != 1"> <span class="colorPurpel">{{a.attr_set}}:</span> {{' ' + a.attr}}</label>
+          </div>
+        </div>
+
+        <div class="rent" *ngIf="mode==2">
+          <div class="m-form__group form-group row" style="margin:0px;">
+            <div class="m-radio-list col-sm-6">
+              <label class="m-radio" *ngFor="let rent of productPrice.rent; let i ='index'" (click)="formateRent(rent, i)">
+                <input type="radio" [value]="i" name="rent" [(ngModel)]="rentPriceId">
+                ${{rent.price}} / {{rent.duration}} {{getType(rent.rent_type, rent.duration)}}
+                <span></span>
+              </label>
+            </div>
+            <div class="col-sm-6 pad-l-zero">
+              <label for="" class="colorPurpel">Rental Duration</label>
+              <div class="quantity clearfix">
+                <span class="btn btn-sm btn-dark no-m" (click)="decreaseRent()">-</span>
+                <span class="cart-qunt btn btn-sm no-m">{{item.rental_duration}}</span>
+                <span class="btn btn-sm btn-dark  no-m" (click)="increaseRent()">+</span>
+              </div>
+            </div>
+          </div>
+          <div class="m-form__group form-group row" style="margin:0px;">
+            <div class="col-sm-6 pad-l-zero">
+              <div class="form-group m-form__group">
+                <label for="" class="colorPurpel">Rental Date</label>
+                <div class="input-group date">
+                  <input type="text" class="form-control m-input" (click)="rentalDateChange()" id="Renterl-date" readonly/>
+                  <div class="input-group-append">
+                    <span class="input-group-text">
+                      <i class="la la-calendar-check-o"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 pad-l-zero">
+              <div class="form-group m-form__group">
+								<label class="colorPurpel">
+									Rental Time
+								</label>
+								<div class="input-group timepicker">
+                  <input type="text" class="form-control m-input" id="Rental-time" readonly placeholder="-Select Time-">
+                  <div class="input-group-append">
+										<span class="input-group-text">
+											<i class="la la-clock-o"></i>
+										</span>
+									</div>
+								</div>
+							</div>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="quant row">
+          <div class="col-sm-6">
+            <label class="colorPurpel">Quantity</label>
+            <div class="quantity clearfix">
+              <span class="btn btn-sm btn-dark no-m" (click)="decreaseQuant()">-</span>
+              <span class="cart-qunt btn btn-sm no-m">{{item.quantity}}</span>
+              <span class="btn btn-sm btn-dark  no-m" (click)="increaseQuant()">+</span>
+            </div>
+            <!-- <small class="colorPurpel">{{available}} item(s) are available</small> -->
+          </div>
+          <div class="col-sm-6 price">
+            <h4>
+              Price: ${{(item.quantity * item.price * (item.rental_duration ? item.rental_duration : 1)) | number: '1.2-2'}}
+            </h4>
+          </div>
+        </div>
+        <div style="padding-top: 20px;">
+          <div *ngIf="loader; else addButton" class="m-loader m-loader--brand"
+                style="width: 30px; display: inline-block;"></div>
+          <ng-template #addButton>
+            <button class="btn btn-sm btn-brand" [disabled]="!item.price || item.quantity == 0" (click)="addItem()">
+              <span *ngIf="edit">Update Item</span><span *ngIf="!edit">Add Item</span>
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="reset()" style="margin-left: 10px;">Cancel</button>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+<!-- View List -->
+
+  <h4 class="colorPurpel" style="padding-top: 15px;">
+    View Items
+  </h4>
+  <div class="m-portlet__body form-panel">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Description</th>
+            <th>Price & Term</th>
+            <th>Sales Tax</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th *ngIf="checkStatus"></th>
+          </tr>
+        </thead>
+        
+        <tbody *ngIf="productList && productList.order_items.length > 0; else NoItem">
+          <ng-container *ngFor="let order of productList?.order_items; let i = 'index'; trackBy: trackList">
+            <tr>
+              <td>
+                <img *ngIf="order.product.images && order.product.images.length>0; else alterImage" class="img-fluid img-avatar img-thumbnail img-resize" src="{{imageUrl +  order.store_id + '/' + order.product.id + '/' + order.product.images[0].image_small}}" alt="Product Image" onError="this.src='./assets/img/home/product-image-placeholder.jpg';"/>
+                <ng-template #alterImage>
+                  <img class="img-fluid img-avatar img-thumbnail img-resize" src="./assets/img/home/product-image-placeholder.jpg" alt="Product Image" />
+                </ng-template>
+              </td>
+              <td>
+                <h5>{{order.product.name}}</h5>
+                <div *ngIf="order.variant_chain_name && order.variant_chain_name!='Unassigned'">
+                    <small>({{order.variant_chain_name}})</small>
+                </div>
+                <div>
+                  <div *ngIf="order.rent_start">
+                    <small>From {{getDate(order.rent_start) | date:'MM/dd/yyyy, hh:mm a'}}</small>
+                  </div>
+                  <div *ngIf="order.rent_end">
+                    <small>To {{getDate(order.rent_end) | date:'MM/dd/yyyy, hh:mm a'}}</small>
+                  </div>
+                </div>
+                <div *ngIf="order.deposit_amount > 0">
+                  Deposited Amount: ${{order.deposit_amount | number: '1.2-2'}} {{order.deposite_tax == 'true' ? '(Including Tax)' : ''}} 
+                </div>
+              </td>
+              <td>${{order.price | number: '1.2-2'}}{{order.rental_type && order.rental_type != 'buy'? '/' + order.term : ''}} {{getType(order.rental_type, order.term)}}</td>
+              <td>{{order.sales_tax}}% <br> ${{order.sales_tax_price | number: '1.2-2'}}</td>
+              <td>{{order.quantity}}</td>
+              <td>
+                ${{order.sub_total | number: '1.2-2'}}
+              </td>
+              <td *ngIf="checkStatus">
+                <button *ngIf="order.rental_type && order.rental_type != 'buy'" (click)="editCart(order)" title="Edit Order Item" 
+                  class="btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button (click)="removeCart(order.id, i)" class="btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+        <ng-template #NoItem>
+          <tbody>
+            <tr>
+              <td colspan="7">
+                <h5 class="text-center">No Item Found</h5>
+              </td>
+            </tr>
+          </tbody>
+        </ng-template>
+      </table>
+    </div>  
+    <div class="col-12" style="padding-top: 10px;">
+      <h4 class="pb-2">Order Summary</h4>
+        <div class="table-responsive">
+          <table class="table cart">
+            <tbody>
+            <tr>
+              <td>
+                Total Quantity
+              </td>
+              <td>
+                <span class="cart_p">{{productList?.total_quantity}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Sub Total
+              </td>
+              <td>
+                <span class="cart_p">${{(productList?.sub_total ? productList.sub_total : 0) | number: '1.2-2'}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Shipping Charge
+              </td>
+              <td>
+                 <span class="cart_p"> ${{(productList?.delivery_charge ? productList.delivery_charge : 0) | number: '1.2-2'}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Discount
+              </td>
+              <td>
+                <span class="cart_p"> ${{(productList?.total_discount ? productList.total_discount : 0) | number: '1.2-2'}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Tax
+              </td>
+              <td>
+                <span class="cart_p"> ${{(productList?.tax ? productList.tax : 0) | number: '1.2-2'}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Total Deposited Amount
+              </td>
+              <td>
+                <span class="cart_p"> ${{getTotalDepositedAmount(productList.order_items) | number: '1.2-2'}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5>Grand Total</h5>
+              </td>
+              <td>
+                <h5> <span class="cart_p">$ {{((productList.sub_total ? productList.sub_total : 0) + (productList.tax ? productList.tax : 0) + getTotalDepositedAmount(productList.order_items) + (productList.delivery_charge ? productList.delivery_charge : 0) - (productList.total_discount ? productList.total_discount : 0)) | number: '1.2-2'}}</span></h5>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

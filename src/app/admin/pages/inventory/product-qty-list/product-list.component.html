@@ -1,0 +1,172 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title m-subheader__title--separator">
+				Inventories
+			</h3>
+			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+				<li class="m-nav__item m-nav__item--home">
+					<a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+						<i class="m-nav__link-icon la la-home"></i>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					<i class="fa fa-angle-right"></i>
+				</li>
+				<li class="m-nav__item">
+					<a class="m-nav__link">
+						<span class="m-nav__link-text">
+							Product List
+						</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content product-list animated fadeIn">
+	<product-search #searchPro (search)="loadSearchData($event)"></product-search>
+	<!--begin::Portlet-->
+	<div class="m-portlet m-portlet--mobile">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title m-product-title">
+					<h3 class="m-portlet__head-text" style="width:100%;">
+						Product List
+					</h3>
+				</div>
+			</div>
+		</div>
+		<div class="m-portlet__body" style="position: relative;">
+				<!--begin: Datatable -->
+				<div class="row" style="padding-bottom: 20px;">
+					<div class="col-sm-6 col-md-8" style="padding-top: 5px; padding-bottom: 5px;">
+						<button class="btn btn-sm btn-outline-dark" [disabled]="pagi.page == 1" style="margin-right: 20px;" (click)="reloadTable(false)"><< Previous</button>
+						<button class="btn btn-sm btn-outline-dark" [disabled]="pagi.page == totalPages" style="margin-right: 20px;" (click)="reloadTable(true)">Next >></button>
+						<span> Displaying page {{pagi.page}} out of {{totalPages}}</span>
+					</div>
+					<div class="col-sm-6 col-md-4">
+						<div class="input-group m-input-group">
+							<div class="input-group-prepend">
+                <span class="input-group-text">
+									Current: {{pagi.page}}
+                </span>
+              </div>
+							<input type="number" min="0" class="form-control m-input" name="gotoPage" [(ngModel)]="goto" (keyup.enter)="gotoPage()" placeholder="Page No" autocomplete="off">
+							<div class="input-group-append" (click)="gotoPage()" style="cursor: pointer;">
+								<span class="input-group-text">
+									Go
+								</span>
+							</div>
+						</div>
+						<small *ngIf="goto == 0 || goto > totalPages" class="info">Minimum 1 and Maximum {{totalPages}}</small>
+					</div>
+				</div>
+        <!--begin::Section-->
+          <div class="m-section">
+            <div class="m-section__content price-table">
+              <div *ngIf="loader" class="table-load m-loader m-loader--brand"></div>
+                <div class="table-responsive" style="margin-bottom: 10px;">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>
+                          Image
+												</th>
+												<th>
+                          Product
+												</th>
+												<th>
+                          Suppiler
+												</th>
+												<th class="text-center" style="min-width: 140px;">
+                          Barcode
+                        </th>
+                        <th *ngIf="location.length>0" [style.min-width.px]="80*(location.length+1)">
+													<div class="w-100">
+														<div class="text-center p-ib" [style.width.%]="(100/location.length)" *ngFor="let loc of location">
+															{{loc.name}} QTY
+														</div>
+													</div>
+                        </th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="productLst.length<1; else table">
+                      <tr *ngIf="!loader"><td [attr.colspan]="4 + location.length"><h4 class="text-center">No Data Found</h4></td></tr>
+                    </tbody>
+                    <ng-template #table>
+                      <tbody>
+                        <tr *ngFor="let pro of productLst; let i='index'; let o='odd'; let e='even'; trackBy: trackPro" [ngClass]="{'odd-tr':o, 'even-tr':e}">
+                          <td>
+														<img *ngIf="pro.image; else alterImage" id="product_home_details" class="img-fluid img-avatar img-thumbnail" src="{{image + '/' + pro.product_id + '/' + pro.image}}" style="max-width:90px; cursor:pointer;" onError="this.src='./assets/img/home/product-image-placeholder.jpg';">
+														<ng-template #alterImage
+														>
+															<img id="product_home_details" class="img-fluid img-avatar img-thumbnail" src="./assets/img/home/product-image-placeholder.jpg" style="max-width:90px; cursor:pointer;" >
+														</ng-template>
+													</td>
+                          <td>
+														<a routerLink="/admin/inventory/{{pro?.product_id}}/details">{{pro?.name}}</a>
+														<div>{{pro?.chain_name}}</div>
+													</td>
+													<td>{{pro?.supplier_name}}</td>
+													<td>
+														<input type="text" class="form-control m-input" [(ngModel)]="pro.barcode" autocomplete="off">
+													</td>
+                          <td *ngIf="location.length>0">
+													<div class="w-100">
+														<div class="p-ib" [style.width.%]="(100/location.length)" *ngFor="let loc of pro.location_data; trackBy: trackProLoc">
+															<input type="number" min="0" class="form-control m-input" [(ngModel)]="loc.quantity" autocomplete="off">
+														</div>
+													</div>
+													</td>
+                          <td>
+														<div *ngIf="saveClick == i; else SAVEBTN" class="m-loader m-loader--brand"
+															style="width: 30px; display: inline-block;"></div>
+                            <ng-template #SAVEBTN>
+																<button id="m_quick_sidebar_toggle" (click)="saveProduct(pro, i)" title="Update Product Quantity" class="btn btn-sm btn-outline-dark">
+																	Save
+																</button>
+														</ng-template>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </ng-template>
+                  </table>
+                </div>
+            </div>
+					</div>
+					<!--end::Section-->
+				<div class="row">
+					<div class="col-sm-6 col-md-8" style="padding-top: 5px; padding-bottom: 5px;">
+						<button class="btn btn-sm btn-outline-dark" [disabled]="pagi.page == 1" style="margin-right: 20px;" (click)="reloadTable(false)"><< Previous</button>
+						<button class="btn btn-sm btn-outline-dark" [disabled]="pagi.page == totalPages" style="margin-right: 20px;" (click)="reloadTable(true)">Next >></button>
+						<span> Displaying page {{pagi.page}} out of {{totalPages}}</span>
+					</div>
+					<div class="col-sm-6 col-md-4">
+						<div class="input-group m-input-group">
+							<div class="input-group-prepend">
+                <span class="input-group-text">
+									Current: {{pagi.page}}
+                </span>
+              </div>
+							<input type="number" min="0" class="form-control m-input" name="gotoPage" [(ngModel)]="goto" (keyup.enter)="gotoPage()" placeholder="Page No" autocomplete="off">
+							<div class="input-group-append" (click)="gotoPage()" style="cursor: pointer;">
+								<span class="input-group-text">
+									Go
+								</span>
+							</div>
+						</div>
+						<small *ngIf="goto == 0 || goto > totalPages" class="info">Minimum 1 and Maximum {{totalPages}}</small>
+					</div>
+				</div>
+        <!--end: Datatable -->
+      </div>
+	</div>
+		<!--end::Portlet-->
+</div>
+

@@ -1,0 +1,85 @@
+<div class="alert_container" #alert></div>
+<div class="m-content product-list animated fadeIn">
+    <div class="m-subheader">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">
+                    Plans
+                </h3>
+                <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                    <li class="m-nav__item m-nav__item--home">
+                        <a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+                            <i class="m-nav__link-icon la la-home"></i>
+                        </a>
+                    </li>
+                    <li class="m-nav__separator">
+                        <i class="fa fa-angle-right"></i>
+                    </li>
+                    <li class="m-nav__item">
+                        <a class="m-nav__link">
+                            <span class="m-nav__link-text">
+                                Payment Methods
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet m-portlet--mobile mt-5 pt-5">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <p>Please enter preferred payment method below . You can use a credit / debit card </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet__body" style="position: relative;background: #fff;padding: 20px;">
+        <div class="m-section">
+
+            <div class="payment-box">
+                <div class="payment-box-top">
+                    <h4>
+                        Credit Or Debit Card
+                    </h4>
+                    <p>Add a credit/debit card for subscription billing.</p>
+                    <p>All major credit/debit cards accepted.</p>
+                    <upgrade-subscription *ngIf="isSubs" [isNew]="true" [addCardMode]="true" [btnText]="'Add Card'" (onLoad)="onLoad($event)" (showAlert)="onAlert($event)"></upgrade-subscription>
+                </div>
+                <div class="card-list" *ngIf="!loading && cards.length;else loader">
+                    <div class="single-card mb-3" *ngFor="let card of cards">
+                        <p>
+                            <span>
+                                <b>XXXX{{card.last4}}</b>
+                            </span>
+                            <span *ngIf="card.isDefault" class="card-default">PRIMARY</span>
+                        </p>
+                        <p>
+                            <span>Expires : {{card.exp_month}} / {{card.exp_year}}</span>
+
+                            <span class="btn-card">
+                                <button class="btn m-btn--pill m-btn--air btn-brand btn-sm" *ngIf="!card.isDefault" (click)="makePrimary(card.id)">Make Primary</button>
+                                <button *ngIf="!card.isDefault" class="btn m-btn--pill m-btn--air btn-danger btn-sm" (click)="deleteCard(card.id)">Delete</button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <ng-template #loader>
+                    <div *ngIf="!loading" class="single-card mt-4">
+                        <span>
+                            No Card added
+                        </span>
+                    </div>
+                </ng-template>
+                <app-preloader *ngIf="loading"></app-preloader>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="preload" *ngIf="preloader">
+    <app-preloader></app-preloader>
+</div>

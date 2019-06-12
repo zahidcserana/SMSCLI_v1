@@ -1,0 +1,102 @@
+<div class="heading-part">
+  <h5>Calculate Delivery Distance</h5>
+</div>
+
+<section style="padding-top: 20px;">
+  <div class="d-flex" style="align-items: center;">
+    <h6 style="margin-right: 20px;">Select Location</h6>
+    <div style="flex: 1;" class="form-group">
+      <select class="form-control" name="location" [(ngModel)]="locationId" (change)="selectLocation()">
+        <option *ngFor="let loc of locations" [value]="loc.id">{{loc.name}}</option>
+      </select>
+    </div>
+  </div>
+
+  <form class="mt-3 m-form m-form--fit m-form--label-align-right" [formGroup]="distanceForm" (ngSubmit)="submitForm()" style="position: relative;">
+    <div *ngIf="loader" class="table-load m-loader m-loader--brand" style="z-index:99999;"></div>
+    <div class="row">
+      <div class="col-md-12 form-group">
+        <label for="address">Address</label>
+        <input id="address" type="text" class="form-control m-input" name="address" formControlName="address"
+          autocomplete="nope">
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="city">City</label>
+        <input id="city" type="text" class="form-control m-input" name="city" formControlName="city" autocomplete="nope">
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="state">State</label>
+        <input id="state" type="text" class="form-control m-input" name="state" formControlName="state" autocomplete="nope">
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="zipcode">Zip Code</label>
+        <input id="zipcode" type="text" class="form-control m-input" name="zipcode" formControlName="zipcode"
+          autocomplete="nope">
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="country">Country</label>
+        <input id="country" type="text" class="form-control m-input" name="country" formControlName="country"
+          autocomplete="nope">
+      </div>
+      <div class="col-md-12 form-group">
+        <div class="m-radio-inline">
+          <label style="margin-right: 20px;">Calculate Distance in</label>
+          <label class="m-radio m-radio--bold">
+            <input type="radio" name="in_mile" formControlName="in_mile" [value]="false">
+            Km
+            <span></span>
+          </label>
+          <label class="m-radio m-radio--bold">
+            <input type="radio" name="in_mile" formControlName="in_mile" [value]="true">
+            Miles
+            <span></span>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="max_distance">Maximum Delivery Distance</label>
+        <div class="input-group m-input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="table-cost-addon">
+              {{unit ? 'Miles' : 'Km'}}
+            </span>
+          </div>
+          <input id="max_distance" numberOnly type="text" class="form-control m-input" name="distance" formControlName="distance"
+            autocomplete="nope">
+        </div>
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="min_fee">Minimum Delivery Fee</label>
+        <div class="input-group m-input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="table-cost-addon">
+              $
+            </span>
+          </div>
+          <input id="min_fee" type="text" numberOnly class="form-control m-input" name="min_delivery_fee"
+            formControlName="min_delivery_fee" autocomplete="nope">
+        </div>
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="per_distance_fee">Per Mile/Km Distance Fee</label>
+        <div class="input-group m-input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="table-cost-addon">
+              $
+            </span>
+          </div>
+          <input id="per_distance_fee" type="text" numberOnly class="form-control m-input" name="distance_price"
+            formControlName="distance_price" autocomplete="nope">
+        </div>
+      </div>
+    </div>
+
+    <div class="m-portlet__foot m-portlet__foot--fit">
+      <div class="m-form__actions m-form__actions" style="padding: 20px 0px;">
+        <button type="submit" class="btn btn-brand" [disabled]="!distanceForm.valid || !locationId" [ngClass]="{'m-loader m-loader--light m-loader--right': loading}">
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+</section>

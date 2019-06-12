@@ -1,0 +1,60 @@
+<form class="m-form m-form--fit m-form--label-align-right container-border" #form="ngForm">
+  <div class="m-portlet__body" style="padding-top: 20px;">
+    <div class="form-group m-form__group" *ngIf="hiddenCate">
+      <label for="parent">
+        Parent Category
+      </label>
+      <input type="text" class="form-control m-input" id="parent" placeholder="Enter Parent Category Name" name="parent"
+        [(ngModel)]="category.parent_name" disabled autocomplete="off">
+    </div>
+    <div class="form-group m-form__group">
+      <label for="cateName">
+        Category Name
+      </label>
+      <input type="text" class="form-control m-input" id="cateName" placeholder="Enter Category Name" name="child"
+        [(ngModel)]="category.name" (ngModelChange)="makeCategoryURL()" required autocomplete="off">
+    </div>
+    <div class="form-group m-form__group">
+      <label for="url">
+        URL
+      </label>
+      <input type="text" class="form-control m-input" id="url" name="child-url" [(ngModel)]="category.url" placeholder="Enter URL"
+        readonly autocomplete="off">
+    </div>
+    <div class="form-group m-form__group">
+      <div class="input-group m-input-group">
+        <input type="text" class="form-control m-input" id="gid" name="id" [value]="formatedUrl" readonly #copyText>
+        <div class="input-group-append cursor-pointer" (click)="copyUrl(copyText)">
+          <span class="input-group-text" id="table-cost-addon">
+            Copy
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="loader; else button" class="m-loader m-loader--brand" style="width: 30px; padding-left: 30px; display: inline-block;"></div>
+
+    <ng-template #button>
+      <div *ngIf="!edit; else updateDelete" class="action-btn">
+        <button type="button" class="btn btn-brand" [disabled]="!form.form.valid" (click)="addCategory(form)" style="margin-right:10px">
+          Save
+        </button>
+        <button type="reset" class="btn btn-danger" (click)="resetCategory()">
+          Cancel
+        </button>
+      </div>
+      <ng-template #updateDelete>
+        <div class="action-btn">
+          <button type="button" class="btn btn-brand" (click)="updateCategory()" style="margin-right:10px">
+            Update
+          </button>
+          <button type="button" class="btn btn-danger" (click)="deleteCategory()">
+            Delete
+          </button>
+        </div>
+      </ng-template>
+    </ng-template>
+
+  </div>
+
+</form>

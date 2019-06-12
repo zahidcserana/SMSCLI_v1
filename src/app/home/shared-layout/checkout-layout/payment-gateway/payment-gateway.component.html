@@ -1,0 +1,26 @@
+<section>
+  <div class="gate-radio-part">
+    <ng-container *ngIf="gateways.length > 1">
+      <div *ngFor="let g of gateways; let i='index'">
+        <div class="gate-radio" style="margin-right: 15px;">
+          <input type="radio" name="gate" [value]="g.id" [(ngModel)]="gateId">
+          <label (click)="changeGateWay(i)">
+            <span [ngSwitch]="g.name" style="position: relative; top: -7px;">
+              <img *ngSwitchCase="'CardConnect'" src="./assets/img/home/CardConnect-logo.jpg">
+              <img *ngSwitchCase="'Stripe'" src="./assets/img/home/stripe.png">
+              <img *ngSwitchCase="'PayPal'" src="./assets/img/home/paypal-logo.png">
+              <img *ngSwitchCase="'Authorize.Net'" src="./assets/img/home/Authorize.net-Logo.jpg">
+            </span>
+          </label>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div [ngSwitch]="gateName">
+    <app-card-connect-checkout *ngSwitchCase="'CardConnect'" (onSelectPayment)="submit($event)" [contents]="contents"></app-card-connect-checkout>
+    <app-paypal-checkout *ngSwitchCase="'PayPal'" (onSelectPayment)="submit($event)" [contents]="contents"></app-paypal-checkout>
+    <app-authorizeDotNet-checkout *ngSwitchCase="'Authorize.Net'" (onSelectPayment)="submit($event)" [contents]="contents"></app-authorizeDotNet-checkout>
+    <app-stripe-checkout *ngSwitchDefault [key]="stripeKey" (onSelectPayment)="submit($event)" [contents]="contents"></app-stripe-checkout>
+  </div>
+</section>

@@ -1,0 +1,28 @@
+.closing-btn button{
+    margin-right: 10px;
+}
+
+button.close {
+    position: absolute;
+    right: 0;
+    top: -28px;
+    border-radius: 50px;
+    font-size: 25px;
+    text-shadow: none !important;
+    color: #eee !important;
+    opacity: 9;
+}
+button.close:hover {
+    color: #eee;
+}
+
+.description-field-title{
+    font-weight: 600;
+    padding-right: 5px;
+}
+
+.img-thumbnail{
+    max-width: 100px!important;
+    height: 100px!important;
+    object-fit: contain;
+}

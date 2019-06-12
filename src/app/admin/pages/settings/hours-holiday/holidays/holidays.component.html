@@ -1,0 +1,45 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<holiday-add-form #holidayComp [holiday]="holiday" [edit]="edit" (output)="alerts($event)"></holiday-add-form>
+
+<br>
+
+<div class="m-portlet">
+  <div class="m-portlet__body">
+    <h4>Holidays list</h4>
+    <div class="m-section" style="margin: 0px; margin-top: 20px;">
+      <div class="m-section__content">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Start date</th>
+                <th>End date</th>
+                <th>Name</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let h of holidays; let i=index; trackBy: trackByHoildays">
+                <td>{{getDate(h.start_date)}}</td>
+                <td>{{getDate(h.end_date)}}</td>
+                <td>{{h.description}}</td>
+                <td>
+                  <a (click)="editHoliday(h)" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                  <div *ngIf="deleteId == h.id; else deleteS" class="m-loader m-loader--brand" style="width: 30px; display: inline-block;"></div>
+                  <ng-template #deleteS>
+                    <a (click)="deleteHoliday(h, i, holidayComp)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                      <i class="fa fa-trash"></i>
+                    </a>
+                  </ng-template>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

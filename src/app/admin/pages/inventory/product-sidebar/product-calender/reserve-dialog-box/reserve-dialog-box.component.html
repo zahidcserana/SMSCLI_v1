@@ -1,0 +1,34 @@
+<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('')">
+    <span aria-hidden="true">&times;</span>
+</button>
+<div class="modal-body">
+    <div class="custom-alert" #hasCusAlert></div>
+    <form class="m-form m-form--fit m-form--label-align-right" #form="ngForm">
+        <h5>Remove Availability</h5>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label for="status">Date</label>
+                <input type="text" class="form-control m-input" name="date" [(ngModel)]="reserve.date" readonly required>
+            </div>
+            <div class="col-md-6 form-group">
+                <label for="status">Quantity</label>
+                <input type="number" class="form-control m-input" min="1" [attr.max]="event.qty" #quantity="ngModel" name="quantity" [(ngModel)]="reserve.quantity" required>
+                <span *ngIf="quantity.errors && quantity.touched">
+                    <small class="error" *ngIf="quantity.errors.required">Quantity required</small>
+                </span>
+                <small class="error" *ngIf="checkQty">Quantity should be less or equal {{event.qty + event.reserve}} and greater then 0</small>
+            </div>
+        </div>
+        <div class="closing-btn text-center" style="padding: 20px;">
+            <button type="submit" [disabled]="loading || !form.form.valid || checkQty" class="btn btn-brand btn-sm" [ngClass]="{'m-loader m-loader--light m-loader--right': loading}" (click)="submit()">
+                Submit
+            </button>
+            <button type="reset" class="btn btn-danger btn-sm" (click)="activeModal.dismiss('')">
+                Cancel
+            </button>
+            <button *ngIf="edit" type="button" class="btn btn-primary btn-sm" [ngClass]="{'m-loader m-loader--light m-loader--right': delLoad}" (click)="deleteReserve()">
+                Delete
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,92 @@
+.main-container-box {
+  display: flex;
+  align-items: center;
+}
+
+.main-container-box .dropbtn {
+  background-color: #ccc;
+  color: #000;
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  outline: none;
+}
+
+.main-container-box .dropbtn:focus {
+  outline: none;
+}
+
+.main-container-box .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.main-container-box .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 150px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  max-height: 300px;
+}
+
+.main-container-box .dropdown-content span{
+  color: black;
+  padding: 5px 11px 8px 11px;
+  display: block;
+  margin: 10px;
+}
+.main-container-box .dropdown-content .search-form-control {
+  color: black;
+  padding: 2px 2px;
+  display: block;
+  margin: 10px;
+}
+.main-container-box .dropdown-content span {
+  cursor: pointer;
+}
+
+.main-container-box .dropdown-content span img {
+  position: relative;
+  top: 0px;
+  margin-right: 5px;
+}
+
+.main-container-box .dropdown span:hover {
+  background-color: #ddd;
+}
+
+.main-container-box .show {
+  display: block;
+}
+
+.main-container-box .custom-form-control {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  outline: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.main-container-box .custom-form-control:focus {
+  outline: none !important;
+}
+
+.main-container-box .dial-code {
+  padding: 12.5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  font-weight: bold;
+}
+
+.custom-form-control-error {
+  color: rgb(238, 57, 57);
+  font-style: italic;
+}

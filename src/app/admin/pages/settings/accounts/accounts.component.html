@@ -1,0 +1,130 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-subheader">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        Accounts
+      </h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+        <li class="m-nav__item m-nav__item--home">
+          <a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+        <li class="m-nav__separator">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+          <a class="m-nav__link">
+            <span class="m-nav__link-text">
+              Settings
+            </span>
+          </a>
+        </li>
+        <li class="m-nav__separator" style="padding-left: 10px">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+          <a class="m-nav__link">
+            <span class="m-nav__link-text">
+              Accounts
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content animated fadeIn">
+  <div class="m-portlet m-portlet--tabs">
+    <div class="m-portlet__body">
+      <app-filter [status]="status" [type]="type" (loadList)="filterList($event)"></app-filter>
+      <div style="padding-bottom: 20px;">
+        <button class="btn btn-brand" (click)="addAccount()">
+          Add Account
+        </button>
+      </div>
+      <div class="m-section">
+        <h5>Income: {{accountReport.income>0?accountReport.income:0}},&nbsp;&nbsp;&nbsp; Expenditure: {{accountReport.expenditure}},&nbsp;&nbsp;&nbsp; Net: {{accountReport.net}}</h5>
+        <div class="m-section__content price-table table-responsive" style="position:relative">
+          <div *ngIf="loader" class="table-load m-loader m-loader--brand" ></div>
+          <table class="table table-hover" style="padding-bottom: 10px;">
+            <thead>
+            <tr>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Description</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="accounts.length; else noFound">
+            <tr *ngFor="let gate of accounts; let i = 'index'; trackBy: trackGateway; let o='odd'; let e='even'" [ngClass]="{'odd-tr':o, 'even-tr':e}">
+              <td>{{gate.type == 1 ? 'Income' : 'Expenditure'}}</td>
+              <th>{{gate.amount}}</th>
+              <th>{{gate.description}}</th>
+              <td >{{getDate(gate.created) | date}}</td>
+              <td [ngClass]="{'success-mgs': gate.status, 'error': !gate.status}">{{gate?.status ? 'Active' : 'Inactive'}}</td>
+              <td>
+                <button (click)="editAccount(gate)" title="Edit Account" class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button id="m_quick_sidebar_toggle" (click)="deleteAccount(gate.id)"
+                   class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+            <ng-template #noFound>
+              <tbody>
+              <tr *ngIf="!loader">
+                <td colspan="5"><h4 class="text-center">No Data Found</h4></td>
+              </tr>
+              </tbody>
+            </ng-template>
+
+          </table>
+          <!-- pagination Start-->
+          <boot-pagination [totalSize]="pagi.total" [listSize]="pagi.limit" (pageChange)="reloadTable($event)"></boot-pagination>
+          <!-- pagination End-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- sidebar -->
+
+<!--
+<div class="native-routing animated">
+  <button class="close-sidebar btn btn-sm btn-brand">
+    <i class="fa fa-chevron-right"></i>
+  </button>
+  <span class="close-sidebar-upper">
+    <i class="la la-close"></i>
+  </span>
+  &lt;!&ndash; <div class="native-routing-container">
+     <ng-template #addFormCard></ng-template>
+   </div>&ndash;&gt;
+  <div class="native-routing-container">
+    <app-add-form *ngIf="sideBarName=='add'" [account]="account" [edit]="edit" (submit)="submitAccount($event)"></app-add-form>
+  </div>
+</div>
+-->
+
+<div class="native-routing animated">
+  <button class="close-sidebar btn btn-sm btn-brand">
+    <i class="fa fa-chevron-right"></i>
+  </button>
+  <span class="close-sidebar-upper">
+    <i class="la la-close"></i>
+  </span>
+  <div class="native-routing-container">
+    <app-add-form [account]="account" (submit)="submitAccount($event)"></app-add-form>
+  </div>
+</div>

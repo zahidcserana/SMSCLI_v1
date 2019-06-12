@@ -1,0 +1,33 @@
+<section class="singleshop-section" *ngIf="grids.length">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4 col-sm-12 mb-4" *ngFor="let item of grids">
+        <div class="w-100 single-shop single-shop-1">
+          <div class="row align-items-center">
+            <div class="col-md-6 col-sm-4 singleshope-imgarea">
+              <div class="singleshope-imginner">
+                <div class="singleshope-imgmiddle">
+                  <img [src]="item.url" class="img-fluid">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-8">
+              <h4>{{item.label}}</h4>
+              <p>{{item.text}}</p>
+              <ng-container *ngIf="item.link && item.type">
+                <a [attr.href]="item.link" *ngIf="item.type == 'External'; else otherType">{{item.btn_text}}
+                  <i class="fa fa-long-arrow-right"></i>
+                </a>
+                <ng-template #otherType>
+                  <a [routerLink]="item.link">{{item.btn_text}}
+                    <i class="fa fa-long-arrow-right"></i>
+                  </a>
+                </ng-template>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

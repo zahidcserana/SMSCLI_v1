@@ -1,0 +1,136 @@
+<div class="custom-alert" #hasAlert></div>
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        Store List
+      </h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+        <li class="m-nav__item m-nav__item--home">
+          <a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+        <li class="m-nav__separator">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+          <a class="m-nav__link">
+            <span class="m-nav__link-text">
+              Store List
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content product-list animated fadeIn">
+  <!--begin::Portlet-->
+
+  <!--end::Portlet-->
+  <!--begin::Portlet-->
+  <div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+      <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title">
+          <h3 class="m-portlet__head-text">
+            Store List
+          </h3>
+          <div class="button-midle float-right">
+            <a [routerLink]="['/partner/store/add']" type="button" class="btn btn-brand btn-sm">
+              Add Store
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-portlet__body" style="position: relative;">
+      <!--begin: Datatable -->
+      <!--begin::Section-->
+      <div class="m-section">
+        <div class="m-section__content price-table">
+          <div *ngIf="loader" class="table-load m-loader m-loader--brand"></div>
+          <div class="table-responsive" style="margin-bottom: 10px;">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>
+                    Store Name
+                  </th>
+                  <th>Store Url</th>
+                  <th>
+                    Logo
+                  </th>
+                  <th>
+                    Features
+                  </th>
+                  <th>Status</th>
+                  <th>
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="stores.length<1; else table">
+                <tr *ngIf="!loader">
+                  <td colspan="6">
+                    <h4 class="text-center">No Stores Found</h4>
+                  </td>
+                </tr>
+              </tbody>
+              <ng-template #table>
+                <tbody>
+                  <tr *ngFor="let str of stores; let o='odd'; let e='even'; trackBy: trackStore" [ngClass]="{'odd-tr':o, 'even-tr':e}">
+                    <th>{{str.name}}</th>
+                    <td>{{str.name + hoshName}}</td>
+                    <td>
+                      <img *ngIf="str.logo" class="img-fluid img-avatar img-thumbnail img-resize-tum" [src]="str.logo"
+                        onError="this.src='./assets/img/admin/logo/store_logo.png';" style="cursor:pointer;">
+                      <img *ngIf="!str.logo" class="img-fluid img-avatar img-thumbnail img-resize-tum" src="./assets/img/admin/logo/store_logo.png"
+                        style="cursor:pointer;">
+                    </td>
+                    <td>
+                      {{str?.features}}
+                    </td>
+                    <td>
+                      <span class="m-badge m-badge--wide" [ngClass]="{'m-badge--success': str.status==1, 'm-badge--danger': str.status==0}">{{str.status==1
+                        ? 'Active' : 'Inactive'}}</span>
+                    </td>
+                    <td>
+                      <div *ngIf="deleteId == str.id; else deleteS" class="m-loader m-loader--brand"
+                        style="width: 30px; display: inline-block;"></div>
+                      <ng-template #deleteS>
+                        <a [routerLink]="['/partner/store/edit', str.id]" class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill"
+                          title="Edit Store">
+                          <i class="fa fa-edit"></i>
+                        </a>
+                        <a (click)="deleteStore(str.id)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                          title="Delete Store">
+                          <i class="fa fa-trash"></i>
+                        </a>
+                        <a (click)="getDomain(str)" title="Store Dashboard" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill">
+                          <i class="fa fa-dashboard"></i>
+                        </a>
+                      </ng-template>
+                    </td>
+                  </tr>
+                </tbody>
+              </ng-template>
+            </table>
+          </div>
+          <!-- pagination Start-->
+          <boot-pagination [totalSize]="pagi.total" [page]="pagi.page" [pagelimit]="pagi.limit" [listSize]="pagi.limit"
+            (pageChange)="reloadTable($event)"></boot-pagination>
+          <!-- pagination End-->
+        </div>
+      </div>
+      <!--end::Section-->
+      <!--end: Datatable -->
+    </div>
+
+  </div>
+  <!--end::Portlet-->
+</div>

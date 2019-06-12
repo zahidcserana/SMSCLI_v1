@@ -1,0 +1,50 @@
+<section class="innerpage-banner"  [ngStyle]="bannerImage">
+	<div class="container-fluid">
+		<div class="row align-items-center">
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-10 col-10" *ngIf="breadCrumb">
+				<div class="w-100 innaerpage-title">
+					<h2>{{breadCrumb.name}}</h2>
+					<ul>
+						<li>
+							<a routerLink="">Home</a>/</li>
+						<li>{{breadCrumb.name}}</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-xl-6 col-md-6">
+				<div class="w-100 innerpage-banner-img">
+					<!--<img src="./assets/img/home/layout1/slider2.png" class="img-fluid">-->
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- / header section -->
+<div class="wraper animated fadeIn">
+	<!-- category product content -->
+	<section class="category-content pt-5">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-3 col-md-5 filter">
+					<h3>Category Filter</h3>
+					<product-filtering [breadCrumb]="breadCrumb" (queryChange)="loadList($event)"></product-filtering>
+				</div>
+				<div class="col-lg-9 col-md-7">
+					<selected-filter-item></selected-filter-item>
+					<product-list [allProduct]="products" *ngIf="products.length; else notFound"></product-list>
+					<div class="product-pagination" *ngIf="products.length">
+							<boot-pagination [page]="page" [itemList]="false"  [pagelimit]="limit" [totalSize]="total_products" [options]="pageNumbers" [listSize]="limit"
+							 (pageChange)="paginate($event)"></boot-pagination>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</section>
+</div>
+
+
+<app-preloader *ngIf="loader"></app-preloader>
+<ng-template #notFound>
+	<p *ngIf="!products.length && loaded && !loader ">No Product Found </p>
+</ng-template>

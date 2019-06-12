@@ -1,0 +1,304 @@
+<div class="animated fadeIn content">
+  <h4 style="padding: 10px 0px;">
+    Contact Information
+  </h4>
+  <div class="m-portlet__body form-panel" style="padding-bottom: 15px;">
+    <form class="m-form m-form--fit m-form--label-align-right" #form="ngForm" autocomplete="off">
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="fname" class="colorPurpel">
+            First Name<span *ngIf="!buy">*</span>
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="fname" type="text" autocomplete="nope" placeholder="First Name"
+              name="first_name" #fName="ngModel" [(ngModel)]="billingForm.first_name" [required]="buy ? null : 'required'">
+            <span *ngIf="fName.invalid && fName.touched">
+              <small *ngIf="fName.errors.required" class="error">First Name is Required</small>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="lname" class="colorPurpel">
+            Last Name<span *ngIf="!buy">*</span>
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="lname" type="text" autocomplete="nope" placeholder="Last Name" name="last_name"
+              #laName="ngModel" [(ngModel)]="billingForm.last_name" [required]="buy ? null : 'required'">
+            <span *ngIf="laName.invalid && laName.touched">
+              <small *ngIf="laName.errors.required" class="error">Last Name is Required</small>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="mobile" class="colorPurpel">
+            Mobile number<span *ngIf="!buy">*</span>
+          </label>
+          <div class="form-group m-form__group">
+            <input numberOnly class="form-control m-input" id="mobile" type="text" autocomplete="nope" placeholder="Mobile number"
+              name="mobile" #mobile="ngModel" [(ngModel)]="billingForm.mobile" [required]="buy ? null : 'required'">
+            <span *ngIf="mobile.invalid && mobile.touched">
+              <small *ngIf="mobile.errors.required" class="error">Mobile number is Required</small>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="email" class="colorPurpel">
+            Email
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="email" type="email" autocomplete="nope" placeholder="Email" name="email"
+              #email="ngModel" [(ngModel)]="billingForm.email" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,5}$">
+            <span *ngIf="email.invalid && email.touched">
+              <small *ngIf="email.errors.pattern" class="error">Please enter correct email</small>
+            </span>
+          </div>
+        </div>
+      </div>
+      <h4 style="padding: 10px 0px;">
+        Billing Address
+      </h4>
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="address" class="colorPurpel">
+            Address<span *ngIf="!buy">*</span>
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="address" type="text" autocomplete="nope" placeholder="Address" name="address"
+              #address="ngModel" [(ngModel)]="billingForm.address_line1" [required]="buy ? null : 'required'">
+            <span *ngIf="address.invalid && address.touched">
+              <small *ngIf="address.errors.required" class="error">Address is Required</small>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="company_name" class="colorPurpel">
+            Company Name (optional)
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="company_name" type="text" autocomplete="nope" placeholder="Company Name"
+              name="company_name" [(ngModel)]="billingForm.company_name">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="city" class="colorPurpel">
+            City<span *ngIf="!buy">*</span>
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="city" type="text" autocomplete="nope" placeholder="City" name="city"
+              #city="ngModel" [(ngModel)]="billingForm.city" [required]="buy ? null : 'required'">
+            <span *ngIf="city.invalid && city.touched">
+              <small *ngIf="city.errors.required" class="error">City is Required</small>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="state" class="colorPurpel">
+            State<span *ngIf="!buy">*</span>
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="state" type="text" autocomplete="nope" placeholder="State" name="state"
+              #state="ngModel" [(ngModel)]="billingForm.state_id" [required]="buy ? null : 'required'">
+            <span *ngIf="state.invalid && state.touched">
+              <small *ngIf="state.errors.required" class="error">State is Required</small>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="zipcode" class="colorPurpel">
+            Zip Code<span *ngIf="!buy">*</span>
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="zipcode" type="text" autocomplete="nope" placeholder="Zip Code"
+              name="zipcode" #zipcode="ngModel" [(ngModel)]="billingForm.zipcode" [required]="buy ? null : 'required'">
+            <span *ngIf="zipcode.invalid && zipcode.touched">
+              <small *ngIf="zipcode.errors.required" class="error">Zip Code is Required</small>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="special_instructions" class="colorPurpel">
+            Special Instructions/Comments
+          </label>
+          <div class="form-group m-form__group">
+            <textarea class="form-control m-input" id="special_instructions" type="text" autocomplete="nope"
+              placeholder="Special Instructions/Comments" name="special_instructions" [(ngModel)]="billingForm.special_instructions"></textarea>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="special_requests" class="colorPurpel">
+            Special Requests
+          </label>
+          <div class="form-group m-form__group">
+            <textarea class="form-control m-input" id="special_requests" type="text" autocomplete="nope" placeholder="Special Requests"
+              name="special_requests" [(ngModel)]="billingForm.special_requests"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <h4 *ngIf="shiping" style="padding: 10px 0px;">
+        Shipping Address
+      </h4>
+      <div *ngIf="shiping" class="form-check" style="padding-left: 0px;">
+        <label class="m-checkbox">
+          <input type="checkbox" name="sameAsBill" [(ngModel)]="sameAs" (click)="checkForShipping($event)" [disabled]="disabledField">
+          Same As Billing Address
+          <span></span>
+        </label>
+      </div>
+      <div class="row" *ngIf="shiping">
+        <div class="col-sm-6">
+          <label for="Shfname" class="colorPurpel">
+            First Name*
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="Shfname" type="text" autocomplete="nope" placeholder="First Name"
+              name="Shfirst_name" #ShfName="ngModel" [(ngModel)]="billingForm.shipping_first_name" [required]="shiping"
+              [disabled]="disabledField">
+            <span *ngIf="ShfName.invalid && ShfName.touched">
+              <small *ngIf="ShfName.errors.required" class="error">First Name is Required</small>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="Shlname" class="colorPurpel">
+            Last Name<span *ngIf="shiping">*</span>
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="Shlname" type="text" autocomplete="nope" placeholder="Last Name"
+              name="Shlast_name" #ShlaName="ngModel" [(ngModel)]="billingForm.shipping_last_name" [required]="shiping"
+              [disabled]="disabledField">
+            <span *ngIf="ShlaName.invalid && ShlaName.touched">
+              <small *ngIf="ShlaName.errors.required" class="error">Last Name is Required</small>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="Shmobile" class="colorPurpel">
+            Mobile number<span *ngIf="shiping">*</span>
+          </label>
+          <div class="form-group m-form__group">
+            <input numberOnly class="form-control m-input" id="Shmobile" type="text" autocomplete="nope" placeholder="Mobile number"
+              name="Shmobile" #Shmobile="ngModel" [(ngModel)]="billingForm.shipping_mobile" [required]="shiping"
+              [disabled]="disabledField">
+            <span *ngIf="Shmobile.invalid && Shmobile.touched">
+              <small *ngIf="Shmobile.errors.required" class="error">Mobile number is Required</small>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="Shaddress1" class="colorPurpel">
+            Address Line 1*
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="Shaddress1" type="text" autocomplete="nope" placeholder="Address"
+              name="Shaddress1" #Shaddress1="ngModel" [(ngModel)]="billingForm.shipping_address1" [required]="shiping"
+              [disabled]="disabledField">
+            <span *ngIf="Shaddress1.invalid && Shaddress1.touched">
+              <small *ngIf="Shaddress1.errors.required" class="error">Address is Required</small>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="Shaddress2" class="colorPurpel">
+            Address Line 2
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="Shaddress2" type="text" autocomplete="nope" placeholder="Address"
+              name="Shaddress2" #Shaddress2="ngModel" [(ngModel)]="billingForm.shipping_address2" [disabled]="disabledField">
+            <!-- <span *ngIf="Shaddress2.invalid && Shaddress2.touched">
+              <small *ngIf="Shaddress2.errors.required" class="error">Address is Required</small>
+            </span> -->
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="Shcity" class="colorPurpel">
+            City*
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="Shcity" type="text" autocomplete="nope" placeholder="City" name="Shcity"
+              #Shcity="ngModel" [(ngModel)]="billingForm.shipping_city" [required]="shiping" [disabled]="disabledField">
+            <span *ngIf="Shcity.invalid && Shcity.touched">
+              <small *ngIf="Shcity.errors.required" class="error">City is Required</small>
+            </span>
+          </div>
+        </div>
+        <!-- <div class="col-sm-6">
+          <label for="Shstate" class="colorPurpel">
+            State
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="Shstate" type="text" autocomplete="nope" placeholder="State" 
+            name="Shstate" #Shstate="ngModel" [(ngModel)]="billingForm.shipping_state">
+            <span *ngIf="Shstate.invalid && Shstate.touched">
+              <small *ngIf="Shstate.errors.required" class="error">State is Required</small>
+            </span>
+          </div>
+        </div> -->
+        <div class="col-sm-6">
+          <label for="Shzipcode" class="colorPurpel">
+            Zip Code*
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="Shzipcode" type="text" autocomplete="nope" placeholder="Zip Code"
+              name="Shzipcode" #Shzipcode="ngModel" [(ngModel)]="billingForm.shipping_zipcode" [required]="shiping"
+              [disabled]="disabledField">
+            <span *ngIf="Shzipcode.invalid && Shzipcode.touched">
+              <small *ngIf="Shzipcode.errors.required" class="error">Zip Code is Required</small>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <h4 style="padding: 10px 0px;">
+        Additional Information
+      </h4>
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="alt_phone" class="colorPurpel">
+            Alternate phone number
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="alt_phone" type="text" autocomplete="nope" placeholder="" name="alt_phone"
+              [(ngModel)]="billingForm.alt_phone">
+          </div>
+        </div>
+        <!-- <div class="col-sm-6">
+          <label for="event_location" class="colorPurpel">
+            Delivery Option
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="event_location" type="text" autocomplete="nope" placeholder="" 
+            name="event_location" [(ngModel)]="billingForm.event_location" readonly>
+          </div>
+        </div> -->
+        <div class="col-sm-6" *ngIf="billingForm.driving_license_required">
+          <label for="event" class="colorPurpel">
+            Driver's License*
+          </label>
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" id="event" type="text" autocomplete="nope" placeholder="Driving License"
+              name="driving_license" [(ngModel)]="billingForm.driving_license">
+            <small *ngIf="!billingForm.driving_license && errorFiled" class="error">Please Enter your driver's license.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">.
+        <div class="col-12">
+          <div class="form-check" style="padding-left: 0px;">
+            <label class="m-checkbox">
+              <input type="checkbox" name="remember" [(ngModel)]="termsCondition" readonly disabled="true">
+              I understand your Rental Process and Return Policy
+              <a routerLink="/terms-and-conditions" style="color: #716aca;">terms & conditions</a>.
+              <span></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding-top: 10px;">
+        <button type="submit" [disabled]="!form.form.valid" class="btn btn-brand" (click)="submitBilling()">Continue</button>
+      </div>
+    </form>
+  </div>
+</div>

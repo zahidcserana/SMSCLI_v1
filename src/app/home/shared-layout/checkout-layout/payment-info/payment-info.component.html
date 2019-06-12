@@ -1,0 +1,19 @@
+<div class="container mb-5 pb-5 ">
+  <div class="row justify-content-center" *ngIf="order_error_show">
+    <div class="col-md-6 order-error custom-alert alert alert-danger">
+     <p> Your Order is invalid </p>
+     <p> <b>{{unavailable_product.name}}</b> has only <b>{{unavailable_product.quantity}}</b> available product in  store </p>
+    </div>
+  </div>
+  <div class="row justify-content-center"  >
+    <div class="custom-alert col-md-6 mt-5 mb-5 " #hasAlert></div>
+  </div>
+  <div class="row">
+    <div class="col-md-7">
+      <app-payment-gateway #gateWay (onSelectPayment)="SelectPaymentGateway($event)"  [contents]="contents"></app-payment-gateway>
+    </div>
+    <div class="col-md-5  ">
+      <app-order-summery [contents]="contents"></app-order-summery>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-section card-section info-section animated fadeIn">
+  <div class="m-section__content">
+    <h4 class="colorPurpel info-heading">Add Store
+    </h4>
+    <section>
+      <!--begin::Portlet-->
+      <form class="m-form m-form--fit m-form--label-align-right" [formGroup]="storeForm" (ngSubmit)="storeForm.valid && storeName && unique && submitStore()">
+        <div class="form-group m-form__group" style="position: relative;">
+          <label for="title">Business Name*</label>
+          <input type="text" autocomplete="off" class="form-control m-input" placeholder="Business name" id="title"
+            formControlName="slug" (change)="checkStoreName()" (keyup)="unique=false; duplicate=false">
+          <small *ngIf="unique" style="color:#041531">{{storeName}}{{domain}}</small>
+          <small *ngIf="duplicate" class="error">Should be unique</small>
+          <div *ngIf="storeSlug.invalid && storeSlug.touched">
+            <small *ngIf="store.errors.required" class="error">Business Name Required</small>
+          </div>
+          <div class="unique-check" *ngIf="unique || duplicate">
+            <i class="fa" [ngClass]="{'fa-check': unique, 'fa-close': duplicate}"></i>
+          </div>
+          <div class="m-loader m-loader--skin-dark checkLoader" *ngIf="checking"></div>
+        </div>
+
+        <div class="form-group m-form__group">
+          <label for="status">Status</label>
+          <select id="status" class="form-control m-select" formControlName="status">
+            <option value="1">Active</option>
+            <option value="0">Inactive</option>
+          </select>
+        </div>
+        <div class="form-group m-form__group" style="margin-top: 20px;">
+          <button type="submit" class="btn btn-brand" [ngClass]="{'m-loader m-loader--light m-loader--right': loading}"
+            [disabled]="loading">Submit</button>
+        </div>
+      </form>
+
+    </section>
+  </div>
+</div>

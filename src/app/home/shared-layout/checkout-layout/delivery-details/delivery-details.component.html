@@ -1,0 +1,263 @@
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-md-8 ">
+
+      <form class="billing-address" [formGroup]="billingForm" (submit)="submit()">
+        <!-- <div class="row"> -->
+        <h3>{{ contents.site_specific.checkout_info.title_contact }}</h3>
+        <div class="row mt-3 order_details">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="">{{ contents.site_specific.checkout_info.lbl_first_name }}</label>
+              <input type="text" formControlName="first_name" class="form-control" autocomplete="nope">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="">{{ contents.site_specific.checkout_info.lbl_lastname }} </label>
+              <input type="text" formControlName="last_name" class="form-control" autocomplete="off">
+            
+            </div>
+          </div>
+        </div>
+        <div class="row order_details">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="">{{ contents.site_specific.checkout_info.lbl_mobile }} </label>
+              <input type="text" numberOnly formControlName="mobile" class="form-control" autocomplete="nope">
+              <span *ngIf="billingForm.get('mobile').invalid">
+                <small *ngIf="billingForm.get('mobile').hasError('required') && billingForm.get('mobile').touched" class="error">Mobile No is Required</small>
+              </span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="">{{ contents.site_specific.checkout_info.lbl_email }} </label>
+              <input type="email" formControlName="email" class="form-control" autocomplete="nope">
+            
+              <span *ngIf="billingForm.get('email').hasError('email') && !billingForm.get('email').hasError('required')">
+                <small class="error"> Please enter a valid email address</small>
+              </span>
+            </div>
+          </div>
+        </div>
+        <!-- </div> -->
+        <div class="order_details mt-3">
+          <div class="row">
+            <div class="col-md-12">
+              <h3 class="mt-2 mb-2 ">{{ contents.site_specific.checkout_info.title_billing }}</h3>
+            </div>
+          </div>
+          <div class="row order_details mt-2">
+            <div class="col-md-6 mt-2">
+              <div class="form-group ">
+                <label for="">{{ contents.site_specific.checkout_info.lbl_address }} </label>
+                <input type="text" formControlName="address_line1" class=" col-md-12 mb-2 form-control" autocomplete="nope">
+                <!-- <span *ngIf="billingForm.get('address_line1').invalid">
+                  <small *ngIf="billingForm.get('address_line1').hasError('required') && billingForm.get('address_line1').touched" class="error">Address is Required</small>
+                </span> -->
+              </div>
+            </div>
+            <div class="col-md-6 mt-2 ">
+              <div class="form-group">
+                <label for="">{{ contents.site_specific.checkout_info.lbl_company_name }} </label>
+                <input type="text" formControlName="company_name" class="form-control" autocomplete="nope">
+              </div>
+            </div>
+
+          </div>
+          <div class="row order_details">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="">{{ contents.site_specific.checkout_info.lbl_city }} </label>
+                <input type="text" formControlName="city" class="form-control" autocomplete="nope">
+                <!-- <span *ngIf="billingForm.get('city').invalid">
+                  <small *ngIf="billingForm.get('city').hasError('required') && billingForm.get('city').touched" class="error">City is Required</small>
+                </span> -->
+              </div>
+            </div>
+            <div class="col-md-4 ">
+              <div class="form-group">
+                <label for="">{{ contents.site_specific.checkout_info.lbl_state }} </label>
+                <input type="text" formControlName="state_id" class="form-control" autocomplete="nope">
+                <!-- <span *ngIf="billingForm.get('state_id').invalid">
+                  <small *ngIf="billingForm.get('state_id').hasError('required') && billingForm.get('state_id').touched" class="error">State is Required</small>
+                </span> -->
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group ">
+                <label for="">{{ contents.site_specific.checkout_info.lbl_zipcode }} </label>
+                <input type="text" formControlName="zipcode" class=" col-md-12 form-control" autocomplete="nope">
+                <!-- <span *ngIf="billingForm.get('zipcode').invalid">
+                  <small *ngIf="billingForm.get('zipcode').hasError('required') && billingForm.get('zipcode').touched" class="error">zipcode is Required</small>
+                </span> -->
+              </div>
+            </div>
+          </div>
+          <div class="row order_details mt-3 ">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="">{{ contents.site_specific.checkout_info.lbl_special_comments }} </label>
+                <textarea name="" class=" form-control " formControlName="special_instructions" id="" rows="5" autocomplete="nope"></textarea>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="">{{ contents.site_specific.checkout_info.lbl_special_request }} </label>
+                <textarea name="" class=" form-control " formControlName="special_requests" id="" rows="5" autocomplete="nope"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-5 order_details" *ngIf="show_shipping_method">
+          <div class="row">
+            <div class="col-md-12">
+              <h3 class="col-md-12">{{ contents.site_specific.checkout_info.title_shipping }}</h3>
+            </div>
+          </div>
+          <div class="row order_details mt-4 ">
+            <div class="col-md-12">
+              <div class="enable-shipping-address">
+                <input type="checkbox" (change)="onSelectShippingMethod($event)" autocomplete="nope"> {{ contents.site_specific.checkout_info.lbl_same_as_billing }}
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3 order_details">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="">{{ contents.site_specific.checkout_info.lbl_shipping_first_name }}</label>
+                <input type="text" formControlName="shipping_first_name" required class="form-control" autocomplete="nope">
+                <span *ngIf="billingForm.get('shipping_first_name').invalid">
+                  <small *ngIf="billingForm.get('shipping_first_name').hasError('required') && billingForm.get('shipping_first_name').touched"
+                    class="error">First Name is Required</small>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="">{{ contents.site_specific.checkout_info.lbl_shipping_last_name }}</label>
+                <input type="text" formControlName="shipping_last_name" required class="form-control" autocomplete="nope">
+                <span *ngIf="billingForm.get('shipping_last_name').invalid">
+                  <small *ngIf="billingForm.get('shipping_last_name').hasError('required') && billingForm.get('shipping_last_name').touched"
+                    class="error">Last Name is Required</small>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row order_details">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="">{{ contents.site_specific.checkout_info.lbl_shipping_mobile }}</label>
+                <input type="text" numberOnly formControlName="shipping_mobile" required class="form-control" autocomplete="nope">
+                <span *ngIf="billingForm.get('shipping_mobile').invalid">
+                  <small *ngIf="billingForm.get('shipping_mobile').hasError('required') && billingForm.get('shipping_mobile').touched" class="error">Mobile No is Required</small>
+                </span>
+              </div>
+            </div>
+
+          </div>
+          <div class="row order_details mt-3">
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label for="">{{ contents.site_specific.checkout_info.lbl_shipping_address_line_1 }}</label>
+                <input type="text" formControlName="shipping_address1" required class=" col-md-12 mb-2 form-control" autocomplete="nope">
+                <span *ngIf="billingForm.get('shipping_address1').invalid">
+                  <small *ngIf="billingForm.get('shipping_address1').hasError('required') && billingForm.get('shipping_address1').touched"
+                    class="error">Address line 1 is Required</small>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label for="">{{ contents.site_specific.checkout_info.lbl_shipping_address_line_2 }}</label>
+                <input type="text" formControlName="shipping_address2" class=" col-md-12 mb-2 form-control" autocomplete="nope">
+                <!-- <span *ngIf="billingForm.get('shipping_address2').invalid">
+                  <small *ngIf="billingForm.get('shipping_address2').hasError('required') && billingForm.get('shipping_address2').touched" class="error">Address is Required</small>
+                </span> -->
+              </div>
+            </div>
+          </div>
+          <div class="row order_details">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="">{{ contents.site_specific.checkout_info.lbl_shipping_city }}</label>
+                <input type="text" formControlName="shipping_city" required class="form-control" autocomplete="nope">
+                <span *ngIf="billingForm.get('shipping_city').invalid">
+                  <small *ngIf="billingForm.get('shipping_city').hasError('required') && billingForm.get('shipping_city').touched" class="error">City is Required</small>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label for="">{{ contents.site_specific.checkout_info.lbl_shipping_zipcode }}</label>
+                <input type="text" formControlName="shipping_zipcode" required class=" col-md-12 form-control" autocomplete="nope">
+                <span *ngIf="billingForm.get('shipping_zipcode').invalid">
+                  <small *ngIf="billingForm.get('shipping_zipcode').hasError('required') && billingForm.get('shipping_zipcode').touched" class="error">
+                    Zip Code is Required</small>
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="mt-5 ">
+          <h3 class="mt-2 mb-2 ">{{ contents.site_specific.checkout_info.title_additional }}</h3>
+          <div class="row mt-2  order_details">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="">{{ contents.site_specific.checkout_info.lbl_driving_license }}</label>
+                <input type="text" formControlName="driving_license" class="form-control" autocomplete="nope">
+                <span *ngIf="driving_lc_required && !this.billingForm.get('driving_license').value">
+                  <small class="error">Driving License is Required</small>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="">{{ contents.site_specific.checkout_info.lbl_alt_mobile }}</label>
+                <input type="text" formControlName="alt_phone" class="form-control" autocomplete="nope">
+
+              </div>
+            </div>
+            <div class="row col-md-12">
+                <app-shipping-method [type]="'checkout'" [address]="billingForm" (onSelectShipping)="selectSgippingMethod($event)" [shipping]="shipping" ></app-shipping-method>
+                <small class="pl-3 pb-3" *ngIf="message" [ngStyle]="message.color"><b>{{message.msg}}</b></small>
+            </div>
+          </div>
+        </div>
+
+        <div class="row order_details">
+          <div class="col-md-12">
+            <div class="enable-shipping-address order_details">
+              <input type="checkbox" checked (change)="onSelecttermsCondition($event)" autocomplete="nope">
+              <span [innerHtml]="contents.site_specific.checkout_info.terms_and_condition "></span>
+              <!--I understand your Rental Process and Return Policy-->
+              <!--<a class="trms_condintion" routerLink="/terms-and-conditions">terms & conditions</a>.-->
+            </div>
+            <span *ngIf="termsError">
+              <small class="error col-md-12">
+                Accept Terms & Condition to continue.</small>
+            </span>
+          </div>
+        </div>
+        <div class="row order_details mt-4 ">
+
+        </div>
+      </form>
+    </div>
+    <div class="col-md-4   ">
+      <app-order-summery [contents]="contents"></app-order-summery>
+      <div class="row justify-content-center">
+        <button [disabled]="show_shipping_method && !billingForm.valid ? true: false" (click)="submit()" class=" col-md-4 btn theme-btn  caps">{{ contents.site_specific.checkout_info.btn_continue }}</button>
+
+      </div>
+    </div>
+
+  </div>
+</div>

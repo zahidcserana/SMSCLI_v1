@@ -1,0 +1,190 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title m-subheader__title--separator">
+				New Product Listing
+			</h3>
+			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+				<li class="m-nav__item m-nav__item--home">
+					<a routerLink="/admin/dashboard" class="m-nav__link m-nav__link--icon">
+						<i class="m-nav__link-icon la la-home"></i>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+          <a routerLink="/admin/inventory/" class="m-nav__link">
+            <span class="m-nav__link-text">
+              Product
+            </span>
+          </a>
+        </li>
+        <li class="m-nav__separator" style="padding-left: 10px">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+          <a class="m-nav__link">
+            <span class="m-nav__link-text">
+              Product Wizard
+            </span>
+          </a>
+        </li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content product-list animated fadeIn">
+	<!--begin::Portlet-->
+	<div class="m-portlet m-portlet--mobile">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title m-product-title">
+          <!-- <p>Use Express Add to pick from product suggestions or add your own in a snap!</p> -->
+          <form class="m-form m-form--fit m-form--label-align-right">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Pick Type</label>
+                  <ng-multiselect-dropdown name="type"
+                    [data]="typeList"
+                    [(ngModel)]="typeValue"
+                    [settings]="typeSettings"
+                    (onSelect)="onTypeSelect($event)"
+                    (onDeSelect)="onTypeUnSelect($event)"
+                  >
+                  </ng-multiselect-dropdown>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="form-group" style="position: relative;">
+                  <label>Pick Tag/Group</label>
+                  <ng-multiselect-dropdown name="tag"
+                    [data]="tagList"
+                    [(ngModel)]="tagvalue"
+                    [settings]="tagSettings"
+                    (onSelect)="onTagSelect($event)"
+                    (onDeSelect)="onTagUnSelect($event)"
+                  >
+                  </ng-multiselect-dropdown>
+                  <div *ngIf="tyChange" class="m-loader m-loader--brand" style="position: absolute; top: 45px; right: 70px; width: 30px; display: inline-block;"></div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Add your own product</label>
+                  <div class="input-group">
+                    <input class="form-control m-input" name="proName" [(ngModel)]="proName"
+                      type="text" autocomplete="off">
+                    <div class="input-group-append btn btn-dark" (click)="addNewProduct()" style="cursor: pointer;">
+                      Add
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+				</div>
+			</div>
+		</div>
+		<div class="m-portlet__body" style="position: relative;">
+				<!--begin: Datatable -->
+				<div class="row" style="padding-bottom: 20px;">
+					<div class="col-sm-6" style="padding-top: 5px; padding-bottom: 5px;">
+            <button class="btn btn-sm btn-dark" [disabled]="pagi.page == totalPages" style="margin-right: 20px;" (click)="pageChange()">Load More</button>
+          </div>
+          <div class="col-sm-6 text-right">
+            <button type="button" [disabled]="productList.length<1" class="btn btn-success btn-sm" 
+              [ngClass]="{'m-loader m-loader--skin-dark m-loader--right': allAdd}" style="margin-right: 5px" (click)="addProduct()">Add Selected</button>
+            <button type="button" class="btn btn-dark btn-sm" (click)="cancel()">Go To Inventory</button>
+          </div>
+				</div>
+        <!--begin::Section-->
+          <div class="m-section">
+            <div class="m-section__content price-table">
+              <div *ngIf="loader" class="table-load m-loader m-loader--brand"></div>
+                <div class="table-responsive" style="margin-bottom: 10px;">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th class="text-center">
+                          <label class="m-checkbox m-checkbox--check-bold m-checkbox--state-dark">
+                            <input type="checkbox" (click)="checkAll($event)">
+                            <span></span>
+                          </label>
+                        </th>
+                        <th style="min-width: 200px;">Tag</th>
+												<th style="min-width: 300px;">Product</th>
+                        <th class="max-110"># in stock</th>
+												<th class="max-110"># of Hrs</th>
+                        <th class="max-110">Price</th>
+                        <th class="max-110"># of Days</th>
+                        <th class="max-110">Price</th>
+                        <th class="max-110"># of Wks</th>
+                        <th class="max-110">Price</th>
+                        <th class="max-110">Base Price</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="productList.length<1; else table">
+                    </tbody>
+                    <ng-template #table>
+                      <tbody>
+                        <tr *ngFor="let pro of productList; let i='index'; let o='odd'; let e='even'; trackBy: trackPro" [ngClass]="{'odd-tr':o, 'even-tr':e}">
+                          <td class="text-center">
+                            <label class="m-checkbox m-checkbox--check-bold m-checkbox--state-dark">
+                              <input type="checkbox" [attr.name]="'pro_'+pro.name" [(ngModel)]="pro.check" (click)="checkOne($event, i)">
+                                <span></span>
+                            </label>
+                          </td>
+                          <td><input type="text" class="form-control m-input" [attr.name]="'tag' + pro.name" [(ngModel)]="pro.tag" autocomplete="off"></td>
+													<td><input type="text" class="form-control m-input" [attr.name]="'name' + pro.name" [(ngModel)]="pro.name" autocomplete="off"></td>
+                          <td><input type="text" numberOnly class="form-control m-input" [attr.name]="'qty' + pro.name" [(ngModel)]="pro.quantity" autocomplete="off"></td>
+                          <td><input type="text" numberOnly class="form-control m-input" [attr.name]="'hourly_duration' + pro.name" [(ngModel)]="pro.hourly_duration" autocomplete="off"></td>
+                          <td><input type="text" numberOnly class="form-control m-input" [attr.name]="'hourly_price' + pro.name" [(ngModel)]="pro.hourly_price" autocomplete="off"></td>
+                          <td><input type="text" numberOnly class="form-control m-input" [attr.name]="'daily_duration' + pro.name" [(ngModel)]="pro.daily_duration" autocomplete="off"></td>
+													<td><input type="text" numberOnly class="form-control m-input" [attr.name]="'daily_price' + pro.name" [(ngModel)]="pro.daily_price" autocomplete="off"></td>
+													<td><input type="text" numberOnly class="form-control m-input" [attr.name]="'weekly_duration' + pro.name" [(ngModel)]="pro.weekly_duration" autocomplete="off"></td>
+                          <td><input type="text" numberOnly class="form-control m-input" [attr.name]="'weekly_price' + pro.name" [(ngModel)]="pro.weekly_price" autocomplete="off"></td>
+                          <td><input type="text" numberOnly class="form-control m-input" [attr.name]="'base' + pro.name" [(ngModel)]="pro.price" autocomplete="off"></td>
+                          <td>
+                            <div *ngIf="addClick == i; else SAVEBTN" class="m-loader m-loader--brand"
+															style="width: 30px; display: inline-block;"></div>
+                            <ng-template #SAVEBTN>
+                                <button style="margin: 5px" (click)="copyRow(pro, i)" title="Copy Row" class="btn btn-sm btn-outline-dark">
+																	Copy
+																</button>
+																<button style="margin: 5px" (click)="addProduct(pro, i)" title="Add Product" class="btn btn-sm btn-outline-dark" [ngClass]="{'m-loader m-loader--skin-dark m-loader--right': induAdd==i}">
+																	Add
+																</button>
+														</ng-template>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </ng-template>
+                  </table>
+                </div>
+            </div>
+					</div>
+					<!--end::Section-->
+				<div class="row" style="padding-bottom: 20px;">
+					<div class="col-sm-6" style="padding-top: 5px; padding-bottom: 5px;">
+            <button class="btn btn-sm btn-dark" [disabled]="pagi.page == totalPages" style="margin-right: 20px;" (click)="pageChange()">Load More</button>
+          </div>
+          <div class="col-sm-6 text-right">
+            <button type="button" [disabled]="productList.length<1" class="btn btn-success btn-sm" 
+              [ngClass]="{'m-loader m-loader--skin-dark m-loader--right': allAdd}" style="margin-right: 5px" (click)="addProduct()">Add Selected</button>
+            <button type="button" class="btn btn-dark btn-sm" (click)="cancel()">Go To Inventory</button>
+          </div>
+				</div>
+        <!--end: Datatable -->
+      </div>
+	</div>
+		<!--end::Portlet-->
+</div>
+

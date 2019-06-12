@@ -1,0 +1,47 @@
+ <div style="padding-top: 35px;">
+    <h4 class="colorPurpel" *ngIf="edit; else add">Update Section</h4>
+    <ng-template #add class="colorPurpel">
+      <h4 class="colorPurpel">Add Section</h4>
+    </ng-template>
+    <form class="m-form m-form--fit m-form--label-align-right" #f="ngForm">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group m-form__group">
+            <label for="Class">
+              Class*
+            </label>
+            <select id="class_id" class="form-control m-select" name="class_id"  #class_id="ngModel" [(ngModel)] ="supplier.class_id" required>
+              <option *ngFor="let class of classes" [value]="class.id">{{class.name}} </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group m-form__group">
+            <label for="name">Name*</label>
+            <input class="form-control m-input" id="name" type="text" placeholder="Enter Name" #name="ngModel" name="name" [(ngModel)] ="supplier.name" autocomplete="off" required>
+            <span *ngIf="name.errors && name.touched">
+              <small *ngIf="name.errors.required" class="error">Name required</small>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="m-portlet__foot m-portlet__foot--fit">
+        <div class="m-form__actions m-form__actions" style="padding: 30px 0px;">
+          <div *ngIf="loader; else button" class="m-loader m-loader--brand"
+              style="width: 30px; padding-left: 30px; display: inline-block;"></div>
+          <ng-template #button>
+            <button type="button" class="btn btn-brand" [disabled]="!f.form.valid"  *ngIf="edit; else addbtn" (click)="update()">
+              <i class="fa fa-save"></i> <span style="padding-left:10px;">Update</span>
+            </button>
+            <ng-template #addbtn>
+              <button type="button" class="btn btn-brand" [disabled]="!f.form.valid" (click)="submit(f)">
+                <i class="fa fa-save"></i> <span style="padding-left:10px;">Submit</span>
+                </button>
+            </ng-template>
+          </ng-template>
+        </div>
+      </div>
+    </form>
+  </div>	
+  
+  

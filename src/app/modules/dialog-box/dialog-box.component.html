@@ -1,0 +1,16 @@
+<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('')">
+  <span aria-hidden="true">&times;</span>
+</button>
+<div class="modal-body">
+  <h5 class="text-center">
+    {{massage}}
+  </h5>
+  <div class="closing-btn text-center" style="padding: 20px;">
+    <button type="button" class="btn btn-brand btn-sm" (click)="activeModal.close(true)">
+      Yes
+    </button>
+    <button type="button" class="btn btn-danger btn-sm" (click)="activeModal.close(false)">
+      No
+    </button>
+  </div>
+</div>

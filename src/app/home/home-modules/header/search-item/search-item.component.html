@@ -1,0 +1,18 @@
+<form class="navbar-form navbar-search" role="search">
+    <div class="input-group search-area">
+        <div class="home">
+          <ng-template #rt let-r="result" let-t="term">
+            {{r.name}}
+          </ng-template>
+          <input id="typeahead-http" name="search" type="text" class="form-control" [resultTemplate]="rt" [(ngModel)]="params" [ngbTypeahead]="search" [inputFormatter]="formatter" [focusFirst]="false" (keyup.enter)="goToSearchProduct(params)" placeholder="Search.." /> 
+        </div>
+        <div *ngIf="loader"  class="m-loader m-loader--orange" style="right:20px;"></div>
+  
+        <div class="input-group-btn" style="position: absolute; width:46px; right: 0;">
+          <button type="button" class="btn btn-search btn-default search-btn" (click)="goToSearchProduct(params)">
+          <i class="fa fa-search"></i>
+          </button>  
+       </div>
+    </div>  
+  </form>
+  

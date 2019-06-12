@@ -1,0 +1,95 @@
+<div class="m-portlet m-portlet--mobile">
+  <div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+      <div class="m-portlet__head-title">
+        <h3 class="m-portlet__head-text">
+          <i class="la la-search"></i>
+          Search
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="m-portlet__body search-panel">
+    <!--begin::Form-->
+    <form class="m-form m-form--fit m-form--label-align-right second-form">
+      <div class="row">
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" type="text" placeholder="Enter Name" name="name" [(ngModel)]="userSearch.name" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" type="email" placeholder="Enter Email" name="email" [(ngModel)]="userSearch.email" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group m-form__group">
+            <select class="form-control" name="account_type" [(ngModel)]="userSearch.account_type">
+              <option value="">-Billing Type-</option>
+              <option value="FREE">Free</option>
+              <option value="Sliver">Sliver</option>
+              <option value="Platinum">Platinum</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group m-form__group">
+            <select class="form-control" name="plan_period" [(ngModel)]="userSearch.plan_period">
+              <option value="">-Billing Period-</option>
+              <option value="month">Monthly</option>
+              <option value="year">Yearly</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group m-form__group">
+            <select class="form-control m-input" name="status" [(ngModel)]="userSearch.status">
+              <option value=null>-Status-</option>
+              <option value="0">Pending</option>
+              <option value="1">Active</option>
+              <option value="2">Inactive</option>	
+              <option value="3">Delete</option>	
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group m-form__group">
+            <select class="form-control m-input" name="user_type_id" [(ngModel)]="userSearch.user_type_id">
+              <option value=null>-User Type-</option>
+              <option value="1">Super Admin</option>
+              <option value="2">Company Admin</option>
+              <option value="3">Store Admin</option>
+              <option value="4">Store Manager</option>
+              <option value="5">Customer</option>	
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group m-form__group">
+            <div class="input-group date">
+              <input type="text" class="form-control m-input" (click)="dateChange()" 
+              placeholder="-Created Date-" id="created-date" readonly/>
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <i class="la la-calendar-check-o"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn m-btn--pill m-btn--air btn-brand btn-sm" (click)="searchUsers()"
+        style="margin-right:10px">
+            Search
+        </button>
+        <button type="reset" class="btn m-btn--pill m-btn--air btn-danger btn-sm"
+        (click)="resetSearch()">
+            Cancel
+        </button>
+      </div>
+    </form>
+    <!--end::Form-->
+  </div>
+</div>

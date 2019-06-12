@@ -1,0 +1,131 @@
+.order_summery {
+    width: 500px;
+    border: 1px solid #ccc;
+    min-height: 160px;
+}
+.order_summery h5 {
+    text-align: center;
+    border-bottom: 1px solid #cccc;
+    margin: 0 auto;
+    padding: 10px;
+    margin-bottom: 25px;
+}
+.order-list {
+    min-height: 120px;
+    width: 90%;
+    border-bottom: 1px solid #cccc;
+    margin: 0 auto;
+    padding: 10px 0;
+}
+.order-list:last-child {
+    border-bottom: none;
+}
+.order-product_details {
+    width: 295px;
+    float: left;
+}
+.order_summery .order-img {
+    width: 60px;
+    float: left;
+    margin-right: 14px;
+}
+.order_summery .order-product_name {
+    width: 270px;
+    float: left;
+    margin-left: 13px;
+    margin-top: 25px;
+}
+.order_summery .order-product_price {
+    width: 37%;
+    float: left;
+    text-align: right;
+    padding-right: 6px;
+} 
+
+.order-product_details .name  {
+    width: 100%;
+    min-height: 25px;
+
+    
+} 
+
+.img-thumbnail {
+    max-height: 95px!important;
+    transform: scale(.8);
+}
+
+
+
+.bottom_info .qty {
+    
+    width:19%;
+    float: left;
+} 
+
+.bottom_info {
+    width: 100%;
+}
+
+.price_show {
+    width: 90%;
+    margin: 7px auto; 
+}
+.price_show p {
+    text-align: left;
+    margin: 14px 0;
+
+}
+.price_show .cart_p {
+
+    width: 45%;
+    text-align: right;
+    float: right;
+    margin-right: 12px;
+}
+
+.cart_btn a {
+    color: #fff;
+    padding: 7px;
+    text-align: center;
+    width: 200px;
+    display: inline-block;
+    margin: 0 11%;
+}
+
+
+
+.bottom_info .tax {
+    width: 42%;
+    float: left;
+}
+.bottom_info .deposit {
+    width: 100%;
+    float: left;
+}
+.bottom_info .total {
+    width: 40%;
+    float: right;
+    text-align: right;
+    padding-right: 12px;
+}
+
+@media (max-width: 767px) {
+    .order-list  {
+        min-height: 173px;
+    }
+    .order_summery {
+        width: 100% !important;
+    }
+
+}
+.cart_btn a {
+    color: #fff;
+    padding: 6px;
+    text-align: center;
+    width: 210px;
+    display: block;
+    margin: 0 11%;
+    margin-left: 330px!important;
+    float: right;
+    font-size: 12px;
+}

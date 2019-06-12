@@ -1,0 +1,46 @@
+.m-portlet__head-title {
+    width: 100%;
+}
+
+.button-midle {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 1.3rem;
+    font-weight: 500;
+    font-family: Roboto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.button-midle .btn {
+    margin-left: 10px;
+}
+
+.custom-alert{
+    position: fixed;
+    top: 2%;
+    right: 30px;
+    z-index: 5000;
+}
+
+.dis-none{
+    display: none;
+}
+.dis-block{
+    display: table-row!important;
+}
+
+.m-dropdown.m-dropdown--align-center.m-dropdown--large .m-dropdown__wrapper {
+    margin-left: -50px;
+}
+
+.custom-alert{
+    position: fixed;
+    top: 90px;
+    right: 30px;
+    z-index: 5000;
+}
+
+.m-badge.m-badge--warning {
+    color: #fff!important;
+}

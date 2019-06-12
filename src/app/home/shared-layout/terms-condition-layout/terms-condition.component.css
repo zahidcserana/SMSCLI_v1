@@ -1,0 +1,47 @@
+.page-title {
+    text-align: center;
+    font-size: 50px;
+    padding-top: 5rem;
+    font-weight: 700;
+    font-family: "Source Sans Pro", sans-serif;
+  }
+.title {
+    color: #e58222;
+    font-size: 21px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 58px;
+    padding-top: 7rem;
+    font-weight: 700;
+    color: #e58222;
+    font-family: "Source Sans Pro", sans-serif;
+}
+h4 {
+    color: #e58222;
+    text-align: center;
+    margin: 30px 0;
+    font-size: 19px;
+    line-height: 1.8em;
+    margin-top: 60px;
+}
+h3 {
+    color: #e58222;
+    font-size: 25px;
+    text-align: center;
+    margin: 72px 0;
+}
+
+.text {
+    margin: 30px 0;
+}
+
+.exchange-box-answer {
+   margin: 30px 40px;
+}
+
+.back-btn {
+    position: absolute;
+    right: -123px;
+}

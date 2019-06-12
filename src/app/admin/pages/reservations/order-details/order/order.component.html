@@ -1,0 +1,36 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-portlet m-portlet--full-height">
+  <div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+      <div class="m-portlet__head-title row">
+        <h3 class="m-portlet__head-text col-12 colorPurpel">
+          Order Details
+        </h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-portlet__body">
+    <div class="description-fields row">
+      <div class="col-md-6">
+        <p><span class="description-field-title">Order Id: </span> <span>{{order.id}}</span></p>  
+        <p><span class="description-field-title">Quantity: </span> <span>{{order.total_quantity}}</span></p>
+        <p><span class="description-field-title">Pickup Store: </span> <span>{{order.pickup}}</span></p>
+        <p><span (click)="changeStatus(order)" style="cursor: pointer;"><span class="description-field-title">Status: </span> <span class="m-badge m-badge--wide" [ngClass]="checkStatus(order.status)" style="margin-right: 10px;">{{getStatus(order.status)}}</span> <i class="la la-edit"></i></span></p>
+        <p><span class="description-field-title">Order Date & Time: </span> <span>{{getDateFormate(order.created) | date:'MM/dd/yyyy, hh:mm a'}}</span></p>
+        <p><span class="description-field-title">Delivery Date & Time: </span> <span>{{getDateFormate(order.delivery_date) | date:'MM/dd/yyyy, hh:mm a'}}</span></p>
+      </div>
+      <div class="col-md-6">
+        <p><span class="description-field-title">Sub Total: </span> <span>${{(order.sub_total ? order.sub_total : 0) | number: '1.2-2'}} </span></p>
+        <p><span class="description-field-title">Delivery Charge: </span> <span>${{(order.delivery_charge ? order.delivery_charge : 0) | number: '1.2-2'}}</span></p>
+        <p><span class="description-field-title">Discount: </span> <span>${{(order.total_discount ? order.total_discount : 0) | number: '1.2-2'}} {{order.total_discount ? '(' + order?.coupon?.code + ')' : ''}}</span></p>
+        <p><span class="description-field-title">Sales Tax: </span> <span>${{(order.tax ? order.tax : 0) | number: '1.2-2'}}</span></p>
+        <p><span class="description-field-title">Delivery Tax: </span> <span>${{(order.delivery_tax ? order.delivery_tax : 0) | number: '1.2-2'}}</span></p>
+        <p><span class="description-field-title">Deposit Amount: </span> <span>${{order.total_deposit | number: '1.2-2'}}</span></p>
+        <p><span class="description-field-title">Grand Total: </span> <span>${{order.total | number: '1.2-2'}}</span></p>
+      </div>
+    </div>
+  </div>
+
+</div>

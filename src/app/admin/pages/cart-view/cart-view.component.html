@@ -1,0 +1,25 @@
+<!-- begin::Quick Sidebar -->
+<div class="m-quick-sidebar--skin-light cart-sidebar-width inventory-sidebar animated fadeIn" appunwraptag="">
+    <div class="cart-sidebar" *ngIf="checkOut">
+      <div class="row">
+        <h3 class="col-sm-5 colorPurpel text-uppercase" style="padding-bottom: 15px;">
+          <span *ngIf="!show">View Cart</span>
+          <span *ngIf="show">Order Details</span>
+        </h3>
+        <h4 class="col-sm-7 upper-btns" style="margin: 0px;">
+          <button *ngIf="show; else OtherBtn" class="btn btn-danger" (click)="ClearFullCart(true)" style="margin-right: 10px;">Clear Cart</button>
+          <ng-template #OtherBtn>
+            <button class="btn btn-sm btn-danger" (click)="ClearFullCart(true)" style="margin-right: 10px;">Clear Cart</button>
+            <button *ngIf="checkOut" class="btn btn-sm btn-dark" (click)="backToCart()" style="margin-right: 10px;">Back To Cart</button>
+            <button *ngIf="payment && checkOut" class="btn btn-sm btn-dark" (click)="backToContact()">Back To Contact</button>
+          </ng-template>
+        </h4>
+      </div>
+    </div>
+    <div>
+      <app-cart *ngIf="!checkOut" (clear)="ClearFullCart($event)" (checkOut)="checkOutOpen()"></app-cart>
+      <app-check-out (openBilling)="openBilling()" *ngIf="!payment && checkOut"></app-check-out>
+      <app-payment (cart)="ClearFullCart()" *ngIf="payment && checkOut"></app-payment>
+    </div>
+
+</div>

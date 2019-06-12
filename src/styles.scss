@@ -1,0 +1,332 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~assets/vendors/base/vendors.bundle.css';
+@import '~assets/css/admin/style.bundle.css';
+
+
+body{
+    margin: 0px!important;
+}
+
+app-auth{
+    height: 100%!important;
+    // width: 100%!important;
+}
+
+.hide-copy-input {
+    position: absolute;
+    left: -99999px;
+}
+
+.block-pointer {
+    pointer-events: none;
+}
+
+.dis-block {
+    display: block;
+}
+
+.dis-none {
+    display: none;
+}
+
+.cursor-pointer {
+    cursor: pointer!important;
+}
+
+.btn-orange{
+	background: rgba(229, 130, 34,0.8);
+	color: #fff;
+	cursor: pointer;
+}
+.btn-orange:hover{
+	transition: all 0.5s;
+	background: rgba(229, 130, 34,1);
+	color: #fff;
+}
+
+.btn-outline-orange{
+	border: 1px solid #E58222!important;
+	color: #E58222;
+	background: #fff!important;
+	cursor: pointer;
+}
+
+.phone-number .input-group input.form-control {
+    border-radius: 0px!important;
+    margin-top: 0px!important;
+    padding: 1.1rem!important;
+    color: #343a40!important;
+    background-color: transparent!important;
+    border: 1px solid #ccc!important;
+}
+
+.phone-number .input-group-addon.flagInput {
+    border: 1px solid #ccc!important;
+}
+
+.phone-number .input-group-addon.flagInput .dropdown{
+    top: 8px!important;
+}
+
+.btn-outline-orange:hover{
+	transition: all 0.5s;
+	background: #E58222!important;
+	color: #fff;
+}
+
+.btn[type="button"][disabled],.btn[disabled], .btn[type="submit"][disabled], .btn[type="reset"][disabled] {
+	opacity: 0.5;
+	cursor: no-drop;
+}
+button[type="button"][disabled],button[disabled], button[type="submit"][disabled], button[type="reset"][disabled] {
+	opacity: 0.5;
+	cursor: no-drop;
+}
+
+.table-load.m-loader {
+    position: absolute; display: inline-block; left:45%; top:40%;
+}
+.table-load.m-loader:before {
+    width: 5rem!important;
+    height: 5rem!important;
+}
+
+.availability-container  .availability-container-items{
+    cursor: pointer;
+    display: block;
+}
+
+.error{
+	color:red;
+}
+
+.info{
+	color:blue;
+}
+
+.success-mgs {
+    color: green
+}
+
+.fc-day-grid-event .fc-content {
+    white-space: normal!important;
+}
+
+.fc-day-grid-event .fc-content .fc-time {
+    margin-right: 10px!important;
+}
+
+.m-loader-lg{
+    margin:auto;
+    width: 100%;
+    height: 80%;
+}
+.m-loader-lg.m-loader:before{
+    border-top-color: #E58222!important;
+}
+.m-loader-lg:before{
+    width: 7rem!important;
+    height: 7rem!important;
+    top: 40%!important;
+    left: 40%!important;
+}
+
+.m-nav .m-nav__item > .m-nav__link .m-nav__link-icon{
+	width: 30px;
+}
+
+.btn.m-btn--hover-dark:hover{
+	border-color: #343a40 !important;
+    color: #ffffff !important;
+    background-color: #343a40 !important;
+}
+
+.btn.m-btn--hover-orange:hover{
+	border-color: #E58222 !important;
+    color: #ffffff !important;
+    background-color: #E58222 !important;
+}
+
+.m-nav__item .m-nav__link-text{
+	padding-left: 10px!important;	
+}
+
+.select2{
+	display: block;
+	width: 100%!important;
+}
+
+.select2-search__field{
+	width: 100%!important;
+}
+
+.select2-container{
+	width: 100%!important;
+}
+
+.custom-alert{
+	min-width: 300px;
+	max-width: 500px;
+}
+
+#categoryAttr-jsTree .jstree-container-ul.jstree-children > li > a > i.jstree-icon.jstree-checkbox, 
+#category-jsTree .jstree-container-ul.jstree-children > li > a > i.jstree-icon.jstree-checkbox {
+    display: none!important;
+}
+#categoryAttr-jsTree .jstree-container-ul.jstree-children > li > a.jstree-anchor {
+    pointer-events: none!important;
+}
+
+// home
+
+.admin-cart .dropdown-menu.show, .home .dropdown-menu.show{
+    max-height: 300px!important; overflow-y: auto!important;
+}
+
+.home .dropdown-item.active {
+    background: transparent !important;
+}
+
+.home .dropdown-item:hover {
+    background: #E58222 !important;
+    color: #fff!important;
+    cursor: pointer;
+}
+
+.home .dropdown-item {
+    padding: 0px!important;
+}
+
+.home .dropdown-item .inner-serch{
+    padding: 5px 10px!important;
+}
+
+.admin-cart .dropdown-item.active {
+    background: transparent !important;
+    color: #000!important;
+}
+
+.admin-cart .dropdown-item:hover {
+    background: #ebedf2 !important;
+    color: #000!important;
+    cursor: pointer;
+}
+
+.home .dropdown-item {
+    white-space: pre-wrap!important;
+}
+
+.admin-cart .dropdown-item {
+    white-space: pre-wrap!important;
+    border-bottom: 1px solid #eeeeee!important;
+}
+
+.btn-xsm{
+    padding: 0.15rem 0.75rem!important;
+    font-size: 0.8rem!important;
+    line-height: 1!important;
+}
+
+
+// Home 
+.container-fluid {
+    width: 100%;
+    padding-right: 5% !important;
+    padding-left: 5% !important;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.custom-mg15 {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.slider-area .carousel-inner img {
+    height: 550px !important;
+    width: 100%;
+}
+
+// .vertical-menu {
+//     background: #000;
+//     height: 550px!important;
+// }
+
+.imagesider p {
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 30px;
+    letter-spacing: 0.2px;
+    color: #555;
+}
+
+.imagesider h2 {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 38px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+	color: #e58222;
+}
+
+.footer a {
+		font-family: 'Poppins', sans-serif;
+		text-decoration: none;
+		color: #ffffff;
+    }
+
+.m-datatable__cell span {
+    margin: 0px!important;
+}
+
+// scroll bar
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px transparent; 
+    border-radius: 2px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #e2e5ec; 
+    border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #e2e5ec; 
+}
+
+// html {
+//     -ms-overflow-style: -ms-autohiding-scrollbar;
+// }
+
+* {
+    scrollbar-face-color: #DEE3E7;
+    scrollbar-highlight-color: #FFFFFF;
+    scrollbar-3dlight-color: #D1D7DC;
+    scrollbar-darkshadow-color: #98AAB1;
+    scrollbar-shadow-color: #DEE3E7;
+    scrollbar-arrow-color: #006699;
+    scrollbar-track-color: #EFEFEF;
+    }
+
+
+
+    .btn-min {
+        padding: 5px 10px!important;
+        font-size: 11px!important;
+        letter-spacing: 1px!important;
+        margin-left: 0!important;
+        margin-right: 15px;
+        margin-top: 0!important;
+    }

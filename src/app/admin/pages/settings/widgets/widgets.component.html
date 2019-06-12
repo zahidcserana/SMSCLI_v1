@@ -1,0 +1,138 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-subheader">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        Widgets
+      </h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+        <li class="m-nav__item m-nav__item--home">
+          <a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+        <li class="m-nav__separator">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+          <a class="m-nav__link">
+            <span class="m-nav__link-text">
+              Settings
+            </span>
+          </a>
+        </li>
+        <li class="m-nav__separator" style="padding-left: 10px">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+          <a class="m-nav__link">
+            <span class="m-nav__link-text">
+              Widgets
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+  <!-- END: Subheader -->
+  <div class="m-content animated fadeIn">
+    <!--<div class="m-portlet">-->
+      <!--<div class="m-portlet__body">-->
+        <!--<div class="heading-part">-->
+          <!--<div class="child-head-part">-->
+            <!--<h3>Add RentMy to your own website</h3>-->
+            <!--<small>Follow the simple steps below</small>-->
+          <!--</div>-->
+          <!--<div class="child-head-part">-->
+            <!--<img src="./assets/img/admin/widget.png" alt="">-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="m-portlet">
+          <div class="m-portlet__body">
+            <div class="body-part">
+              <h4><img src="./assets/img/admin/wp.png" alt="wp"> Setup your shop in WordPress</h4>
+              <p>Follow the simple steps below</p>
+            </div>
+            <hr>
+            <div class="body-part">
+              <h4>Install the plugin</h4>
+              <p>Go to Plugins > Add new in your Wordpress website, search for RentMy and install the plugin.</p>
+              <p>you can also do a manual install by downloading the plugin from wordpress plugin store.
+                <!--<a href="#" target="_blank"> here</a>.-->
+              </p>
+
+            </div>
+            <hr>
+            <div class="body-part">
+              <h4>Configure Wordpress</h4>
+              <p>Go to Settings > RentMy and enter this store ID.</p>
+              <code style="padding:10px;border:1px solid #ccc;">{{storeUid}}</code>
+              <br/>
+              <img src="./assets/img/admin/wp_rentmy.png" class="img-fluid" style="margin-top:30px;width:100% ;height:100%;" />
+            </div>
+            <hr>
+            <div class="body-part">
+              <h4>View featured Products</h4>
+              <code>[rentmy-products data-type=featured]</code>
+            </div>
+            <div class="body-part">
+              <h4>View specific Products</h4>
+              <code>[rentmy-products data-type=products  data-products="comma seperated product ids"]</code>
+            </div>
+            <hr>
+            <div class="body-part">
+              <h4>View Products with limit (Max 12)</h4>
+              <code>[rentmy-products data-type=featured data-limit=6]</code>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="m-portlet">
+          <div class="m-portlet__body">
+            <div class="body-part">
+              <h4>Add RentMy to your own website</h4>
+              <p>Follow the simple steps below</p>
+            </div>
+            <hr>
+            <div class="body-part">
+              <h4>Add a piece of JavaScript code</h4>
+              <p>Paste this code at the end of your website before body tag. This install the plugin on your website</p>
+              <code>{{links.pluginjs}}</code>
+              <br/>
+              <code>{{links.plugin}}</code>
+            </div>
+            <hr>
+            <div class="body-part">
+              <h4>View Featured Products</h4>
+              <code>{{links.feature}}</code>
+            </div>
+            <hr>
+            <div class="body-part">
+              <h4>View Specific Products</h4>
+              <code>{{links.specific}}</code>
+            </div>
+            <hr>
+            <div class="body-part">
+              <h4>View Products with limit (Max 12)</h4>
+              <code>{{links.limit}}</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+  

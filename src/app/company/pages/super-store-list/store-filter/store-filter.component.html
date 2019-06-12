@@ -1,0 +1,68 @@
+<div class="m-portlet m-portlet--mobile">
+  <div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+      <div class="m-portlet__head-title">
+        <h3 class="m-portlet__head-text">
+          <i class="la la-search"></i>
+          Search
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="m-portlet__body search-panel">
+    <!--begin::Form-->
+    <form class="m-form m-form--fit m-form--label-align-right second-form">
+      <div class="row">
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" type="text" placeholder="Enter Name" name="slug" [(ngModel)]="storeSearch.slug" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group m-form__group">
+            <input class="form-control m-input" type="text" placeholder="Enter Url" name="name" [(ngModel)]="storeSearch.name" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group m-form__group">
+            <select class="form-control" name="account_type" [(ngModel)]="storeSearch.account_type">
+              <option value="">-Billing Type-</option>
+              <option value="FREE">Free</option>
+              <option value="Sliver">Sliver</option>
+              <option value="Platinum">Platinum</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group m-form__group">
+            <select class="form-control" name="plan_period" [(ngModel)]="storeSearch.plan_period">
+              <option value="">-Billing Period-</option>
+              <option value="month">Monthly</option>
+              <option value="year">Yearly</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group m-form__group">
+            <select class="form-control m-input" name="status" [(ngModel)]="storeSearch.status">
+              <option value="">-Status-</option>
+              <option value="1">Active</option>
+              <option value="0">Inactive</option>	
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn m-btn--pill m-btn--air btn-brand btn-sm" (click)="searchUsers()"
+        style="margin-right:10px">
+            Search
+        </button>
+        <button type="reset" class="btn m-btn--pill m-btn--air btn-danger btn-sm"
+        (click)="resetSearch()">
+            Cancel
+        </button>
+      </div>
+    </form>
+    <!--end::Form-->
+  </div>
+</div>

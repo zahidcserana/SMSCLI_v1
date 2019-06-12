@@ -1,0 +1,19 @@
+.info-section, .feed-section{
+    padding-left:2.2rem;
+    padding-right:2.2rem;
+}
+
+.info-heading{
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid;
+}
+.info-heading a{
+    top: -6px;
+}
+
+.img-resize-tum{
+    max-width: 60px!important;
+    height: 60px!important;
+    object-fit: contain;
+}

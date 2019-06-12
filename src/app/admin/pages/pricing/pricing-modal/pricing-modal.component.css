@@ -1,0 +1,22 @@
+.feature_name{width: 20rem !important;}
+.m-pricing-table-4 .m-pricing-table-4__bottom .m-pricing-table-4__bottom-container.m-pricing-table-4__bottom-container--fixed{width: 95% !important;}
+.m-pricing-table-4 .m-pricing-table-4__top{background-color: #22B9FF !important;}
+.m-pricing-table-4 .m-pricing-table-4__top .m-pricing-table-4__top-container.m-pricing-table-4__top-container--fixed .m-pricing-table-4__top-body .m-pricing-table-4__top-items{
+    box-shadow: none;
+}
+
+
+.custom-alert {
+    position: fixed;
+    top: 20%;
+    right: 10%;
+}
+
+.preload {
+    position: fixed;
+    left: 7%;
+    top: 15%;
+    background: rgba(255,255,255,.1);
+    width: 100%;
+    height: 100%;
+}

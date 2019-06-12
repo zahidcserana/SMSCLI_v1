@@ -1,0 +1,214 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-content product-sidebar-attr" style="position:relative">
+    <h4 class="text-center" style="padding: 10px 15px;">Create Order</h4>
+  <!--begin::Portlet-->
+    <div *ngIf="loaderLoad; else LOADEPRO" class="table-load m-loader m-loader--brand" style="top: 100px!important;"></div>
+    <ng-template #LOADEPRO>
+      <h5 class="colorPurpel" style="padding: 5px 15px;">{{product?.name}}</h5>
+      <div class="m-portlet__body">
+        <form class="m-form m-form--fit m-form--label-align-right row" #form="ngForm" style="margin:0px;">
+          <div class="col-sm-6">
+            <div class="form-group m-form__group">
+              <img *ngIf="product?.images?.length==0; else alter" class="img-fluid img-avatar img-thumbnail" src="./assets/img/home/product-image-placeholder.jpg" alt="Product Image" />
+              <ng-template #alter>
+                <img class="img-fluid img-avatar img-thumbnail" src="{{imageUrl +  product?.store_id + '/' + product?.id + '/' + product?.images[0].image_large}}" alt="Product Image" />
+              </ng-template>
+            </div>
+          </div>
+          <div class="form-group m-form__group col-sm-6">
+            <div style="padding: 0px 15px;">
+              <label class="m-radio" *ngFor="let rent of productPrice.rent; let i ='index'" (click)="formateRent(rent, i)">
+                <input type="radio" [value]="i" name="rent" [(ngModel)]="rentPriceId">
+                ${{rent.price}} / {{rent.duration}} {{rent.rent_type}}
+                <span></span>
+              </label>
+            </div>
+            <div style="padding: 0px 15px;">
+              <label for="lme">
+                Amount (per item price)
+              </label>
+              <div class="form-group m-form__group">
+                <div class="input-group m-input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="table-cost-addon">
+                      $
+                    </span>
+                  </div>
+                  <input numberOnly class="form-control m-input" name="lme" [(ngModel)]="item.price"
+                    type="text" placeholder="0.00" autocomplete="off">
+                  <div class="input-group-append">
+                    <small class="input-group-text" id="table-cost-addon">
+                      USD
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="attribute col-sm-6" *ngIf ="product?.attribute_sets && product?.attribute_sets.length>0">
+            <div class="m-form__group form-group row" style="margin:0px;">
+              <div class="col-sm-6 pad-l-zero" *ngFor="let att of product.attribute_sets; let i = 'index'">
+                <div class="form-group m-form__group">
+                  <label for="size" class="colorPurpel">{{att.name}}</label>
+                  <select class="form-control m-input" id="size" name="{{att.name}}" [(ngModel)]="attributes[i]">
+                    <option *ngFor="let v of att.attributes" [value]="v.id">{{v.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="start">
+              Start Date*
+            </label>
+            <div class="form-group m-form__group">
+              <input type="text" id="start" class="form-control m-input" 
+              placeholder="mm/dd/yyyy" id="purchase-date-start" (click)="startDateChange()" autocomplete="off" readonly/>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="Reserve">
+              End Date*
+            </label>
+            <div class="form-group m-form__group">
+              <input type="text" id="Reserve" class="form-control m-input" 
+              placeholder="mm/dd/yyyy" id="purchase-date-end" autocomplete="off" readonly disabled/>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="purchage">
+              Quantity*
+            </label>
+            <div class="form-group m-form__group">
+              <div class="quantity clearfix">
+                <span class="btn btn-sm btn-dark no-m" (click)="decreaseItemQuant()">-</span>
+                <span class="cart-qunt btn btn-sm no-m">{{setReserve?.quantity}}</span>
+                <span class="btn btn-sm btn-dark  no-m" (click)="increaseItemQuant()">+</span>
+              </div>
+              <small class="colorPurpel">Quantity should be less or equal {{available}}</small>
+            </div>
+          </div>
+          <div class="price col-sm-6">
+            <h4>Price: ${{(item.price * setReserve.quantity) | number: '1.2-2'}}</h4>
+          </div>
+          <div class="form-group col-12" style="padding: 5px 0px;">
+            <h5 style="padding: 5px 15px;">Customer Information</h5>
+            <div class="row" style="padding-left: 15px;padding-right: 15px;">
+                <div class="col-sm-6">
+                <label for="fname">
+                  First Name
+                </label>
+                <div class="form-group m-form__group">
+                  <input class="form-control m-input" id="fname" type="text" autocomplete="off" placeholder="First Name"
+                  name="first_name" #fName="ngModel" [(ngModel)]="customer.first_name">
+                  <span *ngIf="fName.invalid && fName.touched">
+                    <small *ngIf="fName.errors.required" class="error">First name required</small>
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label for="lname">
+                  Last Name
+                </label>
+                <div class="form-group m-form__group">
+                  <input class="form-control m-input" id="lname" type="text" autocomplete="off" placeholder="Last Name" 
+                  name="last_name" [(ngModel)]="customer.last_name">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label for="phone">
+                  Phone
+                </label>
+                <div class="form-group m-form__group">
+                    <input numberOnly class="form-control m-input" id="phone" type="text" autocomplete="off" placeholder="Phone" 
+                    name="phone" #phone="ngModel" [(ngModel)]="customer.phone">
+                    <span *ngIf="phone.invalid && phone.touched">
+                        <small *ngIf="phone.errors.required" class="error">Phone required</small>
+                    </span>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label for="mobile">
+                  Mobile
+                </label>
+                <div class="form-group m-form__group">
+                  <input numberOnly class="form-control m-input" id="mobile" type="text" autocomplete="off" placeholder="Mobile" 
+                  name="mobile" [(ngModel)]="customer.mobile">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label for="emil">
+                  Email
+                </label>
+                <div class="form-group m-form__group">
+                    <input class="form-control m-input" id="emil" type="text" autocomplete="off" placeholder="Email" 
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                    name="email" #email="ngModel" [(ngModel)]="customer.email">
+                    <span *ngIf="email.invalid && email.touched">
+                        <small *ngIf="email.errors.required" class="error">Email required</small>
+                        <small *ngIf="email.errors.pattern" class="error">Please enter correct email</small>
+                    </span>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label for="address">
+                  Address
+                </label>
+                <div class="form-group m-form__group">
+                    <input class="form-control m-input" id="address" type="text" autocomplete="off" placeholder="Address"
+                    name="address_line1" #address="ngModel" [(ngModel)]="customer.address_line1">
+                    <span *ngIf="address.invalid && address.touched">
+                        <small *ngIf="address.errors.required" class="error">Address required</small>
+                    </span>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label for="city">
+                  City
+                </label>
+                <div class="form-group m-form__group">
+                  <input class="form-control m-input" id="city" type="text" autocomplete="off" placeholder="City" 
+                  name="city" [(ngModel)]="customer.city">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label for="state">
+                  State
+                </label>
+                <div class="form-group m-form__group">
+                  <input class="form-control m-input" id="state" type="text" autocomplete="off" placeholder="State" 
+                  name="state_id" [(ngModel)]="customer.state_id">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label for="zip">
+                  Zip Code
+                </label>
+                <div class="form-group m-form__group">
+                  <input class="form-control m-input" id="zip" type="text" autocomplete="off" placeholder="Zip Code" 
+                  name="zipcode" [(ngModel)]="customer.zipcode">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label for="country">
+                  Country
+                </label>
+                <div class="form-group m-form__group">
+                  <input class="form-control m-input" id="country" type="text" autocomplete="off" placeholder="Country" 
+                  name="country_id" [(ngModel)]="customer.country_id">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group m-form__group col-sm-12" style="padding-top:15px;padding-left:15px;">
+            <div *ngIf="loader; else button" class="m-loader m-loader--brand" 
+              style="width: 30px; display: inline-block;"></div>
+            <ng-template #button>
+              <button class="btn btn-brand" [disabled]="available == 0 || item?.quantity == 0" (click)="addOrder()">Submit</button>
+            </ng-template>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+</div>

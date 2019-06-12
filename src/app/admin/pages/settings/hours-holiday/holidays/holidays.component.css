@@ -1,0 +1,15 @@
+.table th, .table td {
+    border: 0px!important;
+}
+
+.table thead tr {
+    background-color: transparent!important;
+    border-bottom: 1px solid #e7ecf1!important;
+}
+
+.custom-alert{
+    position: fixed;
+    top: 90px;
+    right: 30px;
+    z-index: 5000;
+}

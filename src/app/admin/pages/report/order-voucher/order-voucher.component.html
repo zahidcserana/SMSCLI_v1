@@ -1,0 +1,123 @@
+<div class="custom-alert" #hasAlert></div>
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title m-subheader__title--separator">
+				Transaction History
+			</h3>
+			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+				<li class="m-nav__item m-nav__item--home">
+					<a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+						<i class="m-nav__link-icon la la-home"></i>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					<i class="fa fa-angle-right"></i>
+        </li>
+        <li class="m-nav__item">
+					<a class="m-nav__link">
+						<span class="m-nav__link-text">
+							Reports 
+						</span>
+					</a>
+        </li>
+        <li class="m-nav__separator" style="padding-left: 10px">
+					<i class="fa fa-angle-right"></i>
+        </li>
+				<li class="m-nav__item">
+					<a class="m-nav__link">
+						<span class="m-nav__link-text">
+							Transaction History 
+						</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content product-list animated fadeIn">
+	<!--begin::Portlet-->
+	<voucher-filter (loadList)="filterList($event)"></voucher-filter>
+	<!--end::Portlet-->
+	<!--begin::Portlet-->
+	<div class="m-portlet m-portlet--mobile">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						Transaction History
+					</h3>
+				</div>
+			</div>
+    </div>
+
+      <div class="m-portlet__body" style="position: relative;">
+        <!--begin: Datatable -->
+        <!--begin::Section-->
+          <div class="m-section">
+            <div class="m-section__content price-table">
+              <div *ngIf="loader" class="table-load m-loader m-loader--brand"></div>
+                <div class="table-responsive" style="margin-bottom: 10px;">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>
+                          Order
+                        </th>
+                        <th>
+                          Customer Name
+                        </th>
+                        <th>
+                          Transaction ID
+                        </th>
+                        <th>
+                          Transaction Status
+                        </th>
+                        <th>
+                          Transaction Date
+                        </th>
+                        <th>
+                          Transaction Amount
+                        </th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="transactions.length<1; else table">
+                      <tr *ngIf="!loader"><td colspan="7"><h4 class="text-center">No Transaction Found</h4></td></tr>
+                    </tbody>
+                    <ng-template #table>
+                      <tbody>
+                        <tr *ngFor="let tran of transactions; let o='odd'; let e='even'; trackBy: trackTransaction" [ngClass]="{'odd-tr':o, 'even-tr':e}">
+                          <th (click)="detailtransaction(tran)" title="View Items" style="cursor: pointer;">{{tran?.order_id}}</th>
+                          <td>{{tran?.order?.first_name}} {{tran?.order?.last_name}}</td>
+                          <td>{{tran?.transaction_id == 0 ? '' : tran.transaction_id}}</td>
+                          <td>{{tran?.payment_method}}</td>
+                          <td>{{getDate(tran.created) | date:'MM/dd/yyyy, hh:mm a'}}</td>
+                          <td>{{tran.payment_amount? '$ ' + (tran.payment_amount | number: '1.2-2') : ''}}</td>
+                          <td>
+                            <a routerLink="{{'/admin/reservations/' + tran.order_id + '/details'}}" class="m-portlet__nav-link btn m-btn m-btn--hover-dark m-btn--icon m-btn--icon-only m-btn--pill" title="View Order">
+                              <i class="fa fa-eye"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </ng-template>
+                  </table>
+                </div>
+              <!-- pagination Start-->
+              <boot-pagination [totalSize]="pagi.total" [page]="pagi.page" [pagelimit]="pagi.limit" [listSize]="pagi.limit" (pageChange)="reloadTable($event)"></boot-pagination>
+              <!-- pagination End-->
+            </div>
+          </div>
+          <!--end::Section-->
+        <!--end: Datatable -->
+      </div>
+      
+	</div>
+		<!--end::Portlet-->
+</div>
+
+
+

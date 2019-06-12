@@ -1,0 +1,8 @@
+<ng-container *ngIf="products && products.length > 0">
+  <h3 >Related Product</h3>
+  <div class="row mt-4">
+    <div class="col-xl-3 col-lg-4 col-md-4 col-sm-4 col-6" *ngFor="let product of products">
+        <single-product-item [product]="product"></single-product-item>
+    </div>
+  </div>
+</ng-container>

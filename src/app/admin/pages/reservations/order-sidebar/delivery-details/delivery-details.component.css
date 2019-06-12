@@ -1,0 +1,13 @@
+tbody tr td, tbody tr th {
+    border: none!important;
+}
+
+tbody tr td {
+    min-width: 150px!important;
+}
+
+tbody tr th {
+    text-align: right!important;
+    width: 220px!important;
+}
+

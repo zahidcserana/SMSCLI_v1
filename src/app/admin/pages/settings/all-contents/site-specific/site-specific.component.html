@@ -1,0 +1,36 @@
+<div class="custom-alert" #hasCusAlert></div>
+<form [formGroup]="textForm" (ngSubmit)="save()" *ngIf="formArray.length > 0" class="">
+    <ng-container *ngFor="let f of formArray">
+        <div class="row">
+            <div class="col-md-3">
+                <h5>{{f.label}}</h5>
+            </div>
+            <div class="col-md-9">
+                <div class="row" [formArrayName]="f.group">
+                    <div class="col-md-6" *ngFor="let c of f.contorls">
+                        <div class="form-group">
+                            <label>{{c.label}}</label>
+                            <input class="form-control m-input" [attr.name]="c.name" [formControlName]="c.name"
+                                   autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>&nbsp;</div>
+        <hr />
+    </ng-container>
+    <div class="m-portlet__foot m-portlet__foot--fit">
+        <div class="m-form__actions m-form__actions" style="padding: 30px 0px;">
+            <div class="m-loader m-loader--brand" *ngIf="loader; else btnSubmit"
+                 style="width: 30px; padding-left: 30px; display: inline-block;"></div>
+            <ng-template #btnSubmit>
+                <button type="submit" class="btn btn-brand">
+                    <i class="fa fa-save"></i>
+                    <span style="padding-left:10px;">Submit</span>
+                </button>
+            </ng-template>
+        </div>
+    </div>
+
+</form>

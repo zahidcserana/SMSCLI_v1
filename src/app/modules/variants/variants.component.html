@@ -1,0 +1,25 @@
+<div>
+  <div class="main-div" *ngFor="let v of iteration; let i=index">
+    <div class="row" style="flex:9">
+      <div class="col-md-6">
+        <select2-add-option [data]="allVariants[i]" [prop]="'name'" [domId]="'variant-' + v.id" [placeholder]="'Variant'" [url]="'variants'"
+          (changeValue)="changedVariant($event, i)"></select2-add-option>
+      </div>
+      <!-- <div class="col-md-8">
+        <ng-container *ngIf="v.set_id">
+            <select2-add-option [multi]="true" [data]="findAttribute(v)" [domId]="'variant-set-' + v.id" [prop]="'name'" [url]="'variants/'+'man.id'+'/value'"
+            [placeholder]="'Variant Value'" (changeValue)="changedVariantValue($event, i)"></select2-add-option>
+        </ng-container>
+      </div> -->
+    </div>
+    <div class="text-right" style="flex:1">
+      <button *ngIf="i" title="Archive Product" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+        (click)="deleteVariants(i)">
+        <i class="fa fa-trash"></i>
+      </button>
+    </div>
+  </div>
+  <div style="margin-top: 20px;">
+    <button *ngIf="iteration.length < 4" type="button" class="btn btn-sm btn-secondary" (click)="addAnother()">Add Another</button>
+  </div>
+</div>

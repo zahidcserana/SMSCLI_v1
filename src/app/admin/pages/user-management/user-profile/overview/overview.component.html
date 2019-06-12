@@ -1,0 +1,139 @@
+<!-- <div class="m-section card-section animated fadeIn">
+  <div class="m-section__content">
+    <div class="row user-card">
+        <div class="col-xl-3 col-md-6 col-sm-6">
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>{{cards?.order}}</h3>
+
+              <p>Orders</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-ship"></i>
+            </div>
+            <a routerLink="./" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6 col-sm-6">
+          
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>{{cards?.cartItem}}</h3>
+
+              <p>Cart Items</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-shopping-cart"></i>
+            </div>
+            <a routerLink="./" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+       
+        <div class="col-xl-3 col-md-6 col-sm-6">
+          
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>{{cards?.comment}}</h3>
+
+              <p>Comments</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-comments"></i>
+            </div>
+            <a routerLink="./" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+       
+        <div class="col-xl-3 col-md-6 col-sm-6">
+          
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3>{{cards?.rating}}</h3>
+
+              <p>Ratings</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-star"></i>
+            </div>
+            <a routerLink="./" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+       
+      </div>
+  </div>
+</div> -->
+
+  <div class="m-section card-section info-section animated fadeIn">
+    <div class="m-section__content">
+      <h4 class="colorPurpel info-heading">Personal Info
+        <button (click)="goToPersonalInfo()"
+          class="btn btn-secondary m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air float-right">
+          <i class="la la-edit"></i>
+      </button>
+      </h4>
+      <div class="row">
+        <p class="col-md-6">
+          <strong>Name: </strong> {{user_info?.first_name}} {{user_info?.last_name}}
+        </p>
+        <p class="col-md-6">
+          <strong>Email: </strong> {{user_info?.email}}
+        </p>
+      </div>
+      <div class="row">
+        <p class="col-md-6">
+          <strong>User Type: </strong> {{findUserType(user_info?.user_type_id)}}
+        </p>
+        <p class="col-md-6">
+          <strong>Phone: </strong> {{user_info?.phone}}
+        </p>
+      </div>
+      <div class="row">
+        <p class="col-md-6">
+          <strong>Mobile: </strong> {{user_info?.mobile}}
+        </p>
+        <p class="col-md-6">
+          <strong>Status: </strong> {{checkStatus(user_info?.status)}}
+        </p>
+      </div>
+
+      <p>
+        <strong>Bio: </strong> {{getText(user_info.about)}}
+      </p>
+    </div>
+  </div>
+    
+		
+<!-- <div class="m-section feed-section animated fadeIn">
+  <div class="m-section__content">
+    <h4 class="colorPurpel info-heading">Feeds</h4>
+    <div class="table-responsive">
+      <table class="table">
+				<thead>
+				  <tr>
+            <th>#</th>
+            <th>Type Action</th>
+            <th>Content ID</th>
+            <th>IP</th>
+            <th>OS</th>
+            <th>Browser</th>
+            <th>Device</th>
+            <th>Date</th>
+          </tr>
+				</thead>
+				<tbody>
+          <tr *ngFor="let fd of feeds; let o='odd'; let e='even'" [ngClass]="{'odd-tr':o, 'even-tr':e}">
+            <td>{{fd.id}}</td>
+            <td>{{fd.type_action}}</td>
+            <td>{{fd.content_id}}</td>
+            <td>{{fd.ip}}</td>
+            <td>{{fd.os}}</td>
+            <td>{{fd.browser}}</td>
+            <td>{{fd.device}}</td>
+            <td>{{fd.date}}</td>
+          </tr>
+				</tbody>
+			</table>
+    </div>
+  </div>
+</div> -->

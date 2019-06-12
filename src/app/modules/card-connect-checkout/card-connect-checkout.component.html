@@ -1,0 +1,44 @@
+<div id="accordion">
+  <div class="card">
+    <div id="collapseOne" class="collapse show">
+      <form (ngSubmit)="submitCardConnect(form)" #form="ngForm">
+        <div class="form-group mb-3" id="cardnumber">
+          <label for="card-number">{{ contents?.site_specific?.checkout_payment?.lbl_card_number}}</label>
+          <div class="iFram">      
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <label for="name-on-number">{{ contents?.site_specific?.checkout_payment?.lbl_name}}</label>
+          <input id="cardName" type="text" name="cardHolderName" ngModel required placeholder="Name on Card " class="form-control">
+        </div>
+        <div class="row mb-3">
+          <label for="" class="col-md-12">{{ contents?.site_specific?.checkout_payment?.lbl_expiration_data}}</label>
+          <div class="form-group col-md-6 ">
+            <select (change)="selectExpireMonth($event)" class="form-control">
+              <option [value]="month.value" *ngFor="let month of months">{{month.text}}</option>
+
+            </select>
+          </div>
+          <div class="form-group col-md-6 ">
+            <select id="EventXCardYear" (change)="selectExpireYear($event)" class="form-control">
+              <option [value]="year.value" *ngFor="let year of years">{{year.text}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <label for="cvv_number">{{ contents?.site_specific?.checkout_payment?.lbl_cvv}}</label>
+          <input maxlength="3" numberOnly name="cvcNo" required #ca="ngModel" [(ngModel)]="cvcNo" (ngModelChange)="checkCVC()" type="text"
+            placeholder="CVV Number " class="form-control">
+        </div>
+
+        <div class="row justify-content-center mt-5 mb-5 " style="position: relative;">
+          <div *ngIf="loader; else buttonShow" class="m-loader" [ngClass]="loaderColor" style="width: 30px;display: inline-block;"></div>
+          <ng-template #buttonShow>
+            <button [disabled]="!form.valid || cvcNo.length<3 || !token" class="btn col-md-4 theme-btn" [ngClass]="btnColor">{{ contents?.site_specific?.checkout_payment?.btn_continue}}</button>
+          </ng-template>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+</div>

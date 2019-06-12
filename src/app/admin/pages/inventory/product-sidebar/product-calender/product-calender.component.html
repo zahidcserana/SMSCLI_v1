@@ -1,0 +1,17 @@
+<div class="m-content">
+    <div class="m-portlet__body">
+        <h5 class="colorPurpel" *ngIf="!unassign" style="padding: 5px 0px;">Selected Variant:</h5>
+        <div class="m-portlet__body add-image" style="padding-bottom: 20px;" *ngIf="!unassign">
+            <div class="row">
+            <div class="col-sm-6">
+                <select class="form-control m-input" name="attribute" [(ngModel)]="variants_products_id" (change)="attributeChange()">
+                <option *ngFor="let a of attributeList" [value]="a.id">
+                    {{a.chain}}
+                </option>
+                </select>
+            </div>
+            </div>
+        </div>
+        <div id="m_calendar"></div>
+    </div>
+</div>  

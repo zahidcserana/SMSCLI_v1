@@ -1,0 +1,79 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="row" *ngIf="product">
+  <div class="card mb-10">
+    <div class="card-body store-body">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-12 product-info">
+        <div class="product-gallery" style="padding: 15px 0px;">
+          <div class="product-gallery-thumbnails">
+            <ol class="thumbnails-list list-unstyled" *ngIf="images.length > 0">
+              <li *ngFor="let img of images; let i='index'" (click)="changeFeatureImage(i)">
+                <img [src]="img.sm_feature" onError="this.src='./assets/img/home/product-image-placeholder.jpg';" class="img-fluid" style="height: 70px; object-fit:contain;">
+              </li>
+            </ol>
+          </div>
+          <div class="product-gallery-featured" *ngIf="images.length > 0; else defaultIMG">
+            <img [src]="featureImage" onError="this.src='./assets/img/home/product-image-placeholder.jpg';" alt="">
+          </div>
+          <ng-template #defaultIMG>
+            <div class="product-gallery-featured">
+              <img [src]="defaultImage" onError="this.src='./assets/img/home/product-image-placeholder.jpg';" alt="">
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-12 product-payment-details">
+        <h2 class="product-title mb-2 mt-3">{{details.name}}</h2>
+        <h2 class="product-price display-4 mt-2 mb-3">$ {{total.price | number:'1.2-2'}}</h2>
+
+        <div class="mr-t">
+          <div *ngIf="prices.buy.type" style="margin-right: 20px; display: inline-block">
+            <input type="radio" name="basePrice" [value]="1" [(ngModel)]="baseRadio"> <label (click)="changeBuyRent('buy')">Buy</label>
+          </div>
+          <div *ngIf="prices.rent.type" style="display: inline-block">
+            <input type="radio" name="basePrice" [value]="2" [(ngModel)]="baseRadio"> <label (click)="changeBuyRent('rent')">Rent</label>
+          </div>
+        </div>
+  
+        <div class="mr-t" *ngIf="baseRadio == 2">
+            <div style="margin-bottom:10px;" *ngFor="let p of prices.rent.price">
+              <input id="radio-rent-price" type="radio" name="rental-price" [value]="p.id" [(ngModel)]="rentelPriceId">
+              <label (click)="changeRent(p.id)">$ {{p?.price}} / {{p?.duration}} {{getType(p.type, p?.duration)}}</label>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-6 select-variant" *ngFor="let vs of details.variant_set_list; let i=index" style="margin-bottom: 0px;">
+            <ng-container *ngIf="vs.id!==1 && vs.name!=='Unassigned'">
+              <label *ngIf="vs.variants.length>0" class="mr-t">{{vs.name}} <span style="color: red">*</span></label>
+              <select *ngIf="vs.variants.length>0" class="form-control mb-3 variant-chain-select" #selectValue (change)="changeVariant(i, selectValue.value)">
+                <option *ngFor="let vv of vs.variants" [value]="vv.id">{{vv.name}}</option>
+              </select>
+            </ng-container>
+          </div>
+        </div>
+        
+        <div class="form-group" *ngIf="baseRadio == 2">
+          <label for="">{{ contents.site_specific.product_details.start_date}}</label>
+          <app-date-picker [placeholder]="'YYYY-MM-DD'" [init]="baseRadio == 2" (onSelectedDate)="SelectRentalDate($event)" ></app-date-picker>
+        </div>
+
+        <div class="mr-t">
+          <label for="quant">{{contents.site_specific.product_details.quantity}}</label>
+          <div class="qtyBtn">
+            <button class="btn btn-success theme-btn" (click)="decreaseQty()"> - </button>
+            <button class="btn btn-light">{{total.qty}}</button>
+            <button class="btn btn-success theme-btn" (click)="increaseQty()"> + </button>
+          </div>
+          <small class="info">{{contents.site_specific.product_details.available}}: {{available}}</small>
+        </div>
+
+        <div class="mr-t">
+          <button (click)="addTocart()" [disabled]="!total.qty || !available || (!prices.buy.type && !prices.rent.type)" class="button theme-btn view-cart-btn">{{contents.site_specific.product_details.add_to_cart}}</button>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

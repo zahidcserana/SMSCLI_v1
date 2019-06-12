@@ -1,0 +1,253 @@
+<div class="custom-alert" #hasCusAlert></div>
+<div class="animated fadeIn">
+    <h4 class="colorPurpel">
+        Customer Information
+    </h4>
+    <div class="m-portlet__body form-panel">
+      <div *ngIf="!edit" style="padding-bottom: 20px;">
+          <label class="colorPurpel">
+            Select Existing Customer
+          </label>
+          <div class="row">
+            <select2-ajax class="col-8" [cache]="true" [placeholder]="'Select One'" [url]="url"
+              [prop]="'name'" [minword]="1" (changeValue)="changeValue($event)"></select2-ajax>
+            <div class="col-4">
+              <div *ngIf="loader_sub" class="m-loader m-loader--brand"
+                style="width: 30px; display: inline-block;"></div>
+            </div>
+          </div>
+      </div>
+      <!--begin::Form-->
+      <form class="m-form m-form--fit m-form--label-align-right" 
+        #form="ngForm">
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="fname" class="colorPurpel">
+              First Name
+            </label>
+            <div class="form-group m-form__group">
+              <input class="form-control m-input" id="fname" type="text" autocomplete="off" placeholder="First Name"
+               name="first_name" #fName="ngModel" [(ngModel)]="customer.first_name">
+               <span *ngIf="fName.invalid && fName.touched">
+                <small *ngIf="fName.errors.required" class="error">First name required</small>
+               </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="lname" class="colorPurpel">
+              Last Name
+            </label>
+            <div class="form-group m-form__group">
+              <input class="form-control m-input" id="lname" type="text" autocomplete="off" placeholder="Last Name" 
+              name="last_name" [(ngModel)]="customer.last_name">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="phone" class="colorPurpel">
+              Phone
+            </label>
+            <div class="form-group m-form__group">
+                <input numberOnly class="form-control m-input" id="phone" type="text" autocomplete="off" placeholder="Phone" 
+                name="phone" #phone="ngModel" [(ngModel)]="customer.phone">
+                <span *ngIf="phone.invalid && phone.touched">
+                    <small *ngIf="phone.errors.required" class="error">Phone required</small>
+                </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="mobile" class="colorPurpel">
+              Mobile
+            </label>
+            <div class="form-group m-form__group">
+              <input numberOnly class="form-control m-input" id="mobile" type="text" autocomplete="off" placeholder="Mobile" 
+              name="mobile" [(ngModel)]="customer.mobile">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="emil" class="colorPurpel">
+              Email
+            </label>
+            <div class="form-group m-form__group">
+                <input class="form-control m-input" id="emil" type="text" autocomplete="off" placeholder="Email" 
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}$"
+                name="email" #email="ngModel" [(ngModel)]="customer.email">
+                <span *ngIf="email.invalid && email.touched">
+                    <small *ngIf="email.errors.required" class="error">Email required</small>
+                    <small *ngIf="email.errors.pattern" class="error">Please enter correct email</small>
+                </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="address" class="colorPurpel">
+              Address
+            </label>
+            <div class="form-group m-form__group">
+                <input class="form-control m-input" id="address" type="text" autocomplete="off" placeholder="Address"
+                name="address_line1" #address="ngModel" [(ngModel)]="customer.address_line1">
+                <span *ngIf="address.invalid && address.touched">
+                    <small *ngIf="address.errors.required" class="error">Address required</small>
+                </span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="city" class="colorPurpel">
+              City
+            </label>
+            <div class="form-group m-form__group">
+              <input class="form-control m-input" id="city" type="text" autocomplete="off" placeholder="City" 
+              name="city" [(ngModel)]="customer.city">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="state" class="colorPurpel">
+              State
+            </label>
+            <div class="form-group m-form__group">
+              <input class="form-control m-input" id="state" type="text" autocomplete="off" placeholder="State" 
+              name="state_id" [(ngModel)]="customer.state_id">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="zip" class="colorPurpel">
+              Zip Code
+            </label>
+            <div class="form-group m-form__group">
+              <input class="form-control m-input" id="zip" type="text" autocomplete="off" placeholder="Zip Code" 
+              name="zipcode" [(ngModel)]="customer.zipcode">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="country" class="colorPurpel">
+              Country
+            </label>
+            <div class="form-group m-form__group">
+              <input class="form-control m-input" id="country" type="text" autocomplete="off" placeholder="Country" 
+              name="country_id" [(ngModel)]="customer.country_id">
+            </div>
+          </div>
+        </div>
+
+        <h4 class="colorPurpel" *ngIf="shiping" style="padding: 10px 0px;">
+          Shipping Address
+        </h4>
+        <div class="row" *ngIf="shiping">
+          <div class="col-sm-6">
+            <label for="Shfname" class="colorPurpel">
+              First Name*
+            </label>
+            <div class="form-group m-form__group">
+              <input class="form-control m-input" id="Shfname" type="text" autocomplete="off" placeholder="First Name"
+               name="Shfirst_name" #ShfName="ngModel" [(ngModel)]="customer.shipping_first_name" required>
+               <span *ngIf="ShfName.invalid && ShfName.touched">
+                <small *ngIf="ShfName.errors.required" class="error">First Name is Required</small>
+               </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="Shlname" class="colorPurpel">
+              Last Name<span *ngIf="shiping">*</span>
+            </label>
+            <div class="form-group m-form__group">
+              <input class="form-control m-input" id="Shlname" type="text" autocomplete="off" placeholder="Last Name" 
+              name="Shlast_name" #ShlaName="ngModel" [(ngModel)]="customer.shipping_last_name" [required]="shiping">
+              <span *ngIf="ShlaName.invalid && ShlaName.touched">
+                <small *ngIf="ShlaName.errors.required" class="error">Last Name is Required</small>
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="Shmobile" class="colorPurpel">
+                Mobile number<span *ngIf="shiping">*</span>
+            </label>
+            <div class="form-group m-form__group">
+              <input numberOnly class="form-control m-input" id="Shmobile" type="text" autocomplete="off" placeholder="Mobile number" 
+              name="Shmobile" #Shmobile="ngModel" [(ngModel)]="customer.shipping_mobile" [required]="shiping">
+              <span *ngIf="Shmobile.invalid && Shmobile.touched">
+                <small *ngIf="Shmobile.errors.required" class="error">Mobile number is Required</small>
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="Shaddress1" class="colorPurpel">
+              Address Line 1*
+            </label>
+            <div class="form-group m-form__group">
+              <input class="form-control m-input" id="Shaddress1" type="text" autocomplete="off" placeholder="Address" 
+                name="Shaddress1" #Shaddress1="ngModel" [(ngModel)]="customer.shipping_address1" required>
+              <span *ngIf="Shaddress1.invalid && Shaddress1.touched">
+                <small *ngIf="Shaddress1.errors.required" class="error">Address is Required</small>
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="Shaddress2" class="colorPurpel">
+              Address Line 2
+            </label>
+            <div class="form-group m-form__group">
+              <input class="form-control m-input" id="Shaddress2" type="text" autocomplete="off" placeholder="Address" 
+                name="Shaddress2" #Shaddress2="ngModel" [(ngModel)]="customer.shipping_address2">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="Shcity" class="colorPurpel">
+              City*
+            </label>
+            <div class="form-group m-form__group">
+              <input class="form-control m-input" id="Shcity" type="text" autocomplete="off" placeholder="City" 
+              name="Shcity" #Shcity="ngModel" [(ngModel)]="customer.shipping_city" required>
+              <span *ngIf="Shcity.invalid && Shcity.touched">
+                <small *ngIf="Shcity.errors.required" class="error">City is Required</small>
+              </span>
+            </div>
+          </div>
+          <!-- <div class="col-sm-6">
+            <label for="Shstate" class="colorPurpel">
+              State
+            </label>
+            <div class="form-group m-form__group">
+              <input class="form-control m-input" id="Shstate" type="text" autocomplete="off" placeholder="State" 
+              name="Shstate" #Shstate="ngModel" [(ngModel)]="customer.shipping_state">
+              <span *ngIf="Shstate.invalid && Shstate.touched">
+                <small *ngIf="Shstate.errors.required" class="error">State is Required</small>
+              </span>
+            </div>
+          </div> -->
+          <div class="col-sm-6">
+            <label for="Shzipcode" class="colorPurpel">
+              Zip Code*
+            </label>
+            <div class="form-group m-form__group">
+              <input class="form-control m-input" id="Shzipcode" type="text" autocomplete="off" placeholder="Zip Code" 
+              name="Shzipcode" #Shzipcode="ngModel" [(ngModel)]="customer.shipping_zipcode" required>
+              <span *ngIf="Shzipcode.invalid && Shzipcode.touched">
+                <small *ngIf="Shzipcode.errors.required" class="error">Zip Code is Required</small>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding-top: 10px;">
+            <div *ngIf="loader; else addCus" class="m-loader m-loader--brand"
+                style="width: 30px; display: inline-block;"></div>
+            <ng-template #addCus>
+                <button *ngIf="edit; else add" type="submit" [disabled]="!form.form.valid" (click)="updateCustomer()" class="btn btn-brand">Update</button>
+                <ng-template #add>
+                  <button type="submit" [disabled]="!form.form.valid" (click)="submitCustomer(form)" class="btn btn-brand">Submit</button>
+                  <button type="button" class="btn btn-danger" (click)="resetCustomer()" style="margin-left: 5px;">Reset</button>
+                </ng-template>
+            </ng-template>
+        </div>
+      </form>
+      <!--end::Form-->
+    </div>
+  </div>
+    
+

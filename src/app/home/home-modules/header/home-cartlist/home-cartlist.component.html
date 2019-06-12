@@ -1,0 +1,22 @@
+<div class="cart-body">
+  <span class="top-arrow"><i class="fa fa-caret-up"></i></span>
+  <div class="inner-cart-body">
+    <div class="cart-list" *ngFor="let cart of cartItems">
+      <img onError="this.src='./assets/img/home/product-image-placeholder.jpg';" *ngIf="cart.product.images.length && cart.product.images[0].image_small!='' ; else placeholder"
+      src="{{img_url}}{{cart.store_id}}/{{cart.product.id}}/{{cart.product.images[0].image_small}}">
+    <ng-template #placeholder>
+      <img class="transition" src="./assets/img/home/product-image-placeholder.jpg" />
+    </ng-template>
+      <div class="cart-name-price">
+        <h4>{{cart.product.name}} <a (click)="removeCart(cart)"><i class="fa fa-trash"></i></a></h4>
+        <span>${{cart.price | number: '1.2-2'}} * {{cart.quantity}}</span>
+      </div>
+    </div>
+
+    <div class="carthome-total w-100">
+      <h5> {{ contents.site_specific.others ? contents.site_specific.others.lbl_cart_total : 'Total'}} <span>${{ total | number:'1.2-2' }}</span></h5>
+      <a (click)="navigateToCart()" class="button lbtn-50 theme-btn lbtn-xs radius">  {{contents.site_specific.others ? contents.site_specific.others.btn_view_cart : 'View Cart'}}</a>
+      <a routerLink="/checkout" class="button lbtn-50 theme-btn lbtn-xs radius"> {{contents.site_specific.others ? contents.site_specific.others.btn_checkout : 'Checkout'}}</a>
+    </div>
+  </div>
+</div>

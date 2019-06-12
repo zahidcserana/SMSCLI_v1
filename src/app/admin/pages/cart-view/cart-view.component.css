@@ -1,0 +1,33 @@
+.cart-sidebar{
+    position: absolute;
+    top: 1px;
+    background: white;
+    padding-top: 20px;
+    padding-right:20px;
+    border-bottom: 1px solid #ebedf2;
+    z-index: 9;
+    /* width:90.5%; */
+}
+
+.pointer-none {
+    pointer-events: none;
+    cursor: no-drop;
+}
+
+.upper-btns{
+    text-align: right;
+    cursor: pointer;
+}
+
+.navbar-fixed {
+    position: fixed;
+    top: 0;
+  }
+
+
+@media screen and (max-width: 992px) {
+    .upper-btns {
+        text-align: left;
+        padding-bottom: 15px;
+    }
+}

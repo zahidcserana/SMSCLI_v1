@@ -1,0 +1,24 @@
+<ng-container>
+  <div class="main-container-box">
+    <div class="dropdown-container-box">
+      <div class="dropdown">
+        <button class="dropbtn" (click)="searchInput.value=''; onDropDownClick()"><img class="dropbtn-part" [src]="'./assets/img/admin/flags/' + selectedFlag?.img"
+            [alt]="selectedFlag?.code"></button>
+        <div #flagDropdown class="dropdown-content">
+          <input type="text" autocomplete="off" class="search-form-control" name="search" ngModel #searchInput
+            (ngModelChange)="search(searchInput.value)">
+          <span *ngFor="let f of flags" (click)=" onFlageSelect(f)"><img [src]="'./assets/img/admin/flags/' + f?.img"
+              [alt]="f.code">{{f.name}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="dail-code-box">
+      <span class="dial-code">{{selectedFlag.dial_code}}</span>
+    </div>
+    <div class="input-container-box">
+      <input type="text" autocomplete="off" class="custom-form-control" name="number" ngModel #numberInput (blur)="check(numberInput.value)"
+        phoneNumberOnly maxlength="10" (ngModelChange)="onNumberPress(numberInput.value)">
+    </div>
+  </div>
+  <small class="custom-form-control-error" *ngIf="invalid">Please Enter Valid Number</small>
+</ng-container>

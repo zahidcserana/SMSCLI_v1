@@ -1,0 +1,111 @@
+<div class="custom-alert" #hasCusAlert></div>
+
+<div class="m-content product-sidebar-description">
+  <!--begin::Portlet-->
+  <div>
+    <form class="m-form m-form--fit m-form--label-align-right" #form="ngForm" (ngSubmit)="upadteProduct()">
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="title">
+            Name*
+          </label>
+          <input type="text" class="form-control m-input" placeholder="Title" id="title" name="name" [(ngModel)]="product.name"
+                 required autocomplete="off">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="title">
+            Mobile*
+          </label>
+          <input type="text" class="form-control m-input" placeholder="Mobile" id="mobile" name="mobile" [(ngModel)]="product.mobile"
+                 required autocomplete="off">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="title">
+            SID
+          </label>
+          <input type="text" class="form-control m-input" placeholder="SID" id="sid" name="sid" [(ngModel)]="product.sid"
+                  autocomplete="off" readonly>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="title">
+            Roll
+          </label>
+          <input type="text" class="form-control m-input" placeholder="Roll" id="class_roll" name="class_roll" [(ngModel)]="product.class_roll"
+                  autocomplete="off">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="Class">
+            Class
+          </label>
+          <select2-add-option [data]="classes" [prop]="'name'" [url]="'classes'" [domId]="'classes'"
+                              [placeholder]="'Class'" [edit]="true" [value]="product.class_id" (changeValue)="changed($event)"></select2-add-option>
+          <input type="hidden" name="student_class" [(ngModel)]="product.class_id" required/>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="Section">
+            Section
+          </label>
+          <select2-add-option [data]="sections" [prop]="'name'"  [parent]="product.class_id" [url]="'sections'" [domId]="'sections'"
+                              [placeholder]="'Section'" [edit]="true" [value]="product.section_id" (changeValue)="sectionChanged($event)"></select2-add-option>
+          <input type="hidden" name="student_section" [(ngModel)]="product.section_id" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="addrress"> Address </label>
+        <input type="text" class="form-control m-input" placeholder="Address" id="address" name="address" [(ngModel)]="product.address" required autocomplete="off">
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="Email">
+            Email
+          </label>
+          <input type="text" class="form-control m-input" placeholder="Email" id="email" name="email" [(ngModel)]="product.email"
+                  autocomplete="off">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="title">
+            Batch
+          </label>
+          <input type="text" class="form-control m-input" placeholder="Batch" id="batch" name="batch" [(ngModel)]="product.batch"
+                  autocomplete="off">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="Status">
+            Status
+          </label>
+          <select class="form-control m-input" [(ngModel)]="product.status" name="status">
+            <option value="1">Active</option>
+            <option value="2">Inactive</option>
+            <option value="3">Suspend</option>
+            <option value="4">Deleted</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="Phone">
+            Phone
+          </label>
+          <input type="text" class="form-control m-input" placeholder="Phone" id="phone" name="phone" [(ngModel)]="product.phone"
+                  autocomplete="off">
+        </div>
+      </div>
+
+      <div class="form-group col-12" style="padding:20px 0px;">
+        <div *ngIf="loader; else buttonSub" class="m-loader m-loader--brand" style="width: 30px; display: inline-block;"></div>
+        <ng-template #buttonSub>
+          <button type="submit" class="btn btn-brand" [disabled]="!form.form.valid">
+            <i class="fa fa-save"></i> <span style="padding-left:10px;">Update</span>
+          </button>
+        </ng-template>
+      </div>
+    </form>
+    <!--end::Form-->
+  </div>
+
+</div>
